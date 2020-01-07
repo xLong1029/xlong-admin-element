@@ -3,7 +3,7 @@
   <div class="navbar">
     <div class="logo-container fl">
       <!-- <img class="logo" :src="logo" /> -->
-      <span class="text">广西住建厅-专家库</span>
+      <span class="text">XLONG家里蹲管理系统</span>
     </div>
     <!-- 导航 -->
     <div class="nav-list-container fl">
