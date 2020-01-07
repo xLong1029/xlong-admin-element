@@ -1,9 +1,9 @@
 {
-  "name": "zjt_gateway_client",
-  "version": "0.0.0",
-  "description": "",
-  "author": "",
-  "license": "MIT",
+  "name": "xlong-admin-element",
+  "version": "1.0.0",
+  "description": "a management system for study only",
+  "author": "xLong <381612175@qq.com>",
+  "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",

@@ -156,7 +156,7 @@ $header-height: 40rem * $baseUnit;
 
     &__home {
       font-weight: bold;
-      font-size: 14rem * $baseUnit;
+      font-size: 16rem * $baseUnit;
       cursor: pointer;
       i{
         font-size: 16rem * $baseUnit;
@@ -181,7 +181,7 @@ $header-height: 40rem * $baseUnit;
     }
 
     &__date {
-      font-size: 14rem * $baseUnit;
+      font-size: 16rem * $baseUnit;
       margin-right: 30rem * $baseUnit;
     }
 

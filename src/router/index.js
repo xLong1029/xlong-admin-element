@@ -74,16 +74,16 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/account-settings',
+    path: '/change-password',
     component: () => import('@/layout/index'),
-    redirect: '/account-settings/index',
+    redirect: '/change-password/index',
     hidden: true,
     children: [
       {
         path: 'index',
-        component: () => import('@/views/account-settings/index'),
-        name: 'AccountSettings',
-        meta: { title: '账户设置' }
+        component: () => import('@/views/change-password/index'),
+        name: 'ChangePwd',
+        meta: { title: '修改密码' }
       }
     ]
   }
