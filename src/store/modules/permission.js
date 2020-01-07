@@ -3,11 +3,11 @@ import { asyncRoutes, constantRoutes } from '@/router'
 /**
  * 使用meta.role判断当前用户是否具有权限访问
  * @param route
- * @param roleIds
+ * @param roles
  */
-function hasPermission(route, roleIds) {
+function hasPermission(route, roles) {
   if (route.meta && route.meta.roles) {
-    return roleIds.some(role => route.meta.roles.includes(role))
+    return roles.some(role => route.meta.roles.includes(role))
   } else {
     return true
   }
@@ -16,16 +16,16 @@ function hasPermission(route, roleIds) {
 /**
  * 递归过滤动态路由表
  * @param routes asyncRoutes
- * @param roleIds
+ * @param roles
  */
-export function filterAsyncRoutes(routes, roleIds) {
+export function filterAsyncRoutes(routes, roles) {
   const res = []
 
   routes.forEach(route => {
     const tmp = { ...route }
-    if (hasPermission(tmp, roleIds)) {
+    if (hasPermission(tmp, roles)) {
       if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roleIds)
+        tmp.children = filterAsyncRoutes(tmp.children, roles)
       }
       res.push(tmp)
     }
@@ -47,9 +47,9 @@ const mutations = {
 
 const actions = {
   // 生成路由
-  generateRoutes({ commit }, roleIds) {
+  generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
-      const accessedRoutes = filterAsyncRoutes(asyncRoutes, roleIds)
+      const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       // 404重定向配置放结尾
       accessedRoutes.push({ path: '*', redirect: '/404', hidden: true })
       commit('SET_ROUTES', accessedRoutes)

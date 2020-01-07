@@ -4,38 +4,38 @@ import {
   setToken,
   removeToken
 } from 'utils/auth'
-// Api方法
+import { strToArr } from 'utils'
 import Api from 'api/user'
 import {
   resetRouter
 } from 'router'
 
+// 清空账户信息
+function clearAccount(_commit) {
+  removeToken();
+  resetRouter();
+  _commit('SET_TOKEN', null);
+  _commit('SET_USER', {
+    id: 0,
+    avatar: '',
+    gender: '',
+    username: '',
+    realName: '',
+    nickName: '',
+    roles: []
+  });
+}
+
 const state = {
   token: getToken(),
-  userInfo: {
-    // 真实姓名
-    realname: null,
-    // 用户id
-    id: null,
-    /**
-     * 角色id
-     *
-     * 权限配置有误： -1
-     * 系统管理员(默认为住建厅管理员):  1
-     * 住建厅人员:  2 ——————管理员 2-1，普通用户 2-2
-     * 其它政府单位人员: 3 ——————管理员 3-1，普通用户 3-2
-     * 社会企业: 4 ——————管理员 4-1，普通用户 4-2
-     * 社会群众: 5
-    */
-    roleIds: [],
-    // 部门名称
-    organizationName: null,
-    // 部门id
-    organizationsId: null,
-    // 账户名
-    username: null,
-    // 头像
-    avatar: null,
+  user: {
+    id: 0,
+    avatar: '',
+    gender: '',
+    username: '',
+    realName: '',
+    nickName: '',
+    roles: []
   }
 }
 
@@ -43,106 +43,51 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_USER_INFO: (state, userInfo) => {
-    state.userInfo = userInfo
+  SET_USER: (state, user) => {
+    state.user = user
   },
-  SET_ROLE_IDS: (state, roleIds) => {
-    state.userInfo.roleIds = roleIds
-  },
-  SET_REALNAME: (state, realname) => {
-    state.userInfo.realname = realname
-  },
-  SET_USERNAME: (state, username) => {
-    state.userInfo.username = username
-  },
-  SET_AVATAR: (state, avatar) => {
-    state.userInfo.avatar = avatar
-  }
 }
 
 const actions = {
-  // 设置token
-  setToken({
-    commit
-  }, token) {
-    return new Promise((resolve, reject) => {
-      if (token) {
-        commit('SET_TOKEN', token)
-        setToken(token)
-        resolve(token)
-      } else {
-        reject()
-      }
-    })
-  },
-
-  // 设置user
-  setUser({
-    commit
-  }, user) {
-    return new Promise((resolve, reject) => {
-      if (user) {
-        commit('SET_USER_INFO', user)
-        setUser(user)
-        resolve(user)
-      } else {
-        reject()
-      }
-    })
-  },
-
   // 获取用户信息
   getInfo({
     commit,
     state
   }) {
     return new Promise((resolve, reject) => {
-      /* 测试数据-start */
-      const user = {
-        realname: '住建厅管理员',
-        roleIds: ['1'],
-        id: 666,
-        organizationName: '',
-        organizationsId: '',
-        username: 'sysmanager',
-        avatar: ''
-      }
-      commit('SET_USER_INFO', user)
-      resolve(user)
-      /* 测试数据-end */
+      const token = getToken();
 
+      Api.GetUser(token)
+        .then(res => {
+          // 登录成功
+          if (res.code == 200) {
+            const info = res.data;
+            const avatar = info.userFace ? info.userFace : null;
+            const roles = info.role ? strToArr(info.role, ',') : null;
 
-      // if (state.token) {
-      //   const { RealName, id, OrganizationName, OrganizationsId, name, RoleIds, EmployeesType } = jwtDecode(state.token);
+            const data = {
+              avatar,
+              roles,
+              realName: info.realName,
+              username: info.username,
+              nickName: info.nickName,              
+              gender: info.gender,
+              id: info.objectId
+            }
 
-      //   const data = {
-      //     realname: RealName,
-      //     roleIds: getRole(RoleIds, EmployeesType),
-      //     id,
-      //     organizationName: OrganizationName,
-      //     organizationsId: OrganizationsId,
-      //     username: name,
-      //     avatar: ''
-      //   }
-
-      //   commit('SET_USER_INFO', data)
-      //   resolve(data)
-      // } else {
-      //   commit('SET_TOKEN', '')
-      //   commit('SET_USER_INFO', {
-      //     realname: null,
-      //     roleIds: [],
-      //     id: null,
-      //     organizationName:  null,
-      //     organizationsId:  null,
-      //     username:  null,
-      //     avatar:  null
-      //   })
-      //   removeToken()
-      //   removeUser()
-      //   resetRouter()
-      //   reject()
-      // }
+            commit('SET_USER', data);
+            resolve(data);
+          }
+          // 登录失败
+          else {
+            clearAccount(commit);
+            reject(res);
+          }
+        })
+        .catch(err => {
+          clearAccount(commit);
+          reject(err);
+        });
     })
   },
 
@@ -152,21 +97,8 @@ const actions = {
     state
   }) {
     return new Promise((resolve, reject) => {
-      commit('SET_TOKEN', '')
-      commit('SET_USER_INFO', {
-        realname: null,
-        roleIds: [],
-        id: null,
-        organizationName: null,
-        organizationsId: null,
-        username: null,
-        avatar: null
-      })
-
-      removeToken()
-      removeUser()
-      resetRouter()
-      resolve()
+      clearAccount(commit);
+      resolve();
     })
   },
 

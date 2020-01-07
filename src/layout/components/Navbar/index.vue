@@ -43,8 +43,8 @@
           </div>
           <ul class="user-info-list mt-10">
             <li class="user-info-list-item">账号：{{ username | isNull }}</li>
-            <li class="user-info-list-item">真实姓名：{{ realname | isNull }}</li>
-            <li class="user-info-list-item">所在部门：{{ organizationName | isNull }}</li>
+            <li class="user-info-list-item">真是姓名：{{ realName | isNull }}</li>
+            <li class="user-info-list-item">性别：{{ gender | isNull }}</li>
           </ul>
         </div>
         <div slot="reference" class="right-menu-item hover-effect fr">
@@ -52,7 +52,7 @@
             <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
             <span class="user-name">
               <i class="el-icon-user-solid mr-5"></i>
-              {{ realname }}
+              {{ nickName }}
             </span>
             <i class="el-icon-caret-bottom" />
           </div>
@@ -76,8 +76,9 @@ export default {
     ...mapGetters([
       "permissionRoutes",
       "username",
-      "realname",
-      "organizationName"
+      "nickName",
+      "realName",
+      "gender"
     ]),
     activeMenu() {
       const route = this.$route;
@@ -235,7 +236,7 @@ $right-menu-height: 50px;
       }
 
       &:hover {
-        color: $menuActiveText;
+        color: $menuActiveText !important;
         background: transparent !important;
         i {
           color: $menuActiveText;
@@ -265,7 +266,7 @@ $right-menu-height: 50px;
       }
 
       &:hover {
-        color: $menuActiveText;
+        color: $menuActiveText !important;
         background: transparent !important;
         i {
           color: $menuActiveText;

@@ -37,7 +37,7 @@
 
 <script>
 /* eslint-disable */
-import { SetLocalS, GetLocalS, Encrypt, Decrypt } from "utils";
+import { SetLocalS, GetLocalS, DelLocalS, Encrypt, Decrypt } from "utils";
 import Api from "api/user";
 
 export default {
@@ -78,6 +78,14 @@ export default {
         }
       },
       immediate: true
+    },
+    remeberPwd(val) {
+      if (!val) {
+        if (GetLocalS("username")) {
+          DelLocalS("username");
+          DelLocalS("password");
+        }
+      }
     }
   },
   created() {
@@ -130,7 +138,7 @@ export default {
                 query: this.otherQuery
               });
             })
-            .catch(err => this.$message.error("用户名或密码不正确"))
+            .catch(err => this.$message.error(err.error))
             .finally(() => (this.loading = false));
         } else this.$message.error("登录失败!填写有误！");
       });

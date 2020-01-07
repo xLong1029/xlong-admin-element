@@ -5,7 +5,7 @@ const router = {
   meta: {
     title: '监控大屏',
     icon: 'el-icon-s-platform',
-    roles: ['1']
+    roles: ['admin']
   }
 }
 

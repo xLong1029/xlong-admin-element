@@ -18,16 +18,21 @@ router.beforeEach(async (to, from, next) => {
       // 已登录跳转到首页
       next({ path: '/' })
     } else {
-      const hasRoles = store.getters.roleIds && store.getters.roleIds.length > 0
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0
+      console.log(hasRoles);
       if (hasRoles) {
         next()
       } else {
         try {
           // 获取用户信息
-          const { roleIds } = await store.dispatch('user/getInfo')
+          const { roles } = await store.dispatch('user/getInfo')
+
+          console.log(roles);
+
+          console.log(`Get role's value, and the user's roles is ${roles}.`)
 
           // 获取可通过的路由
-          const accessRoutes = await store.dispatch('permission/generateRoutes', roleIds)
+          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
           // 动态添加路由
           router.addRoutes(accessRoutes)
 
@@ -35,6 +40,7 @@ router.beforeEach(async (to, from, next) => {
           // 设置replace:true，这样导航就不会留下历史记录
           next({ ...to, replace: true })
         } catch (err) {
+          console.log(111, err);
           // 重登录
           Message.error(err || '用户信息已失效，请重新登录')
           setTimeout(() => {
