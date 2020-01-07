@@ -1,0 +1,149 @@
+{
+  "id": "1445208",
+  "name": "住建厅",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "380382",
+      "name": "search",
+      "font_class": "search",
+      "unicode": "e66f",
+      "unicode_decimal": 58991
+    },
+    {
+      "icon_id": "584065",
+      "name": "退出",
+      "font_class": "exit",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "725731",
+      "name": "用户",
+      "font_class": "yonghu",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "968468",
+      "name": "机构",
+      "font_class": "organization",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "2039579",
+      "name": "部门",
+      "font_class": "bumen",
+      "unicode": "e687",
+      "unicode_decimal": 59015
+    },
+    {
+      "icon_id": "2130705",
+      "name": "机构",
+      "font_class": "jigou",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "5700820",
+      "name": "peoples",
+      "font_class": "peoples",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "6239735",
+      "name": "api",
+      "font_class": "api",
+      "unicode": "e723",
+      "unicode_decimal": 59171
+    },
+    {
+      "icon_id": "6246302",
+      "name": "数据库",
+      "font_class": "database",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "6308099",
+      "name": "Cluster-management",
+      "font_class": "cluster-management",
+      "unicode": "e72b",
+      "unicode_decimal": 59179
+    },
+    {
+      "icon_id": "6512205",
+      "name": "机构管理",
+      "font_class": "jigouguanli",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "6729600",
+      "name": "课程授权",
+      "font_class": "kechengshouquan",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "7068325",
+      "name": "details",
+      "font_class": "details",
+      "unicode": "e757",
+      "unicode_decimal": 59223
+    },
+    {
+      "icon_id": "7239920",
+      "name": "team",
+      "font_class": "team",
+      "unicode": "e75a",
+      "unicode_decimal": 59226
+    },
+    {
+      "icon_id": "7712214",
+      "name": "权限",
+      "font_class": "quanxian",
+      "unicode": "e725",
+      "unicode_decimal": 59173
+    },
+    {
+      "icon_id": "7712679",
+      "name": "full_screen2",
+      "font_class": "full_screen",
+      "unicode": "e72d",
+      "unicode_decimal": 59181
+    },
+    {
+      "icon_id": "7712680",
+      "name": "exit_screen",
+      "font_class": "exit_screen",
+      "unicode": "e72a",
+      "unicode_decimal": 59178
+    },
+    {
+      "icon_id": "8351868",
+      "name": "文件夹",
+      "font_class": "wenjianjia",
+      "unicode": "e6ac",
+      "unicode_decimal": 59052
+    },
+    {
+      "icon_id": "11365100",
+      "name": "yishiyong",
+      "font_class": "yishiyong1",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "11365116",
+      "name": "apply-l",
+      "font_class": "apply-l",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    }
+  ]
+}

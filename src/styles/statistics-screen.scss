@@ -1,0 +1,19 @@
+@import './variables.scss';
+
+// 响应式配置，保留使用
+$designWidth: 1909;
+$designHeight: 1076;
+$baseUnit: 1/100; // 设计图大小为1909*1076px，对应根字体大小为100px
+$widthHeightRatio: $designWidth / $designHeight;
+
+$color-light-blue: #99dced;
+$color-yellow: #fddc31;
+$border-blue: 1px solid #084f8e;
+
+@mixin background-setting($url, $width, $height){
+  width: $width;
+  height: $height;
+  background-size: 100% 100%;
+  background-repeat:no-repeat;
+  background-image: url($url);
+}
