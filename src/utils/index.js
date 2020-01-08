@@ -1,12 +1,13 @@
 /**
- * 根据时间辍返回对应的时间 如 yyyy-MM-dd HH:mm:ss  yyyy-MM-dd
+ * 根据时间辍返回对应的时间 如 YYYY-MM-DD HH:mm:ss  YYYY-MM-DD
  * @param {Object} date 时间对象
- * @param {String} format 时间格式 默认返回年月日时分秒 按照的格式化是 yyyy-MM-dd HH:mm:ss
- * @param {String} timeWord 默认返回2018年01月15日 16:26:30  这种  如填写 - 的。则返回 2018-01-15 16:26:30
+ * @param {String} format 时间格式 默认返回年月日时分秒 按照的格式化是 YYYY-MM-DD HH:mm:ss
+ * @param {String} dateWord 默认返回2018年01月15日 如填写 - 的。则返回 2018-01-15
+ * @param {String} timeWord 默认返回16时26分30秒 如填写 : 的。则返回 16:26:30
  */
-export function timeTrans(date, format = 'yyyy-MM-dd HH:mm:ss', timeWord = '') {
-  const YType = timeWord === '' ? '年' : timeWord
-  const MType = timeWord === '' ? '月' : timeWord
+export function timeTrans(date, format = 'YYYY-MM-DD HH:mm:ss', dateWord = '', timeWord = '') {
+  const YType = timeWord === '' ? '年' : dateWord
+  const MType = timeWord === '' ? '月' : dateWord
   const DType = timeWord === '' ? '日' : ''
 
   const hType = timeWord === '' ? '时' : timeWord
@@ -21,25 +22,25 @@ export function timeTrans(date, format = 'yyyy-MM-dd HH:mm:ss', timeWord = '') {
   const m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + mType
   const s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()) + sType
   switch (format) {
-    case 'yyyy-MM-dd HH:mm:ss':
-      dataValue = Y + M + D + h + m + s
+    case 'YYYY-MM-DD HH:mm:ss':
+      dataValue = Y + M + D + ' ' + h + m + s
       break
-    case 'yyyy':
+    case 'YYYY':
       dataValue = date.getFullYear().toString()
       break
     case 'MM':
       dataValue = M.substring(0, M.length - 1)
       break
-    case 'dd':
+    case 'DD':
       dataValue = D.substring(0, D.length - 1)
       break
-    case 'yyyy-MM':
+    case 'YYYY-MM':
       dataValue = Y + M.substring(0, M.length - 1)
       break
-    case 'yyyy-MM-dd':
+    case 'YYYY-MM-DD':
       dataValue = Y + M + D
       break
-    case 'MM-dd':
+    case 'MM-DD':
       dataValue = M + D.substring(0, D.length - 1)
       break
     case 'HH':
@@ -256,7 +257,7 @@ export function hasClass(ele, cls) {
  * @param {HTMLElement} elm
  * @param {string} cls
  */
-export function addClass(ele, cls) {
+export function aDDClass(ele, cls) {
   if (!hasClass(ele, cls)) ele.className += ' ' + cls
 }
 
