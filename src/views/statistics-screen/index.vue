@@ -2,7 +2,7 @@
   <!-- eslint-disable -->
   <div ref="statisticsScreen" class="statistics-screen scroll-style">
     <div ref="screenContainer" class="statistics-screen-container" :style="{ height: pageH, width: pageW }">
-      <screen-header title="监控大屏" />
+      <screen-header title="监控大屏(建议全屏观看)" />
       <div class="statistics-screen-content flex">
         <!-- 第一屏 -->
         <div id="statisticsScreen1" class="split-screen">

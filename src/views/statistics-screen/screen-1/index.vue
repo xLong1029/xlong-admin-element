@@ -92,6 +92,7 @@
 import Empty from "components/common/Empty";
 import PopupMsgMap from "components/statistics-screen/Charts/PopupMsgMap";
 import RankingBarChart from "components/statistics-screen/Charts/RankingBarChart";
+import areaJson from "mock/guangxi-area.json";
 
 // import Api from "api/statistics-screen";
 // import SignalR from "mixins/signal-r";
@@ -181,21 +182,17 @@ export default {
     // 获取统计数据
     getStatisticsData() {
       // 地图地理坐标
-      Api.getGeoCoordMap()
-        .then(res => {
-          this.map.geoCoordMap = res.custom;
-          this.map.loading = false;
-        })
-        .catch(() => (this.map.loading = false));
+      // Api.getGeoCoordMap()
+      //   .then(res => {
+      //     this.map.geoCoordMap = res.custom;
+      //     this.map.loading = false;
+      //   })
+      //   .catch(() => (this.map.loading = false));
     },
     // 获取受理排行数据
     getRankingData() {
-      Api.getRanking()
-        .then(res => {
-          this.ranking.data.chartData = res.custom;
-          this.ranking.loading = false;
-        })
-        .catch(() => (this.ranking.loading = false));
+      // this.ranking.data.chartData = ;
+      setTimeout(() => (this.ranking.loading = false), 500);
     },
     // 通过SignalR获取消息
     getMsgData() {
@@ -212,14 +209,13 @@ export default {
           );
           // 判断是否断开重连
           this.connection.onclose(() => {
-            if(this.$route.name === 'StatisticsScreen'){
-              logInfo('SignalR-连接已关闭, 尝试重新连接');
+            if (this.$route.name === "StatisticsScreen") {
+              logInfo("SignalR-连接已关闭, 尝试重新连接");
               this.startConnection();
+            } else {
+              logInfo("已离开监控大屏，SignalR-连接已关闭");
             }
-            else{
-              logInfo('已离开监控大屏，SignalR-连接已关闭');
-            }           
-          })
+          });
           this.receiveMessage();
 
           this.message.loading = false;
@@ -228,19 +224,19 @@ export default {
     },
     receiveMessage() {
       // 从集线器调用客户端方法
-      this.connection.on("ReceiveMatterMessage", res => {        
+      this.connection.on("ReceiveMatterMessage", res => {
         logInfo("SignalR-已成功从服务端获取信息");
         // logInfo(res);
         this.countTag = 1;
         // 将消息存储至队列，用到地图上显示
         if (this.tempMsgs.length <= 10) {
           this.tempMsgs.push(res); // 从结尾添加
-        }        
+        }
       });
     },
     // 减少队列消息
-    reduceTempMsgs(msg){
-      if(this.tempMsgs.length > 0) {
+    reduceTempMsgs(msg) {
+      if (this.tempMsgs.length > 0) {
         this.tempMsgs.shift(); // 从开头删除
       }
     },
@@ -252,15 +248,14 @@ export default {
 
       this.msgTimer = setInterval(() => {
         // 30秒后若无操作则清除所有消息
-        if(this.countTag > 10){
+        if (this.countTag > 10) {
           this.map.popupMsg = {};
           this.countTag = 1;
+        } else {
+          this.countTag++;
         }
-        else{
-          this.countTag ++;
-        }
-        
-        if(this.tempMsgs.length > 0) {
+
+        if (this.tempMsgs.length > 0) {
           this.countTag = 1;
           let data = this.tempMsgs[0];
           // 消息动画效果
@@ -271,10 +266,10 @@ export default {
           // 地图显示消息弹窗
           this.map.popupMsg = data;
         }
-      }, 3* 1000)
+      }, 3 * 1000);
     },
     // 清除定时器
-    clearTimer(timers){
+    clearTimer(timers) {
       timers.forEach(e => clearInterval(e));
     }
   }

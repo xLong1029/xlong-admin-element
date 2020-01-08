@@ -8,9 +8,9 @@
 // 参考地址：https://gallery.echartsjs.com/editor.html?c=xdExzKlpOh
 import echarts from "echarts";
 require("echarts/theme/macarons"); // echarts theme
-import resize from "@/mixins/chart/resize";
-import { deepClone } from "@/utils";
-import geoJson from "@/assets/json/guangxi.json";
+import resize from "mixins/chart/resize";
+import { deepClone } from "utils";
+import geoJson from "mock/guangxi.json";
 
 export default {
   name: "PopupMsgMap",
