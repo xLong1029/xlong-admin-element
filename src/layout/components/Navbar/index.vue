@@ -36,8 +36,7 @@
         <div class="user-info-container">
           <div class="user-info-title">
             <span>账户信息</span>
-            <router-link to="/account-settings/index" class="url-btn fr">
-            <!-- <router-link to="/change-password/index" class="url-btn fr"> -->
+            <router-link to="/change-password/index" class="url-btn fr">
               修改密码
               <i class="el-icon-arrow-right"></i>
             </router-link>
