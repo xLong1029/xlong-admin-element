@@ -1,7 +1,6 @@
 import Cookies from 'js-cookie'
 
 const TokenKey = 'xlong_admin_token'
-const UserKey = 'xlong_admin_user'
 
 export function getToken() {
   return Cookies.get(TokenKey)

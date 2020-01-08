@@ -69,6 +69,32 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/components',
+    component: () => import('@/layout/index'),
+    redirect: '/components/index',
+    children: [
+      {
+        path: '/components/index',
+        component: () => import('@/views/components/index'),
+        name: 'Components',
+        meta: {
+          title: '组件',
+          icon: 'el-icon-menu'
+        }
+      }
+    ]
+  },
+  {
+    path: '/statistics-screen',
+    component: () => import('@/views/statistics-screen/index'),
+    name: 'StatisticsScreen',
+    meta: {
+      title: '监控大屏',
+      icon: 'el-icon-s-platform',
+      roles: ['admin']
+    }
+  },
+  {
     path: '/change-password',
     component: () => import('@/layout/index'),
     redirect: '/change-password/index',

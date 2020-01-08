@@ -404,8 +404,8 @@ export function getFileStream(data, name) {
  * @param {*} uselessKeys 不需要的属性序列
  */
 export function ObjOmit(obj, uselessKeys) {
-  uselessKeys.forEach(key => delete obj[key]);
-  return obj;
+  uselessKeys.forEach(key => delete obj[key])
+  return obj
 }
 
 /**
@@ -414,13 +414,13 @@ export function ObjOmit(obj, uselessKeys) {
  * @param {*} value 值
  */
 export function Encrypt(value) {
-  let code = '';
+  let code = ''
   for (let i = 0; i < value.length; i++) {
-    let r = value.charCodeAt(i);
-    code += String.fromCharCode(r + 2);
+    const r = value.charCodeAt(i)
+    code += String.fromCharCode(r + 2)
   }
   // 对字符串进行特殊字符编码，分号（;）、逗号（,）、等号（=）以及空格问题
-  return escape(code);
+  return escape(code)
 }
 
 /**
@@ -430,13 +430,13 @@ export function Encrypt(value) {
  */
 export function Decrypt(value) {
   // 对字符串进行特殊字符解码，分号（;）、逗号（,）、等号（=）以及空格问题
-  value = unescape(value);
-  let correct = '';
+  value = unescape(value)
+  let correct = ''
   for (let i = 0; i < value.length; i++) {
-    let r = value.charCodeAt(i);
-    correct += String.fromCharCode(r - 2);
+    const r = value.charCodeAt(i)
+    correct += String.fromCharCode(r - 2)
   }
-  return correct;
+  return correct
 }
 
 /**
@@ -446,7 +446,7 @@ export function Decrypt(value) {
  * @param {*} value 值
  */
 export function SetLocalS(key, value) {
-  localStorage.setItem(key, value);
+  localStorage.setItem(key, value)
 }
 
 /**
@@ -455,9 +455,9 @@ export function SetLocalS(key, value) {
  * @param {*} key key名
  */
 export function GetLocalS(key) {
-  let res = localStorage.getItem(key);
-  if (res && res != 'null') return res;
-  else return false;
+  const res = localStorage.getItem(key)
+  if (res && res !== 'null') return res
+  else return false
 }
 
 /**
@@ -466,12 +466,12 @@ export function GetLocalS(key) {
  * @param {*} key key名
  */
 export function DelLocalS(key) {
-  localStorage.removeItem(key);
+  localStorage.removeItem(key)
 }
 
 /**
  * localstorage清空所有本地储存
  */
 export function ClearLocalS() {
-  localStorage.clear();
+  localStorage.clear()
 }

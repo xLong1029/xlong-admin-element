@@ -155,7 +155,7 @@ export default {
       /* 测试数据-start */
       this.systemsCount.count = 55;
       this.companyCount.count = 3004;
-      this.serverCount = 9;
+      this.serverCount.count = 9;
       this.userCount.count = 60293;
 
       this.companyNum.chartData = areaJson.map(e => {
