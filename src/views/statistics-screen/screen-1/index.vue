@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="ranking-container statistics-frame">
-        <span class="statistics-frame-title">地市事项分布</span>
+        <span class="statistics-frame-title">各地市用户统计</span>
         <div
           class="statistics-frame-content"
           v-loading="ranking.loading"
@@ -69,14 +69,15 @@
               <div class="msg-list-item-left flex">
                 <span class="msg-list-item__badge">{{ message.list.length - index }}</span>
                 <span class="msg-list-item__name">
-                  <i class="operator">{{ item.operator }}</i>
-                  <i class="through">用</i>
-                  <i class="from-system">{{ item.fromSystem }}</i>
-                  <i class="action">{{ item.action }}</i>
-                  <i class="matter">{{ item.matter }}</i>
+                  <i>用户</i>
+                  <i class="account">{{ item.account }}</i>
+                  <i>在</i>
+                  <i class="city">{{ item.city }}</i>
+                  <i>使用了</i>
+                  <i class="system">{{ item.appName }}</i>
                 </span>
               </div>
-              <span class="msg-list-item-right msg-list-item__time">{{ item.actionTimeStr }}</span>
+              <span class="msg-list-item-right msg-list-item__time">{{ item.time }}</span>
             </li>
           </ul>
           <empty v-else :height="`${300*contrastRadio}px`" />
@@ -93,10 +94,24 @@ import Empty from "components/common/Empty";
 import PopupMsgMap from "components/statistics-screen/Charts/PopupMsgMap";
 import RankingBarChart from "components/statistics-screen/Charts/RankingBarChart";
 import areaJson from "mock/guangxi-area.json";
-
-// import Api from "api/statistics-screen";
-// import SignalR from "mixins/signal-r";
 import { logInfo } from "utils";
+
+const appNames = [
+  "XLONG家里蹲-OA办公系统",
+  "XLONG家里蹲-企业信息化系统",
+  "XLONG家里蹲-CMS系统",
+  "XLONG家里蹲-电商App",
+  "XLONG家里蹲-数据抓取软件",
+  "XLONG家里蹲-你画我猜软件"
+];
+const accounts = [
+  "Lio.Huang",
+  "xLong1029",
+  "JunjiApp",
+  "XieNangMai",
+  "quanquan",
+  "PDD"
+];
 
 export default {
   name: "SplitScreenOne",
@@ -125,7 +140,7 @@ export default {
       map: {
         loading: false,
         popupMsg: {},
-        geoCoordMap: null
+        geoCoordMap: {}
       },
       ranking: {
         loading: false,
@@ -154,7 +169,7 @@ export default {
       rankingTimer: null,
       msgTimer: null,
       // signalR连接
-      connection: null,
+      // connection: null,
       // 计数消息
       countTag: 0
     };
@@ -164,7 +179,6 @@ export default {
   },
   beforeDestroy() {
     this.clearTimer([this.rankingTimer, this.msgTimer]);
-    this.stopConnection();
   },
   methods: {
     // 初始化
@@ -173,58 +187,46 @@ export default {
       this.ranking.loading = true;
       this.message.loading = true;
 
-      this.getStatisticsData();
+      this.getMapData();
       this.getRankingData();
-      // this.getMsgData();
+      this.getDefaultMsgData();
 
       this.setTimer();
     },
-    // 获取统计数据
-    getStatisticsData() {
-      // 地图地理坐标
-      // Api.getGeoCoordMap()
-      //   .then(res => {
-      //     this.map.geoCoordMap = res.custom;
-      //     this.map.loading = false;
-      //   })
-      //   .catch(() => (this.map.loading = false));
+    // 获取地图数据
+    getMapData() {
+      /* 测试数据-start */
+      for (let i = 0; i < areaJson.length; i++) {
+        this.map.geoCoordMap[areaJson[i].name] = areaJson[i].coordinate;
+      }
+      setTimeout(() => (this.map.loading = false), 500);
+      /* 测试数据-end */
     },
     // 获取受理排行数据
     getRankingData() {
+      /* 测试数据-start */
       // this.ranking.data.chartData = ;
       setTimeout(() => (this.ranking.loading = false), 500);
+      /* 测试数据-end */
     },
-    // 通过SignalR获取消息
-    getMsgData() {
-      Api.getMeassage({
-        page: 1,
-        pageSize: 3
-      })
-        .then(res => {
-          this.message.list = res.custom.data;
-
-          // 创建singleR连接
-          this.createConnection(
-            `${process.env.VUE_APP_SERVER_AUTH}/hub/SystemMsg`
-          );
-          // 判断是否断开重连
-          this.connection.onclose(() => {
-            if (this.$route.name === "StatisticsScreen") {
-              logInfo("SignalR-连接已关闭, 尝试重新连接");
-              this.startConnection();
-            } else {
-              logInfo("已离开监控大屏，SignalR-连接已关闭");
-            }
-          });
-          this.receiveMessage();
-
-          this.message.loading = false;
-        })
-        .catch(() => (this.message.loading = false));
+    // 默认独取三条数据
+    getDefaultMsgData() {
+      /* 测试数据-start */
+      for (let i = 0; i < 3; i++) {
+        this.message.list.push({
+          account: accounts[Math.round(Math.random() * (accounts.length - 1))],
+          city:
+            areaJson[Math.round(Math.random() * (areaJson.length - 1))].name,
+          appName: appNames[Math.round(Math.random() * (appNames.length - 1))],
+          time: "2019-01-02 14:00:00"
+        });
+      }
+      setTimeout(() => (this.message.loading = false), 500);
+      /* 测试数据-end */
     },
     receiveMessage() {
       // 从集线器调用客户端方法
-      this.connection.on("ReceiveMatterMessage", res => {
+      this.connection.on("ReceivesystemMessage", res => {
         logInfo("SignalR-已成功从服务端获取信息");
         // logInfo(res);
         this.countTag = 1;
@@ -390,18 +392,13 @@ export default {
           font-style: normal;
         }
 
-        .operator,
-        .matter {
+        .account,
+        .system {
           color: #f3f43d;
         }
 
-        .from-system {
+        .city {
           color: #61e1ff;
-        }
-
-        .through,
-        .action {
-          color: #fff;
         }
       }
 

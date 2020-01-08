@@ -216,6 +216,15 @@ import PoleChart from "components/statistics-screen/Charts/PoleChart";
 import GradualBarChart from "components/statistics-screen/Charts/GradualBarChart";
 import Empty from "components/common/Empty";
 
+const appNames = [
+  "XLONG家里蹲-OA办公系统",
+  "XLONG家里蹲-企业信息化系统",
+  "XLONG家里蹲-CMS系统",
+  "XLONG家里蹲-电商App",
+  "XLONG家里蹲-数据抓取软件",
+  "XLONG家里蹲-你画我猜软件"
+];
+
 export default {
   name: "SplitScreenThree",
   components: {
@@ -473,20 +482,21 @@ export default {
       /* 测试数据-start */
       this.SystemDev.month.data.chartData = [];
       this.SystemDev.quarter.data.chartData = [];
-      for(let i = 1; i <= 6; i ++){
+
+      for (let i = 0; i < 6; i++) {
         this.SystemDev.month.data.chartData.push({
-          appName: `XLONG家里蹲测试系统-${i}`,
+          appName: appNames[i],
           useCount: Math.round(Math.random() * 50)
         });
         this.SystemDev.month.pager.total = this.SystemDev.month.pager.pageSize;
 
         this.SystemDev.quarter.data.chartData.push({
-          appName: `XLONG家里蹲测试系统-${i}`,
+          appName: appNames[i],
           useCount: Math.round(Math.random() * 50)
         });
         this.SystemDev.quarter.pager.total = this.SystemDev.quarter.pager.pageSize;
       }
-      
+
       // Api.getSystemDevData({
       //   page: this.SystemDev.month.pager.pageNo,
       //   pageSize: this.SystemDev.month.pager.pageSize,
@@ -518,7 +528,6 @@ export default {
       //     }
       //   })
       //   .catch(err => (this.SystemDev.quarter.loading = false));
-
 
       setTimeout(() => {
         this.SystemDev.month.loading = false;
