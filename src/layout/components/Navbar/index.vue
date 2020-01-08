@@ -37,13 +37,14 @@
           <div class="user-info-title">
             <span>账户信息</span>
             <router-link to="/account-settings/index" class="url-btn fr">
+            <!-- <router-link to="/change-password/index" class="url-btn fr"> -->
               修改密码
               <i class="el-icon-arrow-right"></i>
             </router-link>
           </div>
           <ul class="user-info-list mt-10">
             <li class="user-info-list-item">账号：{{ username | isNull }}</li>
-            <li class="user-info-list-item">真是姓名：{{ realName | isNull }}</li>
+            <li class="user-info-list-item">真实姓名：{{ realName | isNull }}</li>
             <li class="user-info-list-item">性别：{{ gender | isNull }}</li>
           </ul>
         </div>

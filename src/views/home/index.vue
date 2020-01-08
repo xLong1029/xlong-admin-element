@@ -29,7 +29,7 @@
         >http://i.ui.cn/ucenter/358591.html</a>
       </p>
       <br />
-      <p>*此项目做学习Vuejs测试使用，有什么问题可联系我讨论</p>
+      <p>*此项目做学习Vue测试使用，有什么问题可联系我讨论</p>
     </el-card>
   </div>
 </template>
