@@ -41,13 +41,17 @@ module.exports = {
       }
     },
     plugins: [
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-        'window.jQuery': 'jquery',
-        'root.jQuery': 'jquery'
-      })
-    ]
+      // new webpack.ProvidePlugin({
+      //   $: 'jquery',
+      //   jQuery: 'jquery',
+      //   'window.jQuery': 'jquery',
+      //   'root.jQuery': 'jquery'
+      // })
+    ],
+    // 外部引用
+    externals: {
+      $: 'jquery'
+    }
   },
   chainWebpack(config) {
     config.plugins.delete('preload')
