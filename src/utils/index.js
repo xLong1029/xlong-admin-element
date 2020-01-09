@@ -6,9 +6,9 @@
  * @param {String} timeWord 默认返回16时26分30秒 如填写 : 的。则返回 16:26:30
  */
 export function timeTrans(date, format = 'YYYY-MM-DD HH:mm:ss', dateWord = '', timeWord = '') {
-  const YType = timeWord === '' ? '年' : dateWord
-  const MType = timeWord === '' ? '月' : dateWord
-  const DType = timeWord === '' ? '日' : ''
+  const YType = dateWord === '' ? '年' : dateWord
+  const MType = dateWord === '' ? '月' : dateWord
+  const DType = dateWord === '' ? '日' : ''
 
   const hType = timeWord === '' ? '时' : timeWord
   const mType = timeWord === '' ? '分' : timeWord

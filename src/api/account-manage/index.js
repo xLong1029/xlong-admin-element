@@ -5,6 +5,8 @@
  * 日期 : 2019-4-29
  * 版本 : version 2.0
  */
+
+/* eslint-disable */
 import BmobServer from 'bmob/bmob-server.js'
 
 export default {

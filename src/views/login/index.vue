@@ -8,7 +8,7 @@
       <el-form-item prop="username">
         <el-input
           prefix-icon="el-icon-user"
-          v-model="loginForm.username"
+          v-model.trim="loginForm.username"
           placeholder="请输入手机号码"
           @keyup.enter.native="submit('loginForm')"
         />
@@ -17,7 +17,7 @@
         <el-input
           prefix-icon="el-icon-key"
           type="password"
-          v-model="loginForm.password"
+          v-model.trim="loginForm.password"
           placeholder="请输入密码"
           @keyup.enter.native="submit('loginForm')"
         />

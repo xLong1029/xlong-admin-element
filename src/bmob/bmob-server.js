@@ -1,8 +1,8 @@
 /*
  * 功能 : 封装bmob的增删改查数据方法。
  * 作者 : 罗永梅（381612175@qq.com）
- * 日期 : 2019-7-24
- * 版本 : version 2.1
+ * 日期 : 2020-01-09
+ * 版本 : version 2.2
  */
 /* eslint-disable */
 import { APPLICATION_ID, REST_API_KEY } from 'config/index.js'
@@ -28,8 +28,7 @@ export default {
                     let page = {
                         page: pageNo,
                         size: pageSize,
-                        count: res,
-                        pages: Math.ceil(res.length / pageSize)
+                        count: res
                     }
 
                     // 对createdAt字段降序排列

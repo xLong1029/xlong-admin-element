@@ -85,16 +85,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/statistics-screen',
-    component: () => import('@/views/statistics-screen/index'),
-    name: 'StatisticsScreen',
-    meta: {
-      title: '监控大屏',
-      icon: 'el-icon-s-platform',
-      roles: ['admin']
-    }
-  },
-  {
     path: '/change-password',
     component: () => import('@/layout/index'),
     redirect: '/change-password/index',

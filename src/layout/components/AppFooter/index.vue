@@ -1,6 +1,6 @@
 <template>
   <!-- eslint-disable -->
-  <div class="footer">
+  <div class="footer flex">
     <div class="info">
       <div class="contact flex mt-5">
         <div class="contact-item mr-30">
@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="copyright">2019-2022 &copy; XLONG JIALIDUN</div>
+    <div class="copyright">2020-2022 &copy; XLONG JIALIDUN</div>
   </div>
 </template>
 
@@ -46,11 +46,14 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  min-height: 85px;
+  min-height: 60px;
   width: 100%;
   background: #333;
   color: #cfcfcf;
   font-size: 12px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
 
   .contact {
     width: 470px;
