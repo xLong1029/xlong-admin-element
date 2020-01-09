@@ -86,9 +86,11 @@
       <!-- 操作按钮 -->
       <div class="operate-btn-container">
         <el-button type="primary" @click="add()">添加</el-button>
-        <el-button type="warning" @click="del()">删除</el-button>
-        <el-button type="primary" @click="enableOrDisable(1)">启用</el-button>
-        <el-button type="warning" @click="enableOrDisable(-1)">禁用</el-button>
+        <pop-confirm title="确认删除?" class="mr-10 ml-10" @confirm="del()">
+          <el-button type="warning" :disabled="selectList.length === 0" :loading="delLoading">删除</el-button>
+        </pop-confirm>
+        <el-button type="primary" :disabled="selectList.length === 0" :loading="enableLoading" @click="enableOrDisable(1)">启用</el-button>
+        <el-button type="warning" :disabled="selectList.length === 0" :loading="disableLoading" @click="enableOrDisable(-1)">禁用</el-button>
       </div>
       <!-- 表格 -->
       <dynamic-table
@@ -99,6 +101,7 @@
         :table-data="listData"
         :table-height="tableHeight"
         :default-props="tableProps"
+        :row-class-name="setRowClass"
         :showPagination="true"
         :total="page.total"
         :page-no.sync="page.pageNo"
@@ -117,11 +120,10 @@
         <el-table-column prop="enabledState" label="状态" align="center" width="100" fixed="right">
           <template slot-scope="{ row }">
             <el-tag v-if="row.enabledState === 1" type="success">启用</el-tag>
-            <el-tag v-else type="warning">禁用</el-tag>
+            <el-tag v-else type="danger">禁用</el-tag>
           </template>
         </el-table-column>
       </dynamic-table>
-      <!-- 页码 -->
     </el-card>
   </div>
 </template>
@@ -152,7 +154,15 @@ export default {
     apiGetList(pageNo, pageSize) {
       return (pageNo, pageSize) =>
         Api.GetAccList(this.filterParams, pageNo, pageSize);
-    }
+    },
+    // 删除操作接口
+    apiDelete(){
+        return () => Api.DeleteAcc(this.selectList);
+    },
+    // 启/禁用操作接口
+    apiEnable(enabledState){
+        return (enabledState) => Api.EnableAcc({ enabledState }, this.selectList);
+    },
   },
   data() {
     return {
@@ -236,7 +246,10 @@ export default {
         label: "title"
       },
       listData: [],
-      selectList: []
+      selectList: [],
+      delLoading: false,
+      enableLoading: false,
+      disableLoading: false,
     };
   },
   created() {
@@ -251,7 +264,6 @@ export default {
       this.setTableHeight(385);
       this.getList(1, this.page.pageSize);
     },
-    
     dateChange(vals) {
       if (!vals) {
         this.filterParams.sTime = "";
@@ -268,6 +280,9 @@ export default {
         "YYYY-MM-DD",
         "-"
       )} 23:59:59`;
+    },
+    setRowClass(data) {
+      return data.row.enabledState === -1 ? "tr-disbale" : null;
     }
   }
 };
@@ -277,6 +292,11 @@ export default {
   .page-list {
     text-align: center;
   }
+
+  /deep/  .tr-disbale {
+    background: #f8f8f9;
+    color: #ccc;
+  }  
 }
 .form-container {
   /deep/ .el-form-item {

@@ -29,7 +29,7 @@ export default {
             // 清空选项列表
             this.clearSelect();
             for (let i = 0; i < selection.length; i++) {
-                this.selectList.push(selection[i].id);
+                this.selectList.push(selection[i].objectId);
             }
         },
         /**
@@ -54,17 +54,52 @@ export default {
         /**
          * 添加
          */
-        add() { },
+        add() {
+            // this.apiAdd().then(res => {
+            //     if (res.code == 200) {
+            //         this.$message.success('新增成功!');
+            //         // 更新列表
+            //         this.updateList();
+            //         // 清空选项列表
+            //         this.clearSelect();
+            //     }
+            //     else console.log(res);
+            // }).catch(err => this.$message.error('新增失败！'))
+        },
         /**
          * 删除
          */
-        del() { },
+        del() {
+            this.delLoading = true;
+            this.apiDelete().then(res => {
+                if (res.code == 200) {
+                    this.$message.success('删除成功!');
+                    // 更新列表
+                    this.getList(this.page.pageNo, this.page.pageSize);
+                    // 清空选项列表
+                    this.clearSelect();
+                }
+                else console.log(res);
+            }).catch(err => this.$message.error('删除失败！'))
+                .finally(() => this.delLoading = false);
+        },
         /**
          * 编辑
          *
          * @param {*} row 当前行
          */
-        edit(row) { },
+        edit(row) {
+            // this.apiEdit().then(res => {
+            //     if(res.code == 200){
+            //         this.$message.success('编辑成功!');
+            //         // 更新列表
+            //         this.updateList();
+            //         // 清空选项列表
+            //         this.clearSelect();
+            //     }
+            //     else console.log(res);
+            // }).catch(err => this.$message.error('编辑失败！'))
+        },
         /**
          * 详情
          *
@@ -74,9 +109,23 @@ export default {
         /**
          * 启、禁用
          *
-         * @param {*} type 1 启用 -1 禁用
+         * @param {*} enabledState 1 启用 -1 禁用
          */
-        enableOrDisable(type) { },
+        enableOrDisable(enabledState) {
+            enabledState === 1 ? this.enableLoading = true : this.disableLoading = true;
+            this.apiEnable(enabledState).then(res => {
+                
+                if (res.code == 200) {
+                    this.$message.success('操作成功!');
+                    // 更新列表
+                    this.getList(this.page.pageNo, this.page.pageSize);
+                    // 清空选项列表
+                    this.clearSelect();
+                }
+                else this.$message.warning(res.msg);
+            }).catch(err => console.log(err))
+            .finally(() => enabledState === 1 ? this.enableLoading = false : this.disableLoading = false);
+        },
 
     }
 }

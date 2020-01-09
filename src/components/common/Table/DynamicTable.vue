@@ -2,7 +2,15 @@
   <!-- eslint-disable -->
   <div class="dynamic-table-container">
     <template v-if="tableHeader.length">
-      <el-table ref="table" :data="tableData" :height="tableHeight" border style="width: 100%" @selection-change="handleSelectionChange">
+      <el-table
+        ref="table"
+        :data="tableData"
+        :height="tableHeight"
+        :row-class-name="rowClassName"
+        border
+        style="width: 100%"
+        @selection-change="handleSelectionChange"
+      >
         <template v-for="(item, index) in tableHeader">
           <el-table-column
             :key="'columns' + index"
@@ -105,6 +113,9 @@ export default {
         prop: "prop",
         label: "label"
       })
+    },
+    rowClassName: {
+      type: Function | String
     }
   },
   computed: {
@@ -131,7 +142,7 @@ export default {
       this.$emit("pagination", page, pageSize);
     },
     // 选择框切换时触发，返回所有选项
-    handleSelectionChange(selection){
+    handleSelectionChange(selection) {
       this.$emit("selection-change", selection);
     }
   }
