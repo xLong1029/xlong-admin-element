@@ -81,7 +81,7 @@ export default {
                 }
                 else console.log(res);
             }).catch(err => this.$message.error('删除失败！'))
-                .finally(() => this.delLoading = false);
+            .finally(() => this.delLoading = false);
         },
         /**
          * 编辑

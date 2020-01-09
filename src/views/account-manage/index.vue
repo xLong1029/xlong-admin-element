@@ -4,34 +4,34 @@
     <el-card shadow="never">
       <!-- 筛选 -->
       <el-form ref="filterParams" :model="filterParams" :inline="true" class="form-container">
-        <el-form-item label="用户编号" prop="id">
+        <el-form-item label="用户编号">
           <el-input
             v-model.trim="filterParams.id"
             size="small"
             clearable
-            placeholder="请输入"
+            placeholder="请输入内容"
             @keyup.enter.native="search()"
           />
         </el-form-item>
-        <el-form-item label="手机号码" prop="mobile">
+        <el-form-item label="手机号码">
           <el-input
             v-model.trim="filterParams.mobile"
             size="small"
             clearable
-            placeholder="请输入"
+            placeholder="请输入内容"
             @keyup.enter.native="search()"
           />
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
+        <el-form-item label="邮箱">
           <el-input
             v-model.trim="filterParams.email"
             size="small"
             clearable
-            placeholder="请输入"
+            placeholder="请输入内容"
             @keyup.enter.native="search()"
           />
         </el-form-item>
-        <el-form-item label="创建日期" prop="keyword">
+        <el-form-item label="创建日期">
           <el-date-picker
             v-model="filterParams.createTime"
             type="daterange"
@@ -44,7 +44,7 @@
             @change="dateChange"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="职位" prop="job">
+        <el-form-item label="职位">
           <el-select v-model="filterParams.job" placeholder="请选择" @keyup.enter.native="search()">
             <el-option
               v-for="(item, index) in jobList"
@@ -54,7 +54,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="所在省市" prop="province">
+        <el-form-item label="所在省市">
           <el-select
             v-model="filterParams.province"
             placeholder="请选择"
@@ -68,7 +68,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="用户状态" prop="enabledState">
+        <el-form-item label="用户状态">
           <el-select
             v-model="filterParams.enabledState"
             placeholder="请选择"
@@ -85,7 +85,7 @@
       </el-form>
       <!-- 操作按钮 -->
       <div class="operate-btn-container">
-        <el-button type="primary" @click="add()">添加</el-button>
+        <el-button type="primary" @click="showStore()">添加</el-button>
         <pop-confirm title="确认删除?" class="mr-10 ml-10" @confirm="del()">
           <el-button type="warning" :disabled="selectList.length === 0" :loading="delLoading">删除</el-button>
         </pop-confirm>
@@ -111,10 +111,9 @@
         @selection-change="getSelectList"
       >
         <el-table-column type="selection" width="55" fixed="left"></el-table-column>
-        <el-table-column prop="action" label="操作" width="130" fixed="left">
+        <el-table-column prop="action" label="操作" width="70" fixed="left">
           <template slot-scope="{ row }">
-            <el-button size="mini" type="text" icon="el-icon-tickets" @click="detail(row)">详情</el-button>
-            <el-button size="mini" type="text" icon="el-icon-edit" @click="edit(row)">编辑</el-button>
+            <el-button size="mini" type="text" icon="el-icon-edit" @click="showStore(row)">编辑</el-button>
           </template>
         </el-table-column>
         <el-table-column prop="enabledState" label="状态" align="center" width="100" fixed="right">
@@ -125,6 +124,13 @@
         </el-table-column>
       </dynamic-table>
     </el-card>
+    <!-- 存储弹窗 -->
+    <account-store-dialog
+      :visible.sync="storeDialog.visible"
+      :id="storeDialog.id"
+      :job-list="jobList"
+      :province-list="provinceList"
+    />
   </div>
 </template>
 
@@ -133,6 +139,7 @@
 // 组件
 import Pagination from "components/common/Pagination";
 import DynamicTable from "components/common/Table/DynamicTable";
+import AccountStoreDialog from "./store";
 // Api方法
 import Api from "api/account-manage";
 // Json数据
@@ -147,7 +154,7 @@ import { timeTrans } from "utils";
 
 export default {
   name: "AccountManage",
-  components: { Pagination, DynamicTable },
+  components: { Pagination, DynamicTable, AccountStoreDialog },
   mixins: [Page, Table, DateRange],
   computed: {
     // 获取列表
@@ -188,13 +195,6 @@ export default {
       jobList: [],
       provinceList: [],
       tableHeader: [
-        // {
-        //   title: "全选",
-        //   type: "selection",
-        //   key: "selectAll",
-        //   width: "60",
-        //   align: "center"
-        // },
         {
           title: "用户编号",
           key: "objectId",
@@ -250,12 +250,17 @@ export default {
       delLoading: false,
       enableLoading: false,
       disableLoading: false,
+      storeDialog: {
+        visible: false,
+        id: null
+      }
     };
   },
   created() {
     this.init();
   },
   methods: {
+    // 初始化
     init() {
       this.filterParams = { ...this.defaultParams };
       this.jobList = JsonData.job;
@@ -264,6 +269,7 @@ export default {
       this.setTableHeight(385);
       this.getList(1, this.page.pageSize);
     },
+    // 日期改变
     dateChange(vals) {
       if (!vals) {
         this.filterParams.sTime = "";
@@ -281,9 +287,17 @@ export default {
         "-"
       )} 23:59:59`;
     },
+    // 设置表格行样式
     setRowClass(data) {
       return data.row.enabledState === -1 ? "tr-disbale" : null;
-    }
+    },
+    // 显示编辑弹窗
+    showStore(row) {
+      this.storeDialog = {
+        id: row ? row.objectId : null,
+        visible: true
+      }
+    },
   }
 };
 </script>
