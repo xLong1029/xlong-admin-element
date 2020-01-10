@@ -1,3 +1,4 @@
+/* eslint-disable */ 
 /**
  * 根据时间辍返回对应的时间 如 YYYY-MM-DD HH:mm:ss  YYYY-MM-DD
  * @param {Object} date 时间对象
@@ -131,12 +132,12 @@ export function param2Obj(url) {
   }
   return JSON.parse(
     '{"' +
-      decodeURIComponent(search)
-        .replace(/"/g, '\\"')
-        .replace(/&/g, '","')
-        .replace(/=/g, '":"')
-        .replace(/\+/g, ' ') +
-      '"}'
+    decodeURIComponent(search)
+      .replace(/"/g, '\\"')
+      .replace(/&/g, '","')
+      .replace(/=/g, '":"')
+      .replace(/\+/g, ' ') +
+    '"}'
   )
 }
 
@@ -189,7 +190,7 @@ export function objectMerge(target, source) {
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
 
-  const later = function() {
+  const later = function () {
     // 据上一次触发时间间隔
     const last = +new Date() - timestamp
 
@@ -206,7 +207,7 @@ export function debounce(func, wait, immediate) {
     }
   }
 
-  return function(...args) {
+  return function (...args) {
     context = this
     timestamp = +new Date()
     const callNow = immediate && !timeout
@@ -403,7 +404,7 @@ export function getFileStream(data, name) {
  * @param {*} obj 对象
  * @param {*} uselessKeys 不需要的属性序列
  */
-export function ObjOmit(obj, uselessKeys) {
+export function objOmit(obj, uselessKeys) {
   uselessKeys.forEach(key => delete obj[key])
   return obj
 }
@@ -413,7 +414,7 @@ export function ObjOmit(obj, uselessKeys) {
  *
  * @param {*} value 值
  */
-export function Encrypt(value) {
+export function encrypt(value) {
   let code = ''
   for (let i = 0; i < value.length; i++) {
     const r = value.charCodeAt(i)
@@ -428,7 +429,7 @@ export function Encrypt(value) {
  *
  * @param {*} value 值
  */
-export function Decrypt(value) {
+export function decrypt(value) {
   // 对字符串进行特殊字符解码，分号（;）、逗号（,）、等号（=）以及空格问题
   value = unescape(value)
   let correct = ''
@@ -445,7 +446,7 @@ export function Decrypt(value) {
  * @param {*} key key名
  * @param {*} value 值
  */
-export function SetLocalS(key, value) {
+export function setLocalS(key, value) {
   localStorage.setItem(key, value)
 }
 
@@ -454,7 +455,7 @@ export function SetLocalS(key, value) {
  *
  * @param {*} key key名
  */
-export function GetLocalS(key) {
+export function getLocalS(key) {
   const res = localStorage.getItem(key)
   if (res && res !== 'null') return res
   else return false
@@ -465,13 +466,32 @@ export function GetLocalS(key) {
  *
  * @param {*} key key名
  */
-export function DelLocalS(key) {
+export function delLocalS(key) {
   localStorage.removeItem(key)
 }
 
 /**
  * localstorage清空所有本地储存
  */
-export function ClearLocalS() {
+export function clearLocalS() {
   localStorage.clear()
+}
+
+/**
+ * 比较日期大小
+ *
+ * @param {*} dateOne 第一个日期
+ * @param {*} dateTwo 第二个日期
+ */
+export function compareDate(dateOne, dateTwo) {
+  // 字符串
+  if (typeof (dateOne) === 'string' && typeof (dateTwo) === 'string') {
+    return ((new Date(dateOne.replace(/-/g, "\/"))) <= (new Date(dateTwo.replace(/-/g, "\/"))))
+  }
+  // DATE对象
+  else if (typeof (dateOne) === 'object' && typeof (dateTwo) === 'object') return (dateOne <= dateTwo)
+  else {
+    console.log('日期比较格式不统一')
+    return false
+  }
 }

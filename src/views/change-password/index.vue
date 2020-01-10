@@ -23,7 +23,7 @@
 
 <script>
 /* eslint-disable */
-import { validPassword, isEqual } from "@/utils/validate";
+import { validPassword, isEqual } from "utils/validate";
 // Api方法
 import Api from "api/user";
 // Vuex
@@ -38,21 +38,21 @@ export default {
   },
   data() {
     const validateNewPassword = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入新密码"));
+      if (!value) {
+        return callback(new Error("请输入新密码"));
       } else if (!validPassword(value)) {
-        callback(new Error("密码中必须包含字母、数字，长度至少为6个字符！"));
+        return callback(new Error("密码中必须包含字母、数字，长度至少为6个字符！"));
       } else {
-        callback();
+        return callback();
       }
     };
     const validateComfirPassword = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入确认密码"));
+      if (!value) {
+        return callback(new Error("请输入确认密码"));
       } else if (!isEqual(value, this.form.newPassword)) {
-        callback(new Error("两次输入密码不一致"));
+        return callback(new Error("两次输入密码不一致"));
       } else {
-        callback();
+        return callback();
       }
     };
     return {

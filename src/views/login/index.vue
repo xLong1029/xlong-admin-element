@@ -37,7 +37,7 @@
 
 <script>
 /* eslint-disable */
-import { SetLocalS, GetLocalS, DelLocalS, Encrypt, Decrypt } from "utils";
+import { setLocalS, getLocalS, delLocalS, encrypt, decrypt } from "utils";
 import Api from "api/user";
 
 export default {
@@ -81,19 +81,19 @@ export default {
     },
     remeberPwd(val) {
       if (!val) {
-        if (GetLocalS("username")) {
-          DelLocalS("username");
-          DelLocalS("password");
+        if (getLocalS("username")) {
+          delLocalS("username");
+          delLocalS("password");
         }
       }
     }
   },
   created() {
     // 判断本地存储用户名是否存在
-    if (GetLocalS("username")) {
+    if (getLocalS("username")) {
       // 获取本地存储的用户名和密码
-      this.loginForm.username = GetLocalS("username");
-      this.loginForm.password = Decrypt(GetLocalS("password"));
+      this.loginForm.username = getLocalS("username");
+      this.loginForm.password = decrypt(getLocalS("password"));
       this.remeberPwd = true;
     }
   },
@@ -128,8 +128,8 @@ export default {
               // 判断是否记住密码
               if (this.remeberPwd) {
                 // 本地存储用户名和密码
-                SetLocalS("username", this.loginForm.username);
-                SetLocalS("password", Encrypt(this.loginForm.password));
+                setLocalS("username", this.loginForm.username);
+                setLocalS("password", encrypt(this.loginForm.password));
               }
               this.$message.success("登录成功!");
 

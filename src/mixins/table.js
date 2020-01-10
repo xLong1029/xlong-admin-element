@@ -49,22 +49,38 @@ export default {
        */
         reset() {
             this.filterParams = { ...this.defaultParams };
+            this.clearSelect();
             this.getList(1, this.page.pageSize);
         },
         /**
          * 添加
+         * 
+         * @param {*} params 参数
          */
-        add() {
-            // this.apiAdd().then(res => {
+        add(params) {
+            console.log(params);
+            // this.apiAdd(params).then(res => {
             //     if (res.code == 200) {
             //         this.$message.success('新增成功!');
-            //         // 更新列表
-            //         this.updateList();
-            //         // 清空选项列表
-            //         this.clearSelect();
+            //         this.getList(1, this.page.pageSize);
             //     }
             //     else console.log(res);
             // }).catch(err => this.$message.error('新增失败！'))
+        },
+        /**
+         * 编辑
+         *
+         * @param {*} params 参数
+         * @param {*} id 当前对象id
+         */
+        edit(params, id) {
+            this.apiEdit(params, id).then(res => {
+                if(res.code == 200){
+                    this.$message.success('编辑成功!');
+                    this.getList(this.page.pageNo, this.page.pageSize);
+                }
+                else console.log(res);
+            }).catch(err => this.$message.error('编辑失败！'))
         },
         /**
          * 删除
@@ -74,38 +90,13 @@ export default {
             this.apiDelete().then(res => {
                 if (res.code == 200) {
                     this.$message.success('删除成功!');
-                    // 更新列表
                     this.getList(this.page.pageNo, this.page.pageSize);
-                    // 清空选项列表
                     this.clearSelect();
                 }
                 else console.log(res);
             }).catch(err => this.$message.error('删除失败！'))
             .finally(() => this.delLoading = false);
         },
-        /**
-         * 编辑
-         *
-         * @param {*} row 当前行
-         */
-        edit(row) {
-            // this.apiEdit().then(res => {
-            //     if(res.code == 200){
-            //         this.$message.success('编辑成功!');
-            //         // 更新列表
-            //         this.updateList();
-            //         // 清空选项列表
-            //         this.clearSelect();
-            //     }
-            //     else console.log(res);
-            // }).catch(err => this.$message.error('编辑失败！'))
-        },
-        /**
-         * 详情
-         *
-         * @param {*} row 当前行
-         */
-        detail(row) { },
         /**
          * 启、禁用
          *
@@ -117,9 +108,7 @@ export default {
                 
                 if (res.code == 200) {
                     this.$message.success('操作成功!');
-                    // 更新列表
                     this.getList(this.page.pageNo, this.page.pageSize);
-                    // 清空选项列表
                     this.clearSelect();
                 }
                 else this.$message.warning(res.msg);

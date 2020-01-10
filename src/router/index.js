@@ -68,22 +68,22 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/components',
-    component: () => import('@/layout/index'),
-    redirect: '/components/index',
-    children: [
-      {
-        path: '/components/index',
-        component: () => import('@/views/components/index'),
-        name: 'Components',
-        meta: {
-          title: '组件',
-          icon: 'el-icon-menu'
-        }
-      }
-    ]
-  },
+  // {
+  //   path: '/components',
+  //   component: () => import('@/layout/index'),
+  //   redirect: '/components/index',
+  //   children: [
+  //     {
+  //       path: '/components/index',
+  //       component: () => import('@/views/components/index'),
+  //       name: 'Components',
+  //       meta: {
+  //         title: '组件',
+  //         icon: 'el-icon-menu'
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: '/change-password',
     component: () => import('@/layout/index'),

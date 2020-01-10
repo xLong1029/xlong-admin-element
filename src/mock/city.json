@@ -9512,12 +9512,12 @@
       {
         "code": 4419,
         "name": "东莞市",
-        "childs": []
+        "childs": null
       },
       {
         "code": 4420,
         "name": "中山市",
-        "childs": []
+        "childs": null
       },
       {
         "code": 4451,
@@ -10252,12 +10252,12 @@
       {
         "code": 4603,
         "name": "三沙市",
-        "childs": []
+        "childs": null
       },
       {
         "code": 4604,
         "name": "儋州市",
-        "childs": []
+        "childs": null
       },
       {
         "code": 4690,
@@ -14768,16 +14768,16 @@
   {
     "code": 71,
     "name": "台湾省",
-    "childs": []
+    "childs": null
   },
   {
     "code": 81,
     "name": "香港特别行政区",
-    "childs": []
+    "childs": null
   },
   {
     "code": 82,
     "name": "澳门特别行政区",
-    "childs": []
+    "childs": null
   }
 ]

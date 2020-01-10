@@ -6,7 +6,7 @@
  */
 /* eslint-disable */
 import { APPLICATION_ID, REST_API_KEY } from 'config/index.js'
-import { ObjOmit } from 'utils'
+import { objOmit } from 'utils'
 
 export default {
     // 初始化
@@ -95,7 +95,7 @@ export default {
     EditOne: (tableName, objectId, params) => {
         let query = Bmob.Query(tableName)
         // 删除参数中的objectId值
-        ObjOmit(params, ['objectId', 'createdAt', 'updatedAt'])
+        objOmit(params, ['objectId', 'createdAt', 'updatedAt'])
         // 获取对象并修改
         return new Promise((resolve, reject) => {
             query.get(objectId).then(res => {

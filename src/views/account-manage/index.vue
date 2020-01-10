@@ -45,7 +45,7 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="职位">
-          <el-select v-model="filterParams.job" placeholder="请选择" @keyup.enter.native="search()">
+          <el-select v-model="filterParams.job" placeholder="请选择职位" @keyup.enter.native="search()">
             <el-option
               v-for="(item, index) in jobList"
               :key="'job' + index"
@@ -57,7 +57,7 @@
         <el-form-item label="所在省市">
           <el-select
             v-model="filterParams.province"
-            placeholder="请选择"
+            placeholder="请选择所在省市"
             @keyup.enter.native="search()"
           >
             <el-option
@@ -71,7 +71,7 @@
         <el-form-item label="用户状态">
           <el-select
             v-model="filterParams.enabledState"
-            placeholder="请选择"
+            placeholder="请选择用户状态"
             @keyup.enter.native="search()"
           >
             <el-option label="启用" :value="1"></el-option>
@@ -130,6 +130,9 @@
       :id="storeDialog.id"
       :job-list="jobList"
       :province-list="provinceList"
+      :profession-list="professionList"
+      @add="add"
+      @edit="edit"
     />
   </div>
 </template>
@@ -161,6 +164,14 @@ export default {
     apiGetList(pageNo, pageSize) {
       return (pageNo, pageSize) =>
         Api.GetAccList(this.filterParams, pageNo, pageSize);
+    },
+    // 添加操作接口
+    apiAdd(params){
+        return (params) => Api.AddAccount(params);
+    },
+    // 编辑操作接口
+    apiEdit(params, id){
+        return (params, id) => Api.EditAccount(params, id);
     },
     // 删除操作接口
     apiDelete(){
@@ -194,6 +205,7 @@ export default {
       filterParams: {},
       jobList: [],
       provinceList: [],
+      professionList: [],
       tableHeader: [
         {
           title: "用户编号",
@@ -264,7 +276,8 @@ export default {
     init() {
       this.filterParams = { ...this.defaultParams };
       this.jobList = JsonData.job;
-      this.provinceList = JsonCity;
+      this.professionList = JsonData.profession;
+      this.provinceList = JsonCity;      
 
       this.setTableHeight(385);
       this.getList(1, this.page.pageSize);

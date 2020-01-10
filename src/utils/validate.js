@@ -64,6 +64,17 @@ export function validEmail(email) {
 }
 
 /**
+ * 验证手机号码
+ *
+ * @param {string} mobile
+ * @returns {Boolean}
+ */
+export function validMobile(mobile) {
+  const reg = /^1(3|4|5|7|8)\d{9}$/
+  return reg.test(mobile)
+}
+
+/**
  * 验证密码
  *
  * @param {string} password
