@@ -295,7 +295,7 @@
     <div slot="footer">
       <el-button @click="close">取消</el-button>
       <template>
-        <el-button type="primary" @click="submit()">提交保存</el-button>
+        <el-button type="primary" @click="submit()" :loading="saveLoading">提交保存</el-button>
       </template>
     </div>
   </el-dialog>
@@ -305,7 +305,7 @@
 /* eslint-disable */
 import Api from "api/account-manage";
 import { docElmScrollTo } from "utils/scroll-to";
-import { compareDate, timeTrans, arrToStr, strToArr, deepClone } from "utils";
+import { compareDate, timeTrans, arrToStr, strToArr } from "utils";
 import { validEmail, validMobile } from "utils/validate";
 
 export default {
@@ -413,9 +413,9 @@ export default {
       ],
       // 当前激活tab
       activeTab: {},
-      form: {
+      defaultData: {
         area: "",
-        birthdate: "",
+        birthdate: null,
         city: "",
         companyName: "",
         email: "",
@@ -427,7 +427,26 @@ export default {
         profession: "",
         province: "",
         realname: "",
-        workTime: "",
+        workTime: null,
+        address: "",
+        remark: "",
+        workExperience: []
+      },
+      form: {
+        area: "",
+        birthdate: null,
+        city: "",
+        companyName: "",
+        email: "",
+        face: null,
+        gender: "男",
+        isGraduate: false,
+        job: "",
+        mobile: "",
+        profession: "",
+        province: "",
+        realname: "",
+        workTime: null,
         address: "",
         remark: "",
         workExperience: []
@@ -437,9 +456,7 @@ export default {
         realname: [
           { required: true, message: "请输入真实姓名", trigger: "blur" }
         ],
-        gender: [
-          { required: true, message: "请选择性别", trigger: "change" }
-        ],
+        gender: [{ required: true, message: "请选择性别", trigger: "change" }],
         birthdate: [
           {
             required: true,
@@ -491,7 +508,8 @@ export default {
       // 专业领域
       professionValue: [],
       // 判断是点击滚动还是手动滚动 1：点击，2：手动
-      tag: 2
+      tag: 2,
+      saveLoading: false,
     };
   },
   watch: {
@@ -504,10 +522,10 @@ export default {
   methods: {
     // 初始化
     init() {
-      this.form.workExperience = [];
       this.activeTab = this.tabTitles[0];
 
       if (!this.id) {
+        this.form = {...this.defaultData};
         this.title = "添加用户";
         this.$nextTick(() => this.getTabsPosition());
         return;
@@ -521,7 +539,7 @@ export default {
           const result = res.data;
           if (res.code == 200) {
             // 设置数据
-            this.form = {...this.form, ...result};
+            this.form = { ...this.defaultData, ...result };
             // 设置省市值
             this.provinceValue = [
               this.form.province,
@@ -529,12 +547,18 @@ export default {
               this.form.area
             ];
             // 设置出生日期
-            this.form.birthdate = this.form.birthdate ? new Date(this.form.birthdate) : "";
+            this.form.birthdate = this.form.birthdate
+              ? new Date(this.form.birthdate)
+              : "";
             // 设置工作时间
             this.workTimePH = this.form.isGraduate ? "尚未毕业" : "请选择日期";
-            this.form.workTime = this.form.workTime ? new Date(this.form.workTime) : "";
+            this.form.workTime = this.form.workTime
+              ? new Date(this.form.workTime)
+              : "";
             // 截取专业领域
-            this.professionValue = this.form.profession ? strToArr(this.form.profession, ",") : [];
+            this.professionValue = this.form.profession
+              ? strToArr(this.form.profession, ",")
+              : [];
 
             this.$nextTick(() => this.getTabsPosition());
           } else this.$message.error("无该用户数据!");
@@ -619,8 +643,8 @@ export default {
     addWorkExp() {
       this.form.workExperience.push({
         date: "",
-        // unitAndPost: "",
-        // witness: ""
+        unitAndPost: "",
+        witness: ""
       });
     },
     // 删除工作经验
@@ -629,9 +653,10 @@ export default {
     },
     // 重置表单
     reset() {
-      this.$refs.form.resetFields();      
-      this.provinceValue = [];
+      this.$refs.form.resetFields();
+      this.provinceValue = null;
       this.professionValue = [];
+      this.form = {...this.defaultData};
     },
     // 关闭弹窗
     close() {
@@ -644,11 +669,34 @@ export default {
     submit() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          let params = {...this.form};
+          let params = { ...this.form };
           params.birthdate = params.birthdate === "" ? "" : timeTrans(params.birthdate, "YYYY-MM-DD", "-");
           params.workTime = params.isGraduate ? "" : timeTrans(params.workTime, "YYYY-MM-DD", "-");
-          this.id ? this.$emit("edit", deepClone(params), this.id) : this.$emit("add", deepClone(params));
-          this.close();
+
+          this.saveLoading = true;
+          if (this.id) {
+            Api.EditAccount(params, this.id)
+              .then(res => {
+                if (res.code == 200) {
+                  this.$message.success("编辑成功!");
+                  this.$emit("submit", 1);
+                  this.close();
+                } else this.$message.error(res.msg);
+              })
+              .catch(err => this.$message.error("操作失败！"))
+              .finally(() => this.saveLoading = false);
+          } else {
+            Api.AddAccount(params)
+              .then(res => {
+                if (res.code == 200) {
+                  this.$message.success("添加成功!");
+                  this.$emit("submit", 0);
+                  this.close();
+                } else this.$message.error(res.msg);
+              })
+              .catch(err => this.$message.error("操作失败！"))
+              .finally(() => this.saveLoading = false);
+          }
         } else {
           this.$message.error("提交失败！请检查填写是否有误");
         }
@@ -812,7 +860,7 @@ $border: 1px solid #ebeef5;
 .table {
   width: 100%;
 
-  /deep/ td{
+  /deep/ td {
     padding-bottom: 0;
   }
 

@@ -58,7 +58,6 @@ export default {
          * @param {*} params 参数
          */
         add(params) {
-            console.log(params);
             // this.apiAdd(params).then(res => {
             //     if (res.code == 200) {
             //         this.$message.success('新增成功!');
@@ -74,13 +73,13 @@ export default {
          * @param {*} id 当前对象id
          */
         edit(params, id) {
-            this.apiEdit(params, id).then(res => {
-                if(res.code == 200){
-                    this.$message.success('编辑成功!');
-                    this.getList(this.page.pageNo, this.page.pageSize);
-                }
-                else console.log(res);
-            }).catch(err => this.$message.error('编辑失败！'))
+            // this.apiEdit(params, id).then(res => {
+            //     if(res.code == 200){
+            //         this.$message.success('编辑成功!');
+            //         this.getList(this.page.pageNo, this.page.pageSize);
+            //     }
+            //     else console.log(res);
+            // }).catch(err => this.$message.error('编辑失败！'))
         },
         /**
          * 删除

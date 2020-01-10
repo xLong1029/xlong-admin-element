@@ -71,6 +71,8 @@ export default {
     // 添加一行数据
     AddOne: (tableName, params) => {
         let query = Bmob.Query(tableName)
+        // 删除参数中的objectId值
+        objOmit(params, ['objectId', 'createdAt', 'updatedAt'])
         return new Promise((resolve, reject) => {
             // 循环执行set操作
             for (let i in params) {

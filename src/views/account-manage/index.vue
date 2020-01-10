@@ -131,8 +131,7 @@
       :job-list="jobList"
       :province-list="provinceList"
       :profession-list="professionList"
-      @add="add"
-      @edit="edit"
+      @submit="storeSuccess"
     />
   </div>
 </template>
@@ -164,14 +163,6 @@ export default {
     apiGetList(pageNo, pageSize) {
       return (pageNo, pageSize) =>
         Api.GetAccList(this.filterParams, pageNo, pageSize);
-    },
-    // 添加操作接口
-    apiAdd(params){
-        return (params) => Api.AddAccount(params);
-    },
-    // 编辑操作接口
-    apiEdit(params, id){
-        return (params, id) => Api.EditAccount(params, id);
     },
     // 删除操作接口
     apiDelete(){
@@ -311,6 +302,10 @@ export default {
         visible: true
       }
     },
+    // 存储操作成功 1 编辑 0 新增
+    storeSuccess(type){
+      type === 1 ? this.getList(this.page.pageNo, this.page.pageSize) : this.getList(1, this.page.pageSize);
+    }
   }
 };
 </script>
