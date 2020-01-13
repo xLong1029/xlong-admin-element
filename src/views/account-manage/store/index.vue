@@ -61,8 +61,17 @@
                     </div>
                   </div>
                   <div class="info-table__tr">
-                    <div class="info-table__td head-pic">
+                    <div class="info-table__td head-pic img-shade">
                       <img :src="form.face ? form.face : require('@/assets/images/head.jpg')" />
+                      <div class="img-shade-actions">
+                        <el-upload
+                          class="img-shade-actions-btn"
+                          action=""
+                          :show-file-list="false"
+                        >
+                          <i class="el-icon-edit"></i>编辑
+                        </el-upload>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -509,7 +518,7 @@ export default {
       professionValue: [],
       // 判断是点击滚动还是手动滚动 1：点击，2：手动
       tag: 2,
-      saveLoading: false,
+      saveLoading: false
     };
   },
   watch: {
@@ -525,7 +534,7 @@ export default {
       this.activeTab = this.tabTitles[0];
 
       if (!this.id) {
-        this.form = {...this.defaultData};
+        this.form = { ...this.defaultData };
         this.title = "添加用户";
         this.$nextTick(() => this.getTabsPosition());
         return;
@@ -656,7 +665,7 @@ export default {
       this.$refs.form.resetFields();
       this.provinceValue = null;
       this.professionValue = [];
-      this.form = {...this.defaultData};
+      this.form = { ...this.defaultData };
     },
     // 关闭弹窗
     close() {
@@ -670,8 +679,13 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           let params = { ...this.form };
-          params.birthdate = params.birthdate === "" ? "" : timeTrans(params.birthdate, "YYYY-MM-DD", "-");
-          params.workTime = params.isGraduate ? "" : timeTrans(params.workTime, "YYYY-MM-DD", "-");
+          params.birthdate =
+            params.birthdate === ""
+              ? ""
+              : timeTrans(params.birthdate, "YYYY-MM-DD", "-");
+          params.workTime = params.isGraduate
+            ? ""
+            : timeTrans(params.workTime, "YYYY-MM-DD", "-");
 
           this.saveLoading = true;
           if (this.id) {
@@ -684,7 +698,7 @@ export default {
                 } else this.$message.error(res.msg);
               })
               .catch(err => this.$message.error("操作失败！"))
-              .finally(() => this.saveLoading = false);
+              .finally(() => (this.saveLoading = false));
           } else {
             Api.AddAccount(params)
               .then(res => {
@@ -695,7 +709,7 @@ export default {
                 } else this.$message.error(res.msg);
               })
               .catch(err => this.$message.error("操作失败！"))
-              .finally(() => this.saveLoading = false);
+              .finally(() => (this.saveLoading = false));
           }
         } else {
           this.$message.error("提交失败！请检查填写是否有误");
@@ -845,6 +859,12 @@ $border: 1px solid #ebeef5;
   align-items: center;
   height: 100%;
 
+  &:hover {
+    .img-shade-actions {
+      opacity: 1;
+    }
+  }
+
   img {
     min-width: 100px;
     max-width: 100px;
@@ -881,6 +901,42 @@ $border: 1px solid #ebeef5;
 
     & > i {
       margin-right: 5px;
+    }
+  }
+}
+
+.img-shade {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  &-thumbnail {
+    width: 100%;
+    height: 100%;
+    // cursor: pointer;
+  }
+
+  &-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    cursor: default;
+    color: #fff;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s;
+
+    &-btn {
+      cursor: pointer;
+    }
+
+    /deep/ .el-upload:focus {
+      color: #fff;
     }
   }
 }
