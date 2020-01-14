@@ -155,7 +155,9 @@ xlong-admin-element 是一套基于 Vue + Element +Bmob 开发的单页面客户
 按需求选择打包命令：
 
 > npm run build:prod
+
 > npm run build:release
+
 > npm run build:stageing
 
 ## 作者联系方式
