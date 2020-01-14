@@ -68,6 +68,7 @@
                           class="img-shade-actions-btn"
                           action="customize"
                           :accept="imgAccept"
+                          :before-upload="imgBeforeUpload"
                           :http-request="uploadHead"
                           :show-file-list="false"
                         >
@@ -522,7 +523,8 @@ export default {
       professionValue: [],
       // 判断是点击滚动还是手动滚动 1：点击，2：手动
       tag: 2,
-      saveLoading: false
+      saveLoading: false,
+      fileSize: 1024,
     };
   },
   watch: {
@@ -666,14 +668,8 @@ export default {
     },
     // 上传头像
     uploadHead(params) {
-      console.log("uploadFile", params);
+      // console.log("uploadFile", params);
       const file = params.file;
-
-      const isLt2M = file.size / 1024 / 1024 < 2;
-      if (!isLt2M) {
-        this.$message.warning("请上传2M以下的文件");
-        return false;
-      }
 
       this.uploadToBomb(file)
         .then(res =>  this.form.face = res[0].url)

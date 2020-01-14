@@ -11,7 +11,7 @@
           @click="selectImg(index)"
         >
           <div class="img-shade">
-            <img class="img-shade-thumbnail" :src="imgBaseUrl + item.url" />
+            <img class="img-shade-thumbnail" :src="item.url" />
             <div class="img-shade-actions">
               <span class="img-shade-preview" @click="imgUploadCardPreview(item)">
                 <i class="el-icon-zoom-in"></i>
@@ -22,22 +22,22 @@
         <li>
           <el-upload
             class="img-upload__btn"
-            :action="uploadSettings.action"
-            :data="uploadSettings.data"
-            :headers="uploadSettings.headers"
-            :accept="uploadSettings.accept"
-            :before-upload="imgBeforeUpload"
+            action="customize"
             :on-progress="imgUploadProgress"
-            :on-preview="imgUploadCardPreview"
-            :on-success="imgUploadSuccess"
-            :on-error="imgUploadError"
+            :before-upload="imgBeforeUpload"
+            :http-request="uploadBackground"
             :show-file-list="false"
           >
             <i class="el-icon-plus"></i>
           </el-upload>
         </li>
       </ul>
-      <div class="img-upload__tip">建议上传尺寸：285*150px，文件格式：png / jpg / gif，文件大小：500kb以内</div>
+      <div class="img-upload__tip">
+        <span v-if="sizeHint">建议上传尺寸： {{ sizeHint }}，</span>文件格式：png / jpg / gif，
+        文件大小：
+        <span v-if="fileSize < 1024">{{ fileSize }}kb</span>
+        <span v-else>{{ Math.floor(fileSize/1024) }}M</span>以内
+      </div>
       <el-progress
         class="img-upload__progress"
         v-show="imgProgress.visible"
@@ -49,30 +49,12 @@
 </template>
 <script>
 /* eslint-disable */
-import { getToken } from "@/utils/auth";
-
-const VUE_APP_SERVER_API = process.env.VUE_APP_SERVER_API;
+import UploadImg from "mixins/upload-img.js";
 
 export default {
   name: "BackgroundUpload",
+  mixins: [UploadImg],
   props: {
-    // 图片上传配置
-    uploadSettings: {
-      type: Object,
-      default: () => ({
-        action: VUE_APP_SERVER_API + "/api/upload",
-        accept: ".png,.jpg,.jpeg,.gif",
-        headers: {
-          Authorization: "Bearer " + getToken()
-        },
-        data: {}
-      })
-    },
-    // 图片显示基路径
-    imgBaseUrl: {
-      type: String,
-      default: VUE_APP_SERVER_API
-    },
     // 所有图片列表
     imgList: {
       type: Array,
@@ -82,76 +64,52 @@ export default {
     imgSelectIndex: {
       type: Number,
       default: 0
+    },
+    // 上传按钮尺寸提示文本
+    sizeHint: {
+      type: String,
+      default: "100*100px"
+    },
+    // 图片文件大小限制，单位KB
+    fileSize: {
+      type: Number,
+      default: 150
     }
   },
   data() {
-    return {
-      // 上传进度
-      imgProgress: {
-        visible: false,
-        percentage: 0
-      },
-    };
+    return {};
   },
   methods: {
     // 图片选中状态
     selectImg(index) {
       this.$emit("update:img-select-index", index);
-      this.$emit("select-img", this.imgList[index].url);      
+      this.$emit("select-img", this.imgList[index].url);
     },
-    // 图片上传前
-    imgBeforeUpload(file) {
-      if (
-        !(
-          file.type === "image/jpeg" ||
-          file.type === "image/png" ||
-          file.type === "image/gif"
-        )
-      ) {
-        this.$message.error("图片只能是 png 、jpg 、gif 格式");
-        return false;
-      }
-      if (file.size > 500 * 1024) {
-        this.$message.error("上传图片大小不能超过 500KB");
-        return false;
-      }
+    // 上传背景图
+    uploadBackground(params) {
+      const file = params.file;
 
-      this.imgProgress.visible = true;
-      this.imgProgress.percentage = 0;
-    },
-    // 图片上传成功
-    imgUploadSuccess(res) {
-      this.imgProgress.visible = false;
-      if (res.status.code === 1) {
-        const url = res.custom[0].localUrl;
+      this.uploadToBomb(file)
+        .then(res => {
+          const url = res[0].url;
 
-        const foundImg = this.imgList.find(e => e.url === url);
-        if (!foundImg) {
-          // 添加至图片列表
-          this.imgList.push({ url });
-          // 默认选中上传图片
-          const activeIndex = this.imgList.length - 1;
-          this.$emit("update:img-select-index", activeIndex);
-          this.$emit("upload-success", url);
-          this.$message.success("图片上传成功");
-        } else {
-          const activeIndex = this.imgList.findIndex(e => e.url === url);
-          this.$emit("update:img-select-index", activeIndex);
-          this.$message.warning("图片已存在");
-        }
-        this.$emit("update:img-list", this.imgList);
-      } else {
-        this.$message.error(res.status.text);
-      }
-    },
-    // 图片上传错误
-    imgUploadError(file) {
-      this.imgProgress.visible = false;
-      this.$message.error("图片上传失败！请重试");
-    },
-    // 图片上传进度
-    imgUploadProgress(res) {
-      this.imgProgress.percentage = Math.floor(res.percent);
+          const foundImg = this.imgList.find(e => e.url === url);
+          if (!foundImg) {
+            // 添加至图片列表
+            this.imgList.push({ url });
+            // 默认选中上传图片
+            const activeIndex = this.imgList.length - 1;
+            this.$emit("update:img-select-index", activeIndex);
+            this.$emit("upload-success", url);
+            this.$message.success("图片上传成功");
+          } else {
+            const activeIndex = this.imgList.findIndex(e => e.url === url);
+            this.$emit("update:img-select-index", activeIndex);
+            this.$message.warning("图片已存在");
+          }
+          this.$emit("update:img-list", this.imgList);
+        })
+        .catch(err => console.log(err));
     },
     // 预览图片
     imgUploadCardPreview(file) {
@@ -161,9 +119,6 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.background-upload-container {
-}
-
 @mixin img-frame {
   border: 1px dashed #dcdfe6;
   border-radius: 4px;
@@ -195,6 +150,7 @@ export default {
     font-size: 12px;
     line-height: 16px;
     margin-top: 10px;
+    color: #ed3f14;
   }
 
   .img-default {
@@ -220,7 +176,7 @@ export default {
         &.is-active {
           padding: 5px;
           border-color: $color-primary;
-          .img-shade-actions{
+          .img-shade-actions {
             line-height: 65px;
           }
         }
