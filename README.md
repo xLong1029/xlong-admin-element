@@ -22,7 +22,7 @@ xlong-admin-element 是一套基于 Vue + Element +Bmob 开发的单页面客户
 [webpack](https://github.com/webpack)<br/>
 [Element](https://github.com/ElemeFE/element)<br/>
 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)<br/>
-ECharts
+[ECharts](https://www.echartsjs.com/zh)<br/>
 
 ## 部分项目运行截图
 * 登录界面
