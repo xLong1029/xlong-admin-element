@@ -7,9 +7,9 @@ xlong-admin-element 是一套基于 Vue + Element +Bmob 开发的单页面客户
 
 *仅作学习参考，请勿商用
 
-<!-- ## 项目展示
+## 项目展示
 
-> DEMO地址：https://xlong1029.github.io/xlong-admin-iview/#/Login -->
+> DEMO地址：https://xlong1029.github.io/xlong-admin-element/#/Login
 
 ## 项目说明
 
@@ -52,17 +52,22 @@ xlong-admin-element 是一套基于 Vue + Element +Bmob 开发的单页面客户
 
 ![Image text](static/images/screen-7.gif) -->
 
-<!-- ## 目录结构
+## 目录结构
 
 ```
-│  .babelrc
-│  .browserslistrc // 浏览器可访问配置
 │  .editorconfig
-│  .postcssrc.js
+│  .env.development // 开发环境配置
+│  .env.production // 生产环境配置
+│  .env.release // release正式库环境配置
+│  .env.staging // stage正式库环境配置
+│  .eslintignore
+│  .eslintrc.js
 │  .gitignore
-│  jest.config
-│  package.json
+│  .travis.yml
 │  babel.config.js // babel配置
+│  jest.config.js
+│  jsconfig.json
+│  package.json
 │  postcss.config.js // CSS转换配置
 │  vue.config.js // 配置文件
 │  README.md
@@ -73,25 +78,41 @@ xlong-admin-element 是一套基于 Vue + Element +Bmob 开发的单页面客户
 │
 ├─src
 │  │  main.js // 项目入口js
-│  │  app.js // 根组件
+│  │  permission.js // 角色权限配置
+│  │  App.vue // 根组件
 │  │
 │  ├─assets // 资源目录，这里的资源会被wabpack构建
 │  ├─api // api接口文件
-│  ├─theme // iView主题样式
 │  ├─store  // 应用级数据（state）
+│  ├─styles  // 样式
 │  │
 │  ├─mock // 测试数据
 │  │    city.json // 省市数据
 │  │    data.json // 部分模拟数据
+│  │    guangxi-area.json // 广西区域数据
+│  │    guangxi.json // 广西地图数据
+│  │
+│  ├─filters // 过滤器
+│  │    index.js
+│  │
+│  ├─config // 项目配置
+│  │    index.js
 │  │
 │  ├─components // 功能组件
 │  │  │
-│  │  ├─Common // 通用组件
-│  │  ├─Image // 图片相关组件
-│  │  ├─Input // 信息输入相关组件
-│  │  ├─Sidebar // 侧边栏相关组件
-│  │  ├─Tree // 树形相关组件
-│  │  └─Table // 表格相关组件
+│  │  ├─common // 通用组件
+│  │  └─statistics-screen // 监控大屏相关组件
+│  │
+│  ├─layout // 布局
+│  │  │  index.vue
+│  │  │
+│  │  └─components // 布局组件
+│  │     │  index.js
+│  │     │  
+│  │     ├─AppFooter // 底部
+│  │     ├─AppMain // 主页面
+│  │     ├─Breadcrumb // 面包屑
+│  │     └─Navbar // 导航
 │  │
 │  ├─views // 视图
 │  │  │
@@ -104,32 +125,34 @@ xlong-admin-element 是一套基于 Vue + Element +Bmob 开发的单页面客户
 │  │  └─Profile // 个人信息相关
 │  │
 │  ├─mixins // 混合模块
-│  │    city_select.js // 城市联级选择
-│  │    email_complete.js // 文章管理
-│  │    page.js // 页码配置
-│  │    table_operate.js // 表格操作
-│  │    table_query.js // 表格查询
-│  │    upload_img.js // 上传图片
-│  │
-│  ├─common // 通用js模块
-│  │    common.js // 封装一些公共常量
-│  │    table_setting.js // 封装一些iView表格按钮渲染
-│  │    validate.js // 封装一些iView表单验证方法
+│  │  │  date-range-picker.js // 日期范围选择配置
+│  │  │  response.js // 响应式配置
+│  │  │  page.js // 页码配置
+│  │  │  table.js // 表格相关操作
+│  │  │  upload-img.js // 上传图片
+│  │  │
+│  │  └─chart
 │  │
 │  ├─utils // 通用工具函数
 │  │    index.js
+│  │    auth.js // 读写token
+│  │    get-page-title.js // 页面标题
+│  │    request.js // 请求配置，因用了bmob，所以没用到requrest请求
+│  │    scroll-to.js // 页面滚动
+│  │    validate.js // 验证
 │  │
 │  ├─bmob  // 封装Bmob请求函数
 │  │    bmob-server.js
 │  │
 │  └─router  // 路由配置
-│       index.js
-│       routes.js
+│     │  index.js
+│     │  
+│     └─modules // 分模块的动态路由
 │
 ├─static // 静态资源
 │
 └─tests // 单元测试文件
-``` -->
+```
 
 ## 本地运行
 1. 安装前台依赖
