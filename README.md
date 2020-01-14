@@ -23,34 +23,24 @@ xlong-admin-element 是一套基于 Vue + Element +Bmob 开发的单页面客户
 [Element](https://github.com/ElemeFE/element)<br/>
 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)<br/>
 
-<!-- ## 部分项目运行截图
+## 部分项目运行截图
 * 登录界面
 
 ![Image text](static/images/screen-1.gif)
 
-* 个人资料
+* 组件展示
 
 ![Image text](static/images/screen-2.gif)
 
-* 树形筛选
+* 账户管理
 
 ![Image text](static/images/screen-3.gif)
 
-* 可编辑表格
-
 ![Image text](static/images/screen-4.gif)
 
-* 图片上传
+* 监控大屏
 
 ![Image text](static/images/screen-5.gif)
-
-* 账户管理功能
-
-![Image text](static/images/screen-6.gif)
-
-* 版块管理功能
-
-![Image text](static/images/screen-7.gif) -->
 
 ## 目录结构
 
