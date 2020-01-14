@@ -8,7 +8,7 @@
       <el-form-item prop="username">
         <el-input
           prefix-icon="el-icon-user"
-          v-model="loginForm.username"
+          v-model.trim="loginForm.username"
           placeholder="请输入手机号码"
           @keyup.enter.native="submit('loginForm')"
         />
@@ -17,7 +17,7 @@
         <el-input
           prefix-icon="el-icon-key"
           type="password"
-          v-model="loginForm.password"
+          v-model.trim="loginForm.password"
           placeholder="请输入密码"
           @keyup.enter.native="submit('loginForm')"
         />
@@ -37,7 +37,7 @@
 
 <script>
 /* eslint-disable */
-import { SetLocalS, GetLocalS, Encrypt, Decrypt } from "utils";
+import { setLocalS, getLocalS, delLocalS, encrypt, decrypt } from "utils";
 import Api from "api/user";
 
 export default {
@@ -78,14 +78,22 @@ export default {
         }
       },
       immediate: true
+    },
+    remeberPwd(val) {
+      if (!val) {
+        if (getLocalS("username")) {
+          delLocalS("username");
+          delLocalS("password");
+        }
+      }
     }
   },
   created() {
     // 判断本地存储用户名是否存在
-    if (GetLocalS("username")) {
+    if (getLocalS("username")) {
       // 获取本地存储的用户名和密码
-      this.loginForm.username = GetLocalS("username");
-      this.loginForm.password = Decrypt(GetLocalS("password"));
+      this.loginForm.username = getLocalS("username");
+      this.loginForm.password = decrypt(getLocalS("password"));
       this.remeberPwd = true;
     }
   },
@@ -120,8 +128,8 @@ export default {
               // 判断是否记住密码
               if (this.remeberPwd) {
                 // 本地存储用户名和密码
-                SetLocalS("username", this.loginForm.username);
-                SetLocalS("password", Encrypt(this.loginForm.password));
+                setLocalS("username", this.loginForm.username);
+                setLocalS("password", encrypt(this.loginForm.password));
               }
               this.$message.success("登录成功!");
 
@@ -130,7 +138,7 @@ export default {
                 query: this.otherQuery
               });
             })
-            .catch(err => this.$message.error("用户名或密码不正确"))
+            .catch(err => this.$message.error(err.error))
             .finally(() => (this.loading = false));
         } else this.$message.error("登录失败!填写有误！");
       });

@@ -80,7 +80,7 @@
             </div>
           </div>
         </div>
-        <!-- 应用类型 -->
+        <!-- 服务类型 -->
         <div class="pie-chart-container">
           <div class="statistics-frame">
             <span class="statistics-frame-title">{{ serviceType.title }}</span>
@@ -151,27 +151,29 @@
         <span class="statistics-frame-title">应用使用情况</span>
         <div
           class="statistics-frame-content"
-          v-loading="systemUse.month.loading || systemUse.quarter.loading"
+          v-loading="SystemDev.month.loading || SystemDev.quarter.loading"
           element-loading-background="loadingBackground"
         >
           <!-- 季度统计 -->
           <div class="system-use-quarter">
             <div class="system-use-quarter__title flex">
               <span class="name">季度统计</span>
-              <span><i class="yellow">{{ systemUse.quarter.pager.total }}</i>个系统</span>
+              <span>
+                <i class="yellow">{{ SystemDev.quarter.pager.total }}</i>个应用
+              </span>
             </div>
             <div class="system-use-quarter__content">
-              <template v-if="!systemUse.quarter.loading">
-                  <gradual-bar-chart
-                    v-if="systemUse.quarter.data.chartData.length"
-                    class-name="quarterChart"
-                    :chart-data="systemUse.quarter.data.chartData"
-                    :axis="systemUse.quarter.data.axis"
-                    :series="systemUse.quarter.data.series"
-                    :sort="true"
-                    :height="`${78 * contrastRadio * systemUse.quarter.data.chartData.length}px`"
-                  />
-                  <empty v-else height="100%" />
+              <template v-if="!SystemDev.quarter.loading">
+                <gradual-bar-chart
+                  v-if="SystemDev.quarter.data.chartData.length"
+                  class-name="quarterChart"
+                  :chart-data="SystemDev.quarter.data.chartData"
+                  :axis="SystemDev.quarter.data.axis"
+                  :series="SystemDev.quarter.data.series"
+                  :sort="true"
+                  :height="`${78 * contrastRadio * SystemDev.quarter.data.chartData.length}px`"
+                />
+                <empty v-else height="100%" />
               </template>
               <empty v-else height="100%" />
             </div>
@@ -180,20 +182,22 @@
           <div class="system-use-month">
             <div class="system-use-month__title flex">
               <span class="name">月度统计</span>
-              <span><i class="yellow">{{ systemUse.month.pager.total }}</i>个系统</span>
+              <span>
+                <i class="yellow">{{ SystemDev.month.pager.total }}</i>个应用
+              </span>
             </div>
             <div class="system-use-month__content">
-              <template v-if="!systemUse.month.loading">
-                  <gradual-bar-chart
-                    v-if="systemUse.month.data.chartData.length"
-                    class-name="monthChart"
-                    :chart-data="systemUse.month.data.chartData"
-                    :axis="systemUse.month.data.axis"
-                    :series="systemUse.month.data.series"
-                    :sort="true"
-                    :height="`${78 * contrastRadio * systemUse.month.data.chartData.length}px`"
-                  />
-                  <empty v-else height="100%" />
+              <template v-if="!SystemDev.month.loading">
+                <gradual-bar-chart
+                  v-if="SystemDev.month.data.chartData.length"
+                  class-name="monthChart"
+                  :chart-data="SystemDev.month.data.chartData"
+                  :axis="SystemDev.month.data.axis"
+                  :series="SystemDev.month.data.series"
+                  :sort="true"
+                  :height="`${78 * contrastRadio * SystemDev.month.data.chartData.length}px`"
+                />
+                <empty v-else height="100%" />
               </template>
               <empty v-else height="100%" />
             </div>
@@ -212,7 +216,14 @@ import PoleChart from "components/statistics-screen/Charts/PoleChart";
 import GradualBarChart from "components/statistics-screen/Charts/GradualBarChart";
 import Empty from "components/common/Empty";
 
-// import Api from "api/statistics-screen";
+const appNames = [
+  "XLONG家里蹲-OA办公系统",
+  "XLONG家里蹲-企业信息化系统",
+  "XLONG家里蹲-CMS系统",
+  "XLONG家里蹲-电商App",
+  "XLONG家里蹲-数据抓取软件",
+  "XLONG家里蹲-你画我猜软件"
+];
 
 export default {
   name: "SplitScreenThree",
@@ -257,10 +268,10 @@ export default {
         title: "业务类型",
         chartData: []
       },
-      // 应用类型数据
+      // 服务类型数据
       serviceType: {
         loading: false,
-        title: "应用类型",
+        title: "服务类型",
         chartData: []
       },
       // 服务器使用情况
@@ -275,7 +286,7 @@ export default {
         }
       },
       // 系统使用情况
-      systemUse: {
+      SystemDev: {
         // 月度
         month: {
           loading: false,
@@ -290,11 +301,11 @@ export default {
               name: "系统名称",
               property: "appName"
             },
-            chartData: [],
+            chartData: []
           },
           pager: {
-            pageNo:1,
-            pageSize: 6,
+            pageNo: 1,
+            pageSize: 10,
             total: 0
           }
         },
@@ -315,7 +326,7 @@ export default {
             chartData: []
           },
           pager: {
-            pageNo:1,
+            pageNo: 1,
             pageSize: 6,
             total: 0
           }
@@ -324,14 +335,14 @@ export default {
       // 定时器
       requestTimer: null,
       tabTimer: null,
-      systemUseTimer: null
+      SystemDevTimer: null
     };
   },
   created() {
     this.init();
   },
   beforeDestroy() {
-    this.clearTimer([this.requestTimer, this.tabTimer, this.systemUseTimer]);
+    this.clearTimer([this.requestTimer, this.tabTimer, this.SystemDevTimer]);
   },
   methods: {
     // 初始化
@@ -341,111 +352,191 @@ export default {
       this.businessType.loading = true;
       this.serviceType.loading = true;
       this.serverUse.loading = true;
-      this.systemUse.month.loading = true;
-      this.systemUse.quarter.loading = true;
+      this.SystemDev.month.loading = true;
+      this.SystemDev.quarter.loading = true;
 
-      // this.getStatisticsData();
-      // this.getSystemUseData();
+      this.getStatisticsData();
+      this.getSystemDevData();
       this.setTimer();
     },
     // 获取统计数据
     getStatisticsData() {
+      /* 测试数据-start */
       // 运行环境
-      Api.getRuntimeData()
-        .then(res => {
-          this.runtime.chartData = res.custom.data.map(e => ({
-            name: e.key,
-            value: e.value
-          }));
-          this.runtime.isSafePersent = res.custom.isSafePersent;
-          this.runtime.loading = false;
-        })
-        .catch(err => (this.runtime.loading = false));
+      this.runtime.chartData = [
+        { value: 30, name: "Windows" },
+        { value: 5, name: "Linux" },
+        { value: 5, name: "iOS" },
+        { value: 15, name: "Android" }
+      ];
 
-      // 服务器类型
-      Api.getDatabaseTypeData()
-        .then(res => {
-          this.databaseType.chartData = res.custom.data.map(e => ({
-            name: e.key,
-            value: e.value
-          }));
-          this.databaseType.isSafePersent = res.custom.isSafePersent;
-          this.databaseType.loading = false;
-        })
-        .catch(err => (this.databaseType.loading = false));
+      // 数据库类型
+      this.databaseType.chartData = [
+        { value: 5, name: "达梦数据库" },
+        { value: 15, name: "Oracal" },
+        { value: 30, name: "SqlServer" }
+      ];
+      this.databaseType.isSafePersent = 9;
 
       // 业务类型
-      Api.getBusinessTypeData()
-        .then(res => {
-          this.businessType.chartData = res.custom.map(e => ({
-            name: e.text,
-            value: e.value
-          }));
-          this.businessType.isSafePersent = res.custom.isSafePersent;
-          this.businessType.loading = false;
-        })
-        .catch(err => (this.businessType.loading = false));
+      this.businessType.chartData = [
+        { value: 10, name: "智慧城市项目" },
+        { value: 10, name: "小程序应用" },
+        { value: 20, name: "企业网站" },
+        { value: 5, name: "电商项目" },
+        { value: 5, name: "App应用" },
+        { value: 5, name: "H5场景应用" }
+      ];
 
-      // 应用类型
-      Api.getServiceTypeData()
-        .then(res => {
-          this.serviceType.chartData = res.custom.map(e => ({
-            name: e.text,
-            value: e.value
-          }));
-          this.serviceType.isSafePersent = res.custom.isSafePersent;
-          this.serviceType.loading = false;
-        })
-        .catch(err => (this.serviceType.loading = false));
+      // 服务类型
+      this.serviceType.chartData = [
+        { value: 60293, name: "个人服务" },
+        { value: 3004, name: "企业服务" },
+        { value: 20241, name: "其他业务服务" }
+      ];
 
       // 服务器使用情况
-      Api.getServerUseData()
-        .then(res => {
-          this.serverUse.data = res.custom;
-          this.serverUse.loading = false;
-        })
-        .catch(err => (this.serverUse.loading = false));
+      this.serverUse.data = {
+        cpuOrder: [
+          {
+            hostIP: "10.1.2.123",
+            hostName: "测试应用1",
+            cpuUsedRatio: 0.0044,
+            ramUsedRatio: 0.7464,
+            diskUsedRatio: 0.2596
+          },
+          {
+            hostIP: "10.1.2.225",
+            hostName: "测试应用2",
+            cpuUsedRatio: 0.0007,
+            ramUsedRatio: 0.9449,
+            diskUsedRatio: 0.7136
+          },
+          {
+            hostIP: "10.1.2.215",
+            hostName: "测试应用3",
+            cpuUsedRatio: 0.0004,
+            ramUsedRatio: 0.2797,
+            diskUsedRatio: 0.7122
+          }
+        ],
+        ramOrder: [
+          {
+            hostIP: "10.1.2.218",
+            hostName: "测试应用4",
+            cpuUsedRatio: 0.0001,
+            ramUsedRatio: 0.9727,
+            diskUsedRatio: 0.4262
+          },
+          {
+            hostIP: "10.1.2.212",
+            hostName: "测试应用5",
+            cpuUsedRatio: 0.0007,
+            ramUsedRatio: 0.9449,
+            diskUsedRatio: 0.7136
+          },
+          {
+            hostIP: "10.1.2.134",
+            hostName: "测试应用6",
+            cpuUsedRatio: 0.0,
+            ramUsedRatio: 0.9108,
+            diskUsedRatio: 0.4133
+          }
+        ],
+        diskOrder: [
+          {
+            hostIP: "10.1.2.165",
+            hostName: "测试应用7",
+            cpuUsedRatio: 0.0,
+            ramUsedRatio: 0.5846,
+            diskUsedRatio: 0.8579
+          },
+          {
+            hostIP: "10.1.2.208",
+            hostName: "测试应用8",
+            cpuUsedRatio: 0.0003,
+            ramUsedRatio: 0.699,
+            diskUsedRatio: 0.854
+          },
+          {
+            hostIP: "10.1.2.156",
+            hostName: "测试应用9",
+            cpuUsedRatio: 0.0001,
+            ramUsedRatio: 0.8313,
+            diskUsedRatio: 0.7305
+          }
+        ]
+      };
+
+      setTimeout(() => {
+        this.runtime.loading = false;
+        this.databaseType.loading = false;
+        this.businessType.loading = false;
+        this.serviceType.loading = false;
+        this.serverUse.loading = false;
+      }, 500);
+      /* 测试数据-end */
     },
     // 定时获取应用使用情况
-    getSystemUseData() {
-      // 月度
-      Api.getSystemUseData({
-        page: this.systemUse.month.pager.pageNo,
-        pageSize: this.systemUse.month.pager.pageSize,
-        byMonth: true
-      })
-        .then(res => {
-          this.systemUse.month.data.chartData = res.custom.data;
-          this.systemUse.month.pager.total = res.custom.totalCount;
-          this.systemUse.month.loading = false;
+    getSystemDevData() {
+      /* 测试数据-start */
+      this.SystemDev.month.data.chartData = [];
+      this.SystemDev.quarter.data.chartData = [];
 
-          this.systemUse.month.pager.pageNo++;
-          if(this.systemUse.month.pager.pageNo > res.custom.pageCount){
-            this.systemUse.month.pager.pageNo = 1;
-          }
-        })
-        .catch(err => (this.systemUse.month.loading = false));
+      for (let i = 0; i < 6; i++) {
+        this.SystemDev.month.data.chartData.push({
+          appName: appNames[i],
+          useCount: Math.round(Math.random() * 50)
+        });
+        this.SystemDev.month.pager.total = this.SystemDev.month.pager.pageSize;
 
+        this.SystemDev.quarter.data.chartData.push({
+          appName: appNames[i],
+          useCount: Math.round(Math.random() * 50)
+        });
+        this.SystemDev.quarter.pager.total = this.SystemDev.quarter.pager.pageSize;
+      }
+
+      // Api.getSystemDevData({
+      //   page: this.SystemDev.month.pager.pageNo,
+      //   pageSize: this.SystemDev.month.pager.pageSize,
+      //   byMonth: true
+      // })
+      //   .then(res => {
+      //     this.SystemDev.month.data.chartData = res.custom.data;
+      //     this.SystemDev.month.pager.total = res.custom.totalCount;
+      //     this.SystemDev.month.loading = false;
+      //     this.SystemDev.month.pager.pageNo++;
+      //     if(this.SystemDev.month.pager.pageNo > res.custom.pageCount){
+      //       this.SystemDev.month.pager.pageNo = 1;
+      //     }
+      //   })
+      //   .catch(err => (this.SystemDev.month.loading = false));
       // 季度
-      Api.getSystemUseData({
-        page: this.systemUse.quarter.pager.pageNo,
-        pageSize: this.systemUse.quarter.pager.pageSize,
-        byMonth: false
-      })
-        .then(res => {
-          this.systemUse.quarter.data.chartData = res.custom.data;
-          this.systemUse.quarter.pager.total = res.custom.totalCount;
-          this.systemUse.quarter.loading = false;
+      // Api.getSystemDevData({
+      //   page: this.SystemDev.quarter.pager.pageNo,
+      //   pageSize: this.SystemDev.quarter.pager.pageSize,
+      //   byMonth: false
+      // })
+      //   .then(res => {
+      //     this.SystemDev.quarter.data.chartData = res.custom.data;
+      //     this.SystemDev.quarter.pager.total = res.custom.totalCount;
+      //     this.SystemDev.quarter.loading = false;
+      //     this.SystemDev.quarter.pager.pageNo++;
+      //     if(this.SystemDev.quarter.pager.pageNo > res.custom.pageCount){
+      //       this.SystemDev.quarter.pager.pageNo = 1;
+      //     }
+      //   })
+      //   .catch(err => (this.SystemDev.quarter.loading = false));
 
-          this.systemUse.quarter.pager.pageNo++;
-          if(this.systemUse.quarter.pager.pageNo > res.custom.pageCount){
-            this.systemUse.quarter.pager.pageNo = 1;
-          }
-        })
-        .catch(err => (this.systemUse.quarter.loading = false));
+      setTimeout(() => {
+        this.SystemDev.month.loading = false;
+        this.SystemDev.quarter.loading = false;
+      }, 500);
+      /* 测试数据-end */
     },
     // 设置定时器
-    setTimer(){
+    setTimer() {
       // 请求
       this.requestTimer = setInterval(() => {
         this.getStatisticsData();
@@ -462,12 +553,12 @@ export default {
       }, 5 * 1000);
 
       // 应用使用情况分页
-      this.systemUseTimer = setInterval(() => {
-        this.getSystemUseData();
+      this.SystemDevTimer = setInterval(() => {
+        this.getSystemDevData();
       }, 5 * 1000);
     },
     // 清除定时器
-    clearTimer(timers){
+    clearTimer(timers) {
       timers.forEach(e => clearInterval(e));
     }
   }
@@ -541,11 +632,15 @@ export default {
   }
 }
 
-.system-use{
+.system-use {
   &-container {
     position: relative;
 
-    @include background-setting("../../../assets/screen_images/img_03.png", 100%, 100%);
+    @include background-setting(
+      "../../../assets/screen_images/img_03.png",
+      100%,
+      100%
+    );
 
     .statistics-frame-title {
       top: 25rem * $baseUnit;
@@ -559,41 +654,40 @@ export default {
   }
 
   &-quarter,
-  &-month{
+  &-month {
     height: 455rem * $baseUnit;
 
-    &__title{
+    &__title {
       @include background-setting(
         "../../../assets/screen_images/img_shiyong_2.png",
         100%,
-        50rem *$baseUnit
+        50rem * $baseUnit
       );
-      line-height: 50rem *$baseUnit;
-      padding: 0 15rem *$baseUnit;
-      justify-content:space-between;
+      line-height: 50rem * $baseUnit;
+      padding: 0 15rem * $baseUnit;
+      justify-content: space-between;
 
-      .name{
+      .name {
         color: #45fbf7;
       }
 
-      .yellow{
+      .yellow {
         color: $color-yellow;
         font-style: normal;
-        margin-right: 5rem *$baseUnit;
+        margin-right: 5rem * $baseUnit;
         font-weight: bold;
       }
     }
 
-    &__content{
-      height: 340rem *$baseUnit;
-      margin-top: 15rem *$baseUnit;
+    &__content {
+      height: 340rem * $baseUnit;
+      margin-top: 15rem * $baseUnit;
     }
   }
 
-  &-month{
-    margin-top: 15rem *$baseUnit;
+  &-month {
+    margin-top: 15rem * $baseUnit;
   }
-  
 }
 
 .statistics {

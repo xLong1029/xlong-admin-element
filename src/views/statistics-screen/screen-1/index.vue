@@ -4,7 +4,7 @@
     <!-- 受理情况 -->
     <div class="accpet-container flex">
       <div class="map-container statistics-frame">
-        <span class="statistics-frame-title">事项消息（地图）</span>
+        <span class="statistics-frame-title">事项消息分布</span>
         <div
           class="statistics-frame-content"
           v-loading="map.loading"
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="ranking-container statistics-frame">
-        <span class="statistics-frame-title">地市事项分布</span>
+        <span class="statistics-frame-title">各地市用户使用情况</span>
         <div
           class="statistics-frame-content"
           v-loading="ranking.loading"
@@ -52,7 +52,7 @@
     </div>
     <!-- 消息通知 -->
     <div class="msg-container statistics-frame">
-      <span class="statistics-frame-title">事项消息（列表）</span>
+      <span class="statistics-frame-title">事项消息列表</span>
       <div
         class="statistics-frame-content"
         v-loading="message.loading"
@@ -69,11 +69,12 @@
               <div class="msg-list-item-left flex">
                 <span class="msg-list-item__badge">{{ message.list.length - index }}</span>
                 <span class="msg-list-item__name">
-                  <i class="operator">{{ item.operator }}</i>
-                  <i class="through">用</i>
-                  <i class="from-system">{{ item.fromSystem }}</i>
-                  <i class="action">{{ item.action }}</i>
-                  <i class="matter">{{ item.matter }}</i>
+                  <i>用户</i>
+                  <i class="account">{{ item.operator }}</i>
+                  <i>在</i>
+                  <i class="city">{{ item.cityName }}</i>
+                  <i>{{ item.matter }}</i>
+                  <i class="system">{{ item.appName }}</i>
                 </span>
               </div>
               <span class="msg-list-item-right msg-list-item__time">{{ item.actionTimeStr }}</span>
@@ -92,10 +93,27 @@
 import Empty from "components/common/Empty";
 import PopupMsgMap from "components/statistics-screen/Charts/PopupMsgMap";
 import RankingBarChart from "components/statistics-screen/Charts/RankingBarChart";
+import areaJson from "mock/guangxi-area.json";
+import { logInfo, timeTrans } from "utils";
 
-// import Api from "api/statistics-screen";
-// import SignalR from "mixins/signal-r";
-import { logInfo } from "utils";
+const appNames = [
+  "XLONG家里蹲-OA办公系统",
+  "XLONG家里蹲-企业信息化系统",
+  "XLONG家里蹲-CMS系统",
+  "XLONG家里蹲-电商App",
+  "XLONG家里蹲-数据抓取软件",
+  "XLONG家里蹲-你画我猜软件"
+];
+const accounts = [
+  "Lio.Huang",
+  "xLong1029",
+  "JunjiApp",
+  "XieNangMai",
+  "quanquan",
+  "PDD",
+  "Plus",
+  "Jhone"
+];
 
 export default {
   name: "SplitScreenOne",
@@ -124,10 +142,11 @@ export default {
       map: {
         loading: false,
         popupMsg: {},
-        geoCoordMap: null
+        geoCoordMap: {}
       },
       ranking: {
         loading: false,
+        defaultChartData: [],
         data: {
           series: [
             {
@@ -150,10 +169,9 @@ export default {
       // 存储消息队列
       tempMsgs: [],
       // 定时器
-      rankingTimer: null,
       msgTimer: null,
       // signalR连接
-      connection: null,
+      // connection: null,
       // 计数消息
       countTag: 0
     };
@@ -163,7 +181,6 @@ export default {
   },
   beforeDestroy() {
     this.clearTimer([this.rankingTimer, this.msgTimer]);
-    this.stopConnection();
   },
   methods: {
     // 初始化
@@ -172,95 +189,93 @@ export default {
       this.ranking.loading = true;
       this.message.loading = true;
 
-      this.getStatisticsData();
+      this.getMapData();
       this.getRankingData();
-      // this.getMsgData();
+      this.getDefaultMsgData();
 
       this.setTimer();
     },
-    // 获取统计数据
-    getStatisticsData() {
-      // 地图地理坐标
-      Api.getGeoCoordMap()
-        .then(res => {
-          this.map.geoCoordMap = res.custom;
-          this.map.loading = false;
-        })
-        .catch(() => (this.map.loading = false));
+    // 获取地图数据
+    getMapData() {
+      /* 测试数据-start */
+      for (let i = 0; i < areaJson.length; i++) {
+        this.map.geoCoordMap[areaJson[i].name] = areaJson[i].coordinate;
+      }
+      setTimeout(() => (this.map.loading = false), 500);
+      /* 测试数据-end */
     },
     // 获取受理排行数据
     getRankingData() {
-      Api.getRanking()
-        .then(res => {
-          this.ranking.data.chartData = res.custom;
-          this.ranking.loading = false;
-        })
-        .catch(() => (this.ranking.loading = false));
-    },
-    // 通过SignalR获取消息
-    getMsgData() {
-      Api.getMeassage({
-        page: 1,
-        pageSize: 3
-      })
-        .then(res => {
-          this.message.list = res.custom.data;
-
-          // 创建singleR连接
-          this.createConnection(
-            `${process.env.VUE_APP_SERVER_AUTH}/hub/SystemMsg`
-          );
-          // 判断是否断开重连
-          this.connection.onclose(() => {
-            if(this.$route.name === 'StatisticsScreen'){
-              logInfo('SignalR-连接已关闭, 尝试重新连接');
-              this.startConnection();
-            }
-            else{
-              logInfo('已离开监控大屏，SignalR-连接已关闭');
-            }           
-          })
-          this.receiveMessage();
-
-          this.message.loading = false;
-        })
-        .catch(() => (this.message.loading = false));
-    },
-    receiveMessage() {
-      // 从集线器调用客户端方法
-      this.connection.on("ReceiveMatterMessage", res => {        
-        logInfo("SignalR-已成功从服务端获取信息");
-        // logInfo(res);
-        this.countTag = 1;
-        // 将消息存储至队列，用到地图上显示
-        if (this.tempMsgs.length <= 10) {
-          this.tempMsgs.push(res); // 从结尾添加
-        }        
+      /* 测试数据-start */
+      this.ranking.defaultChartData = areaJson.map(e => {
+        return {
+          name: e.name,
+          count: Math.round(Math.random() * 20)
+        };
       });
+      this.ranking.data.chartData = [...this.ranking.defaultChartData];
+      setTimeout(() => (this.ranking.loading = false), 500);
+      /* 测试数据-end */
+    },
+    // 默认独取三条数据
+    getDefaultMsgData() {
+      /* 测试数据-start */
+      for (let i = 0; i < 3; i++) {
+        const city = areaJson[Math.round(Math.random() * (areaJson.length - 1))];
+        this.message.list.push({
+          operator: accounts[Math.round(Math.random() * (accounts.length - 1))],
+          cityCode: city.code,
+          cityName: city.name,
+          latitude: city.coordinate[1],
+          longitude: city.coordinate[0],
+          matter: '使用',
+          appName: appNames[Math.round(Math.random() * (appNames.length - 1))],
+          actionTimeStr: "2020-01-08 08:00:00"
+        });
+      }
+      setTimeout(() => (this.message.loading = false), 500);
+      /* 测试数据-end */
+    },
+    // 获取消息
+    receiveMessage() {
+      /* 测试数据-start */
+      const city = areaJson[Math.round(Math.random() * (areaJson.length - 1))];
+      const res = {
+        operator: accounts[Math.round(Math.random() * (accounts.length - 1))],
+        cityCode: city.code,
+        cityName: city.name,
+        latitude: city.coordinate[1],
+        longitude: city.coordinate[0],
+        appName: appNames[Math.round(Math.random() * (appNames.length - 1))],
+        operationType: 2,
+        matter: '使用',
+        actionTimeStr: timeTrans(new Date(), 'YYYY-MM-DD HH:mm:ss', '-', ':')
+      };
+      /* 测试数据-end */
+      this.countTag = 1;
+      // 将消息存储至队列，用到地图上显示
+      if (this.tempMsgs.length <= 10) {
+        this.tempMsgs.push(res); // 从结尾添加
+      }
     },
     // 减少队列消息
-    reduceTempMsgs(msg){
-      if(this.tempMsgs.length > 0) {
+    reduceTempMsgs(msg) {
+      if (this.tempMsgs.length > 0) {
         this.tempMsgs.shift(); // 从开头删除
       }
     },
     // 设置定时器
     setTimer() {
       this.rankingTimer = setInterval(() => {
-        this.getRankingData();
-      }, 1 * 1000);
-
-      this.msgTimer = setInterval(() => {
         // 30秒后若无操作则清除所有消息
-        if(this.countTag > 10){
+        if (this.countTag > 10) {
           this.map.popupMsg = {};
           this.countTag = 1;
+        } else {
+          this.countTag++;
         }
-        else{
-          this.countTag ++;
-        }
-        
-        if(this.tempMsgs.length > 0) {
+
+        if (this.tempMsgs.length > 0) {
           this.countTag = 1;
           let data = this.tempMsgs[0];
           // 消息动画效果
@@ -270,11 +285,23 @@ export default {
           this.message.list.unshift(data);
           // 地图显示消息弹窗
           this.map.popupMsg = data;
+
+          const index = this.ranking.defaultChartData.findIndex(
+            e => e.name === data.cityName
+          );
+          // 随机增加一个值
+          this.ranking.defaultChartData[index].count++;
+          this.ranking.data.chartData = [...this.ranking.defaultChartData];
         }
-      }, 3* 1000)
+      }, 3 * 1000);
+
+      // 模拟signalR每秒获取数据
+      this.msgTimer = setInterval(() => {
+        this.receiveMessage();
+      }, 1 * 1000);
     },
     // 清除定时器
-    clearTimer(timers){
+    clearTimer(timers) {
       timers.forEach(e => clearInterval(e));
     }
   }
@@ -395,18 +422,13 @@ export default {
           font-style: normal;
         }
 
-        .operator,
-        .matter {
+        .account,
+        .system {
           color: #f3f43d;
         }
 
-        .from-system {
+        .city {
           color: #61e1ff;
-        }
-
-        .through,
-        .action {
-          color: #fff;
         }
       }
 

@@ -47,7 +47,11 @@ module.exports = {
       //   'window.jQuery': 'jquery',
       //   'root.jQuery': 'jquery'
       // })
-    ]
+    ],
+    // 外部引用
+    externals: {
+      $: 'jquery'
+    }
   },
   chainWebpack(config) {
     config.plugins.delete('preload')

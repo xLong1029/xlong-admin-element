@@ -1,11 +1,11 @@
 const router = {
-  path: '/statistics-screen/index',
+  path: '/statistics-screen',
   component: () => import('@/views/statistics-screen/index'),
   name: 'StatisticsScreen',
   meta: {
     title: '监控大屏',
     icon: 'el-icon-s-platform',
-    roles: ['1']
+    roles: ['admin', 'manage']
   }
 }
 

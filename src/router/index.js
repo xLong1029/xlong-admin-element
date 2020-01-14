@@ -56,11 +56,6 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/401',
-    component: () => import('@/views/error-page/401'),
-    hidden: true
-  },
-  {
     path: '/',
     component: () => import('@/layout/index'),
     redirect: '/home',
@@ -74,16 +69,32 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/account-settings',
+    path: '/components',
     component: () => import('@/layout/index'),
-    redirect: '/account-settings/index',
+    redirect: '/components/index',
+    children: [
+      {
+        path: '/components/index',
+        component: () => import('@/views/components/index'),
+        name: 'Components',
+        meta: {
+          title: '组件',
+          icon: 'el-icon-menu'
+        }
+      }
+    ]
+  },
+  {
+    path: '/change-password',
+    component: () => import('@/layout/index'),
+    redirect: '/change-password/index',
     hidden: true,
     children: [
       {
         path: 'index',
-        component: () => import('@/views/account-settings/index'),
-        name: 'AccountSettings',
-        meta: { title: '账户设置' }
+        component: () => import('@/views/change-password/index'),
+        name: 'ChangePwd',
+        meta: { title: '修改密码' }
       }
     ]
   }

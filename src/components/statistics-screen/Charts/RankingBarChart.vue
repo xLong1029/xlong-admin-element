@@ -101,6 +101,17 @@ export default {
     this.chart = null;
   },
   methods: {
+    compare(propertys) {
+      return function(a, b) {
+        let value1 = 0;
+        let value2 = 0;
+        propertys.forEach(e => {
+          value1 += a[e];
+          value2 += b[e];
+        });
+        return value2 - value1;
+      };
+    },
     initChart() {
       // 解决因为排序改变图表数据，切换图表时导致死循环的问题
       let chartData = [...this.chartData];

@@ -3,12 +3,8 @@
 @import './element-ui.scss';
 @import './btn.scss';
 
-*{
-  margin: 0;
-  padding: 0;
-}
-
 body {
+  margin: 0;
   background: #f6f7f9;
   color: #333;
   height: 100%;
@@ -16,6 +12,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+textarea{
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 
@@ -208,15 +208,6 @@ aside {
 .app-container {
   padding: 15px;
 }
-
-.components-container {
-  margin: 30px 50px;
-  position: relative;
-}
-
-// .pagination-container {
-//   margin-top: 30px;
-// }
 
 .text-center {
   text-align: center

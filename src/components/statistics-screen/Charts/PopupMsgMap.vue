@@ -8,9 +8,9 @@
 // 参考地址：https://gallery.echartsjs.com/editor.html?c=xdExzKlpOh
 import echarts from "echarts";
 require("echarts/theme/macarons"); // echarts theme
-import resize from "@/mixins/chart/resize";
-import { deepClone } from "@/utils";
-import geoJson from "@/assets/json/guangxi.json";
+import resize from "mixins/chart/resize";
+import { deepClone } from "utils";
+import geoJson from "mock/guangxi.json";
 
 export default {
   name: "PopupMsgMap",
@@ -35,14 +35,11 @@ export default {
         // action: "申报",
         // actionTime: "2019-11-15T16:46:30.2626147+08:00",
         // actionTimeStr: "2019年11月15日 04:46:30",
-        // callBackLink: null,
         // cityCode: "4501",
         // cityName: "桂林市",
-        // fromSystem: "广西房屋建筑和市政基础设施工程评标专家管理系统",
-        // id: 16931,
+        // appName: "广西房屋建筑和市政基础设施工程评标专家管理系统",
         // latitude: 23.055856,
         // longitude: 108.467414,
-        // matter: "设计企业资质核准（甲级及部分乙级）",
         // operationType: 2, // 1 从南宁出发， 2 回到南宁
         // operator: "林勇",
       })
@@ -165,17 +162,17 @@ export default {
 
                 // // 截取字符串
                 // const num = msg.operator.length > 12 ? msg.operator.length : 12;
-                // let fromSystem = '';
-                // for(let i = 0; i <= msg.fromSystem.length/num; i++){
-                //   fromSystem += msg.fromSystem.substring(i*num, (i+1)*num) + '\n';
+                // let appName = '';
+                // for(let i = 0; i <= msg.appName.length/num; i++){
+                //   appName += msg.appName.substring(i*num, (i+1)*num) + '\n';
                 // }
                 // let matter = '';
                 // for(let i = 0; i <= msg.matter.length/num; i++){
                 //   matter += msg.matter.substring(i*num, (i+1)*num) + '\n';
                 // }
 
-                // return `{fline|用户：${msg.operator}}\n{tline|系统：${fromSystem}}{tline|${msg.action}：${msg.matter}}`;
-                return `{tline|${msg.action}：${msg.matter}}`;
+                // return `{fline|用户：${msg.operator}}\n{tline|系统：${msg.appName}}{tline|${msg.action}：${msg.matter}}`;
+                return `{tline|用户：${msg.operator}}\n{tline|使用系统：${msg.appName}}`;
               },
               position: "top",
               backgroundColor: color,
@@ -328,7 +325,7 @@ export default {
       //     {
       //       name: "",
       //       operator: "测试内容",
-      //       fromSystem: "",
+      //       appName: "",
       //       matter: "",
       //       value: [108.467414, 23.055856] // 坐标
       //     }
@@ -355,7 +352,7 @@ export default {
         {
           name: "",
           operator: this.popupMsg.operator,
-          fromSystem: this.popupMsg.fromSystem,
+          appName: this.popupMsg.appName,
           action: this.popupMsg.action,
           matter: this.popupMsg.matter,
           value: [this.popupMsg.longitude, this.popupMsg.latitude, 5] // 坐标

@@ -41,7 +41,7 @@ export default {
   methods: {
     init(route) {
       const navH = 60;
-      const breadcrumbH = 41;
+      const breadcrumbH = 40;
       this.breadcrumbVisible = true;
       appMain.style.minHeight = `calc(100vh - ${navH + breadcrumbH}px)`;
     }

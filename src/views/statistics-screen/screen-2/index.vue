@@ -5,7 +5,7 @@
     <div class="building-container">
       <!-- 数量统计 -->
       <div class="count-container">
-        <!-- 应用数量 -->
+        <!-- 开发应用数量 -->
         <div class="systems">
           <div class="count-card-wrapper left">
             <div class="count-card-container">
@@ -45,7 +45,7 @@
     </div>
     <!-- 企业数量统计 -->
     <div class="company-container statistics-frame">
-      <span class="statistics-frame-title">企业数量</span>
+      <span class="statistics-frame-title">服务企业数量</span>
       <div
         class="statistics-frame-content"
         v-loading="companyNum.loading"
@@ -77,8 +77,7 @@
 <script>
 /* eslint-disable */
 import ThermometerBarChart from "components/statistics-screen/Charts/ThermometerBarChart";
-
-// import Api from "api/statistics-screen";
+import areaJson from "mock/guangxi-area.json";
 
 export default {
   name: "SplitScreenTwo",
@@ -99,14 +98,14 @@ export default {
   },
   data() {
     return {
-      // 应用总数统计
+      // 开发应用总数统计
       systemsCount: {
-        name: "应用总数",
-        count: 0
+        name: "开发应用总数",
+        count: 55
       },
       // 企业总数统计
       companyCount: {
-        name: "当前机构数量",
+        name: "服务企业数量",
         count: 0
       },
       // 服务器总数统计
@@ -148,35 +147,37 @@ export default {
     init() {
       this.companyNum.loading = true;
 
-      // this.getStatisticsData();
+      this.getStatisticsData();
       this.setTimer();
     },
     // 获取统计数据
     getStatisticsData() {
-      // 总数统计数据
-      Api.getServerCount().then(res => (this.serverCount.count = res.custom));
-      Api.getSystemsAndCompanyCount().then(res => {
-        this.userCount.count = res.custom.totalUsers;
-        this.systemsCount.count = res.custom.totalApps;
-        this.companyCount.count = res.custom.totalEnterprise;
-      });
+      /* 测试数据-start */
+      this.systemsCount.count = 55;
+      this.companyCount.count = 3004;
+      this.serverCount.count = 9;
+      this.userCount.count = 60293;
 
-      // 企业数量
-      Api.getCompanyNum()
-        .then(res => {
-          this.companyNum.chartData = res.custom;
-          this.companyNum.loading = false;
-        })
-        .catch(() => (this.companyNum.loading = false));
-    },    
+      this.companyNum.chartData = areaJson.map(e => {
+        return {
+          name: e.name,
+          count: Math.round(Math.random() * 10)
+        }
+      });
+      
+      setTimeout(() => {
+        this.companyNum.loading = false;
+      }, 500);
+      /* 测试数据-end */
+    },
     // 设置定时器
-    setTimer(){
+    setTimer() {
       this.requestTimer = setInterval(() => {
         this.getStatisticsData();
       }, 10 * 1000);
     },
     // 清除定时器
-    clearTimer(timers){
+    clearTimer(timers) {
       timers.forEach(e => clearInterval(e));
     }
   }
@@ -190,6 +191,8 @@ export default {
   overflow: hidden;
   background: url("../../../assets/screen_images/img_zhujian.png") center center
     no-repeat;
+  background-size: 60%;
+  background-position: 50% 28%;
 }
 
 .building-container {
@@ -210,8 +213,8 @@ export default {
     }
 
     .systems {
-      top: 380rem * $baseUnit;
-      left: 60rem * $baseUnit;
+      top: 350rem * $baseUnit;
+      left: 50rem * $baseUnit;
     }
 
     .company {
@@ -221,11 +224,11 @@ export default {
 
     .server {
       top: 280rem * $baseUnit;
-      right: 60rem * $baseUnit;
+      right: 30rem * $baseUnit;
     }
 
     .user {
-      top: 25rem * $baseUnit;
+      top: 50rem * $baseUnit;
       right: 110rem * $baseUnit;
     }
   }
@@ -268,7 +271,7 @@ export default {
     &-title {
       color: #2fc2c3;
       padding: 5rem * $baseUnit;
-      padding: 10rem * $baseUnit 5rem * $baseUnit;
+      padding: 5rem * $baseUnit;
       font-size: 14rem * $baseUnit;
     }
     &-content {

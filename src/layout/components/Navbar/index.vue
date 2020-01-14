@@ -2,8 +2,7 @@
   <!-- eslint-disable -->
   <div class="navbar">
     <div class="logo-container fl">
-      <!-- <img class="logo" :src="logo" /> -->
-      <span class="text">广西住建厅-专家库</span>
+      <img class="logo" :src="logo" />
     </div>
     <!-- 导航 -->
     <div class="nav-list-container fl">
@@ -37,15 +36,15 @@
         <div class="user-info-container">
           <div class="user-info-title">
             <span>账户信息</span>
-            <router-link to="/account-settings/index" class="url-btn fr">
-                账户设置
-                <i class="el-icon-arrow-right"></i>
+            <router-link to="/change-password" class="url-btn fr">
+              修改密码
+              <i class="el-icon-arrow-right"></i>
             </router-link>
           </div>
           <ul class="user-info-list mt-10">
             <li class="user-info-list-item">账号：{{ username | isNull }}</li>
-            <li class="user-info-list-item">真实姓名：{{ realname | isNull }}</li>
-            <li class="user-info-list-item">所在部门：{{ organizationName | isNull }}</li>
+            <li class="user-info-list-item">真实姓名：{{ realName | isNull }}</li>
+            <li class="user-info-list-item">性别：{{ gender | isNull }}</li>
           </ul>
         </div>
         <div slot="reference" class="right-menu-item hover-effect fr">
@@ -53,7 +52,7 @@
             <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
             <span class="user-name">
               <i class="el-icon-user-solid mr-5"></i>
-              {{ realname }}
+              {{ nickName }}
             </span>
             <i class="el-icon-caret-bottom" />
           </div>
@@ -77,8 +76,9 @@ export default {
     ...mapGetters([
       "permissionRoutes",
       "username",
-      "realname",
-      "organizationName"
+      "nickName",
+      "realName",
+      "gender"
     ]),
     activeMenu() {
       const route = this.$route;
@@ -95,7 +95,7 @@ export default {
   },
   data() {
     return {
-      logo: require("@/assets/images/img_logo_white.png")
+      logo: require("@/assets/images/logo-green.png")
     };
   },
   methods: {
@@ -118,18 +118,15 @@ export default {
 $right-menu-height: 50px;
 
 .navbar {
-  padding-left: 20px;
+  padding-left: 12px;
   height: $navbar-height;
   width: 100%;
-  background: url("../../../assets/images/img_topnav.png") center center
-    no-repeat;
-  background-size: cover;
   overflow: hidden;
   position: relative;
-  // box-shadow: 0 4px 4px rgba(0,0,0,0.05);
+  background: #333;
 
   .logo-container {
-    margin-top: 15px;
+    margin-top: 10px;
     font-size: 21px;
     color: #fff;
     font-weight: bold;
@@ -239,7 +236,7 @@ $right-menu-height: 50px;
       }
 
       &:hover {
-        color: $menuActiveText;
+        color: $menuActiveText !important;
         background: transparent !important;
         i {
           color: $menuActiveText;
@@ -269,7 +266,7 @@ $right-menu-height: 50px;
       }
 
       &:hover {
-        color: $menuActiveText;
+        color: $menuActiveText !important;
         background: transparent !important;
         i {
           color: $menuActiveText;

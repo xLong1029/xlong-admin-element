@@ -9,11 +9,11 @@ export default {
         // 当前页面
         pageNo: 1,
         // 每页条数
-        pageSize: 20,
+        pageSize: 15,
         // 每页条数选择
-        pageSizes: [20, 30, 50, 80],
+        pageSizes: [15, 30, 50, 80],
         // 总数
-        total: 0
+        total: 1
       }
     }
   },
@@ -31,8 +31,8 @@ export default {
       this.listLoading = true;
       this.apiGetList(pageNo, pageSize).then(res => {
         this.listLoading = false;
-        this.listData = res.custom.data;
-        this.setPage(res.custom);
+        this.listData = res.data;
+        this.setPage(res.page);
       }).catch(err => console.log(err));
     },
     /**
@@ -42,8 +42,8 @@ export default {
      */
     setPage(data) {
       this.page.pageNo = data.page;
-      this.page.pageSize = data.pageSize;
-      this.page.total = data.totalCount;
+      this.page.pageSize = data.size;
+      this.page.total = data.count;
     }
   }
 }

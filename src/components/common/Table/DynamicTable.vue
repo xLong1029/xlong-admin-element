@@ -2,15 +2,25 @@
   <!-- eslint-disable -->
   <div class="dynamic-table-container">
     <template v-if="tableHeader.length">
-      <el-table ref="table" :data="tableData" :height="tableHeight" border style="width: 100%">
+      <el-table
+        ref="table"
+        :data="tableData"
+        :height="tableHeight"
+        :row-class-name="rowClassName"
+        border
+        style="width: 100%"
+        @selection-change="handleSelectionChange"
+      >
         <template v-for="(item, index) in tableHeader">
           <el-table-column
             :key="'columns' + index"
             :fixed="item.fixed"
+            :align="item.align"
+            :header-align="item.headerAlign"
             :prop="item[defaultProps.prop]"
             :label="item[defaultProps.label]"
             :show-overflow-tooltip="true"
-            :width="item.width ? item.width: null"
+            :width="item.width"
           ></el-table-column>
         </template>
         <slot />
@@ -19,14 +29,14 @@
     <empty v-else :height="tableHeight + 'px'" />
     <!-- 分页 -->
     <pagination
-      class="page-list mt-15"
+      class="page-list mt-20"
       v-show="total > 0 && showPagination"
       :total="total"
       :page.sync="currentPage"
       :limit.sync="limit"
       :pageSizes.sync="pageSizes"
       :auto-scroll="false"
-      @pagination="pageChange"
+      @pagination="handlePageChange"
     />
   </div>
 </template>
@@ -103,6 +113,9 @@ export default {
         prop: "prop",
         label: "label"
       })
+    },
+    rowClassName: {
+      type: Function | String
     }
   },
   computed: {
@@ -124,13 +137,13 @@ export default {
     }
   },
   methods: {
-    // 点击详情时触发，返回当前列
-    detaildClick(row) {
-      this.$emit("detail-click", row);
-    },
     // 页码切换时触发，返回当前页码和每页记录条数
-    pageChange(page, pageSize) {
+    handlePageChange(page, pageSize) {
       this.$emit("pagination", page, pageSize);
+    },
+    // 选择框切换时触发，返回所有选项
+    handleSelectionChange(selection) {
+      this.$emit("selection-change", selection);
     }
   }
 };

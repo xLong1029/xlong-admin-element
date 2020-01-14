@@ -25,10 +25,7 @@ export default {
     return {
       visible: false
     };
-  },
-  created() {},
-  mounted() {},
-  methods: {}
+  }
 };
 </script>
 <style scoped lang="scss"></style>

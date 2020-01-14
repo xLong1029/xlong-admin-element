@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 /**
  * 判断值是否为空，若为空则返回'-'
  * @param value

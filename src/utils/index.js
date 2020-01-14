@@ -1,13 +1,15 @@
+/* eslint-disable */ 
 /**
- * 根据时间辍返回对应的时间 如 yyyy-MM-dd HH:mm:ss  yyyy-MM-dd
+ * 根据时间辍返回对应的时间 如 YYYY-MM-DD HH:mm:ss  YYYY-MM-DD
  * @param {Object} date 时间对象
- * @param {String} format 时间格式 默认返回年月日时分秒 按照的格式化是 yyyy-MM-dd HH:mm:ss
- * @param {String} timeWord 默认返回2018年01月15日 16:26:30  这种  如填写 - 的。则返回 2018-01-15 16:26:30
+ * @param {String} format 时间格式 默认返回年月日时分秒 按照的格式化是 YYYY-MM-DD HH:mm:ss
+ * @param {String} dateWord 默认返回2018年01月15日 如填写 - 的。则返回 2018-01-15
+ * @param {String} timeWord 默认返回16时26分30秒 如填写 : 的。则返回 16:26:30
  */
-export function timeTrans(date, format = 'yyyy-MM-dd HH:mm:ss', timeWord = '') {
-  const YType = timeWord === '' ? '年' : timeWord
-  const MType = timeWord === '' ? '月' : timeWord
-  const DType = timeWord === '' ? '日' : ''
+export function timeTrans(date, format = 'YYYY-MM-DD HH:mm:ss', dateWord = '', timeWord = '') {
+  const YType = dateWord === '' ? '年' : dateWord
+  const MType = dateWord === '' ? '月' : dateWord
+  const DType = dateWord === '' ? '日' : ''
 
   const hType = timeWord === '' ? '时' : timeWord
   const mType = timeWord === '' ? '分' : timeWord
@@ -21,25 +23,25 @@ export function timeTrans(date, format = 'yyyy-MM-dd HH:mm:ss', timeWord = '') {
   const m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + mType
   const s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()) + sType
   switch (format) {
-    case 'yyyy-MM-dd HH:mm:ss':
-      dataValue = Y + M + D + h + m + s
+    case 'YYYY-MM-DD HH:mm:ss':
+      dataValue = Y + M + D + ' ' + h + m + s
       break
-    case 'yyyy':
+    case 'YYYY':
       dataValue = date.getFullYear().toString()
       break
     case 'MM':
       dataValue = M.substring(0, M.length - 1)
       break
-    case 'dd':
+    case 'DD':
       dataValue = D.substring(0, D.length - 1)
       break
-    case 'yyyy-MM':
+    case 'YYYY-MM':
       dataValue = Y + M.substring(0, M.length - 1)
       break
-    case 'yyyy-MM-dd':
+    case 'YYYY-MM-DD':
       dataValue = Y + M + D
       break
-    case 'MM-dd':
+    case 'MM-DD':
       dataValue = M + D.substring(0, D.length - 1)
       break
     case 'HH':
@@ -130,12 +132,12 @@ export function param2Obj(url) {
   }
   return JSON.parse(
     '{"' +
-      decodeURIComponent(search)
-        .replace(/"/g, '\\"')
-        .replace(/&/g, '","')
-        .replace(/=/g, '":"')
-        .replace(/\+/g, ' ') +
-      '"}'
+    decodeURIComponent(search)
+      .replace(/"/g, '\\"')
+      .replace(/&/g, '","')
+      .replace(/=/g, '":"')
+      .replace(/\+/g, ' ') +
+    '"}'
   )
 }
 
@@ -188,7 +190,7 @@ export function objectMerge(target, source) {
 export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
 
-  const later = function() {
+  const later = function () {
     // 据上一次触发时间间隔
     const last = +new Date() - timestamp
 
@@ -205,7 +207,7 @@ export function debounce(func, wait, immediate) {
     }
   }
 
-  return function(...args) {
+  return function (...args) {
     context = this
     timestamp = +new Date()
     const callNow = immediate && !timeout
@@ -256,7 +258,7 @@ export function hasClass(ele, cls) {
  * @param {HTMLElement} elm
  * @param {string} cls
  */
-export function addClass(ele, cls) {
+export function aDDClass(ele, cls) {
   if (!hasClass(ele, cls)) ele.className += ' ' + cls
 }
 
@@ -402,9 +404,9 @@ export function getFileStream(data, name) {
  * @param {*} obj 对象
  * @param {*} uselessKeys 不需要的属性序列
  */
-export function ObjOmit(obj, uselessKeys) {
-  uselessKeys.forEach(key => delete obj[key]);
-  return obj;
+export function objOmit(obj, uselessKeys) {
+  uselessKeys.forEach(key => delete obj[key])
+  return obj
 }
 
 /**
@@ -412,14 +414,14 @@ export function ObjOmit(obj, uselessKeys) {
  *
  * @param {*} value 值
  */
-export function Encrypt(value) {
-  let code = '';
+export function encrypt(value) {
+  let code = ''
   for (let i = 0; i < value.length; i++) {
-    let r = value.charCodeAt(i);
-    code += String.fromCharCode(r + 2);
+    const r = value.charCodeAt(i)
+    code += String.fromCharCode(r + 2)
   }
   // 对字符串进行特殊字符编码，分号（;）、逗号（,）、等号（=）以及空格问题
-  return escape(code);
+  return escape(code)
 }
 
 /**
@@ -427,15 +429,15 @@ export function Encrypt(value) {
  *
  * @param {*} value 值
  */
-export function Decrypt(value) {
+export function decrypt(value) {
   // 对字符串进行特殊字符解码，分号（;）、逗号（,）、等号（=）以及空格问题
-  value = unescape(value);
-  let correct = '';
+  value = unescape(value)
+  let correct = ''
   for (let i = 0; i < value.length; i++) {
-    let r = value.charCodeAt(i);
-    correct += String.fromCharCode(r - 2);
+    const r = value.charCodeAt(i)
+    correct += String.fromCharCode(r - 2)
   }
-  return correct;
+  return correct
 }
 
 /**
@@ -444,8 +446,8 @@ export function Decrypt(value) {
  * @param {*} key key名
  * @param {*} value 值
  */
-export function SetLocalS(key, value) {
-  localStorage.setItem(key, value);
+export function setLocalS(key, value) {
+  localStorage.setItem(key, value)
 }
 
 /**
@@ -453,10 +455,10 @@ export function SetLocalS(key, value) {
  *
  * @param {*} key key名
  */
-export function GetLocalS(key) {
-  let res = localStorage.getItem(key);
-  if (res && res != 'null') return res;
-  else return false;
+export function getLocalS(key) {
+  const res = localStorage.getItem(key)
+  if (res && res !== 'null') return res
+  else return false
 }
 
 /**
@@ -464,13 +466,32 @@ export function GetLocalS(key) {
  *
  * @param {*} key key名
  */
-export function DelLocalS(key) {
-  localStorage.removeItem(key);
+export function delLocalS(key) {
+  localStorage.removeItem(key)
 }
 
 /**
  * localstorage清空所有本地储存
  */
-export function ClearLocalS() {
-  localStorage.clear();
+export function clearLocalS() {
+  localStorage.clear()
+}
+
+/**
+ * 比较日期大小
+ *
+ * @param {*} dateOne 第一个日期
+ * @param {*} dateTwo 第二个日期
+ */
+export function compareDate(dateOne, dateTwo) {
+  // 字符串
+  if (typeof (dateOne) === 'string' && typeof (dateTwo) === 'string') {
+    return ((new Date(dateOne.replace(/-/g, "\/"))) <= (new Date(dateTwo.replace(/-/g, "\/"))))
+  }
+  // DATE对象
+  else if (typeof (dateOne) === 'object' && typeof (dateTwo) === 'object') return (dateOne <= dateTwo)
+  else {
+    console.log('日期比较格式不统一')
+    return false
+  }
 }

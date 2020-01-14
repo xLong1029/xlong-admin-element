@@ -9,8 +9,7 @@
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">抱歉！找不到该页面</div>
-        <div class="bullshit__headline">{{ message }}</div>
-        <a href="" class="bullshit__return-home">返回首页</a>
+        <a href="/home" class="bullshit__return-home">返回首页</a>
       </div>
     </div>
   </div>
@@ -19,12 +18,7 @@
 <script>
 
 export default {
-  name: 'Page404',
-  computed: {
-    message() {
-      return 'The webmaster said that you can not enter this page...'
-    }
-  }
+  name: 'Page404'
 }
 </script>
 
@@ -155,7 +149,7 @@ export default {
     position: relative;
     float: left;
     width: 300px;
-    padding: 30px 0;
+    padding: 100px 0;
     overflow: hidden;
     &__oops {
       font-size: 32px;

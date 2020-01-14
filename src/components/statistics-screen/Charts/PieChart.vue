@@ -142,7 +142,7 @@ export default {
             labelLine: {
               normal: {
                 show: false,
-                length: 10,
+                length: 5,
                 length2: 10
               }
             },
