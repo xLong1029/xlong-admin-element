@@ -66,7 +66,9 @@
                       <div class="img-shade-actions">
                         <el-upload
                           class="img-shade-actions-btn"
-                          action=""
+                          action="customize"
+                          :accept="imgAccept"
+                          :http-request="uploadHead"
                           :show-file-list="false"
                         >
                           <i class="el-icon-edit"></i>编辑
@@ -316,9 +318,11 @@ import Api from "api/account-manage";
 import { docElmScrollTo } from "utils/scroll-to";
 import { compareDate, timeTrans, arrToStr, strToArr } from "utils";
 import { validEmail, validMobile } from "utils/validate";
+import UploadImg from "mixins/upload-img.js";
 
 export default {
   name: "AccountStore",
+  mixins: [UploadImg],
   props: {
     // 弹窗可见性
     visible: {
@@ -660,6 +664,21 @@ export default {
     deleteWorkExp(row, index) {
       this.form.workExperience.splice(index, 1);
     },
+    // 上传头像
+    uploadHead(params) {
+      console.log("uploadFile", params);
+      const file = params.file;
+
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.warning("请上传2M以下的文件");
+        return false;
+      }
+
+      this.uploadToBomb(file)
+        .then(res =>  this.form.face = res[0].url)
+        .catch(err => console.log(err));
+    },
     // 重置表单
     reset() {
       this.$refs.form.resetFields();
@@ -692,23 +711,23 @@ export default {
             Api.EditAccount(params, this.id)
               .then(res => {
                 if (res.code == 200) {
-                  this.$message.success("编辑成功!");
+                  this.$message.success("编辑成功");
                   this.$emit("submit", 1);
                   this.close();
                 } else this.$message.error(res.msg);
               })
-              .catch(err => this.$message.error("操作失败！"))
+              .catch(err => this.$message.error("操作失败"))
               .finally(() => (this.saveLoading = false));
           } else {
             Api.AddAccount(params)
               .then(res => {
                 if (res.code == 200) {
-                  this.$message.success("添加成功!");
+                  this.$message.success("添加成功");
                   this.$emit("submit", 0);
                   this.close();
                 } else this.$message.error(res.msg);
               })
-              .catch(err => this.$message.error("操作失败！"))
+              .catch(err => this.$message.error("操作失败"))
               .finally(() => (this.saveLoading = false));
           }
         } else {
