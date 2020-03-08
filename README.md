@@ -152,8 +152,8 @@ xlong-admin-element 是一套基于 Vue + Element +Bmob 开发的单页面客户
 > npm run dev
 3. 访问地址：http://localhost:9090
 
-## 项目打包(请将vue.config.js中publicPath改成你的项目)
-按需求选择打包命令：
+## 项目打包
+按需求选择打包命令(请将vue.config.js中publicPath改成你的项目)：
 
 > npm run build:prod
 
