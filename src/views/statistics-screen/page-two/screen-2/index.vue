@@ -45,27 +45,27 @@
     </div>
     <!-- 企业数量统计 -->
     <div class="company-container statistics-frame">
-      <span class="statistics-frame-title">服务企业数量</span>
+      <span class="statistics-frame-title">各地市数据展示</span>
       <div
         class="statistics-frame-content"
-        v-loading="companyNum.loading"
+        v-loading="areaStatistics.loading"
         element-loading-background="loadingBackground"
       >
-        <template v-if="!companyNum.loading">
+        <template v-if="!areaStatistics.loading">
           <div class="chart-content">
-            <thermometer-bar-chart
-              v-if="companyNum.chartData.length"
+            <region-multiple-chart
+              v-if="areaStatistics.chartData.length"
               class-name="monthChart"
-              :chart-data="companyNum.chartData"
-              :axis="companyNum.axis"
-              :series="companyNum.series"
+              :chart-data="areaStatistics.chartData"
+              :axis="areaStatistics.axis"
+              :series="areaStatistics.series"
               :sort="true"
-              :height="`${270*contrastRadio}px`"
+              :height="`${300*contrastRadio}px`"
             />
-            <empty v-else :height="`${250*contrastRadio}px`" />
+            <empty v-else :height="`${280*contrastRadio}px`" />
           </div>
         </template>
-        <empty v-else :height="`${250*contrastRadio}px`" />
+        <empty v-else :height="`${280*contrastRadio}px`" />
       </div>
     </div>
     <div id="stars"></div>
@@ -76,13 +76,13 @@
 
 <script>
 /* eslint-disable */
-import ThermometerBarChart from "components/statistics-screen/Charts/ThermometerBarChart";
+import RegionMultipleChart from "@/components/statistics-screen/Charts/RegionMultipleChart";
 import areaJson from "mock/guangxi-area.json";
 
 export default {
   name: "SplitScreenTwo",
   components: {
-    ThermometerBarChart
+    RegionMultipleChart
   },
   props: {
     // loading背景
@@ -118,13 +118,29 @@ export default {
         name: "服务用户数量",
         count: 0
       },
-      // 企业数量柱状图
-      companyNum: {
+      // 区域数据统计
+      areaStatistics: {
         loading: false,
         series: [
           {
-            name: "企业数量",
-            property: "count"
+            name: "管理机构",
+            property: "organization",
+            type: "bar"
+          },
+          {
+            name: "服务企业",
+            property: "company",
+            type: "bar"
+          },
+          {
+            name: "服务用户",
+            property: "user",
+            type: "line"
+          },
+          {
+            name: "项目总数",
+            property: "systems",
+            type: "line"
           }
         ],
         axis: {
@@ -145,7 +161,7 @@ export default {
   methods: {
     // 初始化
     init() {
-      this.companyNum.loading = true;
+      this.areaStatistics.loading = true;
 
       this.getStatisticsData();
       this.setTimer();
@@ -158,15 +174,18 @@ export default {
       this.serverCount.count = 9;
       this.userCount.count = 60293;
 
-      this.companyNum.chartData = areaJson.map(e => {
+      this.areaStatistics.chartData = areaJson.map(e => {
         return {
           name: e.name,
-          count: Math.round(Math.random() * 10)
-        }
+          organization: Math.round(Math.random() * 10) + 5,
+          company: Math.round(Math.random() * 20) + 15,
+          user: Math.round(Math.random() * 15) + 20,
+          systems: Math.round(Math.random() * 20) + 20
+        };
       });
-      
+
       setTimeout(() => {
-        this.companyNum.loading = false;
+        this.areaStatistics.loading = false;
       }, 500);
       /* 测试数据-end */
     },
@@ -174,7 +193,7 @@ export default {
     setTimer() {
       this.requestTimer = setInterval(() => {
         this.getStatisticsData();
-      }, 10 * 1000);
+      }, 30 * 1000);
     },
     // 清除定时器
     clearTimer(timers) {
@@ -189,8 +208,8 @@ export default {
 
 .statistics-screen-2 {
   overflow: hidden;
-  background: url("../../../../assets/screen_images/img_zhujian.png") center center
-    no-repeat;
+  background: url("../../../../assets/screen_images/img_zhujian.png") center
+    center no-repeat;
   background-size: 60%;
   background-position: 50% 28%;
 }
@@ -290,5 +309,9 @@ export default {
     100%,
     340rem * $baseUnit
   );
+
+  .statistics-frame-content{
+    padding-top: 20rem * $baseUnit;
+  }
 }
 </style>
