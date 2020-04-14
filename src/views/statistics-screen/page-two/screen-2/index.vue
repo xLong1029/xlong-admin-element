@@ -45,7 +45,7 @@
     </div>
     <!-- 企业数量统计 -->
     <div class="company-container statistics-frame">
-      <span class="statistics-frame-title">各地市数据展示</span>
+      <span class="statistics-frame-title">各地市数据统计</span>
       <div
         class="statistics-frame-content"
         v-loading="areaStatistics.loading"
@@ -123,8 +123,8 @@ export default {
         loading: false,
         series: [
           {
-            name: "管理机构",
-            property: "organization",
+            name: "服务器",
+            property: "servicer",
             type: "bar"
           },
           {
@@ -138,7 +138,7 @@ export default {
             type: "line"
           },
           {
-            name: "项目总数",
+            name: "开发应用",
             property: "systems",
             type: "line"
           }
@@ -177,7 +177,7 @@ export default {
       this.areaStatistics.chartData = areaJson.map(e => {
         return {
           name: e.name,
-          organization: Math.round(Math.random() * 10) + 5,
+          servicer: Math.round(Math.random() * 3) + 3,
           company: Math.round(Math.random() * 20) + 15,
           user: Math.round(Math.random() * 15) + 20,
           systems: Math.round(Math.random() * 20) + 20
@@ -210,7 +210,7 @@ export default {
   overflow: hidden;
   background: url("../../../../assets/screen_images/img_zhujian.png") center
     center no-repeat;
-  background-size: 60%;
+  background-size: 55%;
   background-position: 50% 28%;
 }
 
@@ -233,22 +233,22 @@ export default {
 
     .systems {
       top: 350rem * $baseUnit;
-      left: 50rem * $baseUnit;
+      left: 70rem * $baseUnit;
     }
 
     .company {
       top: 110rem * $baseUnit;
-      left: 100rem * $baseUnit;
+      left: 120rem * $baseUnit;
     }
 
     .server {
       top: 280rem * $baseUnit;
-      right: 30rem * $baseUnit;
+      right: 50rem * $baseUnit;
     }
 
     .user {
       top: 50rem * $baseUnit;
-      right: 110rem * $baseUnit;
+      right: 130rem * $baseUnit;
     }
   }
 

@@ -1,15 +1,94 @@
 <template>
   <!-- eslint-disable -->
-  <div>has something to develop...</div>
+  <div class="statistics-screen-3">
+    <div class="statistics-screen-3__left">
+      <!-- 排行榜 -->
+      <div class="ranking-container statistics-frame">
+        <span class="statistics-frame-title">服务用户排行</span>
+        <div
+          class="statistics-frame-content"
+          v-loading="ranking.loading"
+          element-loading-background="loadingBackground"
+        >
+          <template v-if="!ranking.loading">
+            <div class="chart-content">
+              <ranking-bar-chart
+                v-if="ranking.data.chartData.length"
+                class-name="rankingChart"
+                :chart-data="ranking.data.chartData"
+                :axis="ranking.data.axis"
+                :series="ranking.data.series"
+                :sort="true"
+                :height="`${620*contrastRadio}px`"
+              />
+              <empty v-else :height="`${620*contrastRadio}px`" />
+            </div>
+          </template>
+          <empty v-else :height="`${600*contrastRadio}px`" />
+        </div>
+      </div>
+      <!-- 业务类型 -->
+      <div class="business-type-container">
+        <div class="statistics-frame">
+          <span class="statistics-frame-title">{{ businessType.title }}</span>
+          <div
+            class="statistics-frame-content"
+            v-loading="businessType.loading"
+            element-loading-background="loadingBackground"
+          >
+            <template v-if="!businessType.loading && businessType.chartData.length">
+              <div class="chart-content">
+                <pie-chart
+                  class-name="businessType"
+                  :chart-data="businessType.chartData"
+                  :carousel="true"
+                  :width="`${500*contrastRadio}px`"
+                  :height="`${260*contrastRadio}px`"
+                  :scale="contrastRadio"
+                />
+              </div>
+            </template>
+            <empty v-else :height="`${280*contrastRadio}px`" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="statistics-screen-3__right">
+      <div class="projects-container statistics-frame">
+        <span class="statistics-frame-title">各业务应用情况</span>
+        <div
+          class="statistics-frame-content"
+          v-loading="ranking.loading"
+          element-loading-background="loadingBackground"
+        >
+          <template v-if="!ranking.loading">
+            <div class="chart-content">
+              <ranking-bar-chart
+                v-if="ranking.data.chartData.length"
+                class-name="rankingChart"
+                :chart-data="ranking.data.chartData"
+                :axis="ranking.data.axis"
+                :series="ranking.data.series"
+                :sort="true"
+                :height="`${620*contrastRadio}px`"
+              />
+              <empty v-else :height="`${620*contrastRadio}px`" />
+            </div>
+          </template>
+          <empty v-else :height="`${600*contrastRadio}px`" />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 /* eslint-disable */
-import StatisticsProgress from "components/statistics-screen/StatisticsProgress";
+import RankingBarChart from "components/statistics-screen/Charts/RankingBarChart";
 import PieChart from "components/statistics-screen/Charts/PieChart";
-import PoleChart from "components/statistics-screen/Charts/PoleChart";
-import GradualBarChart from "components/statistics-screen/Charts/GradualBarChart";
 import Empty from "components/common/Empty";
+
+import areaJson from "mock/guangxi-area.json";
 
 const appNames = [
   "XLONG家里蹲-OA办公系统",
@@ -23,10 +102,8 @@ const appNames = [
 export default {
   name: "SplitScreenThree",
   components: {
-    StatisticsProgress,
     PieChart,
-    PoleChart,
-    GradualBarChart,
+    RankingBarChart,
     Empty
   },
   props: {
@@ -39,23 +116,42 @@ export default {
     contrastRadio: {
       type: Number,
       default: 1
+    },
+    // 地图弹窗消息
+    popupMsg: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  watch: {
+    popupMsg(data) {
+      let arr = [...this.ranking.data.chartData];
+      arr.forEach(e => {
+        if (e.name == data.cityName) {
+          e.count++;
+        }
+      });
+      this.ranking.data.chartData = arr;
     }
   },
   data() {
     return {
-      // 运行环境数据
-      runtime: {
+      ranking: {
         loading: false,
-        title: "运行环境",
-        isSafePersent: 0,
-        chartData: []
-      },
-      // 数据库类型数据
-      databaseType: {
-        loading: false,
-        title: "数据库类型",
-        isSafePersent: 0,
-        chartData: []
+        defaultChartData: [],
+        data: {
+          series: [
+            {
+              name: "受理数",
+              property: "count"
+            }
+          ],
+          axis: {
+            name: "地区",
+            property: "name"
+          },
+          chartData: []
+        }
       },
       // 业务类型数据
       businessType: {
@@ -63,116 +159,42 @@ export default {
         title: "业务类型",
         chartData: []
       },
-      // 服务类型数据
-      serviceType: {
-        loading: false,
-        title: "服务类型",
-        chartData: []
-      },
-      // 服务器使用情况
-      serverUse: {
-        loading: false,
-        activeTab: "CPU",
-        tabs: ["CPU", "RAM", "DISK"],
-        data: {
-          cpuOrder: [],
-          ramOrder: [],
-          diskOrder: []
-        }
-      },
-      // 系统使用情况
-      SystemDev: {
-        // 月度
-        month: {
-          loading: false,
-          data: {
-            series: [
-              {
-                name: "使用次数",
-                property: "useCount"
-              }
-            ],
-            axis: {
-              name: "系统名称",
-              property: "appName"
-            },
-            chartData: []
-          },
-          pager: {
-            pageNo: 1,
-            pageSize: 10,
-            total: 0
-          }
-        },
-        // 季度
-        quarter: {
-          loading: false,
-          data: {
-            series: [
-              {
-                name: "使用次数",
-                property: "useCount"
-              }
-            ],
-            axis: {
-              name: "系统名称",
-              property: "appName"
-            },
-            chartData: []
-          },
-          pager: {
-            pageNo: 1,
-            pageSize: 6,
-            total: 0
-          }
-        }
-      },
       // 定时器
-      requestTimer: null,
-      tabTimer: null,
-      SystemDevTimer: null
+      requestTimer: null
     };
   },
   created() {
     this.init();
   },
   beforeDestroy() {
-    this.clearTimer([this.requestTimer, this.tabTimer, this.SystemDevTimer]);
+    this.clearTimer([this.requestTimer]);
   },
   methods: {
     // 初始化
     init() {
-      this.runtime.loading = true;
-      this.databaseType.loading = true;
+      this.ranking.loading = true;
       this.businessType.loading = true;
-      this.serviceType.loading = true;
-      this.serverUse.loading = true;
-      this.SystemDev.month.loading = true;
-      this.SystemDev.quarter.loading = true;
 
+      this.getRankingData();
       this.getStatisticsData();
-      this.getSystemDevData();
       this.setTimer();
+    },
+    // 获取受理排行数据
+    getRankingData() {
+      /* 测试数据-start */
+      this.ranking.defaultChartData = areaJson.map(e => {
+        return {
+          name: e.name,
+          count: Math.round(Math.random() * 20)
+        };
+      });
+      this.ranking.data.chartData = [...this.ranking.defaultChartData];
+      setTimeout(() => (this.ranking.loading = false), 500);
+      /* 测试数据-end */
     },
     // 获取统计数据
     getStatisticsData() {
       /* 测试数据-start */
-      // 运行环境
-      this.runtime.chartData = [
-        { value: 30, name: "Windows" },
-        { value: 5, name: "Linux" },
-        { value: 5, name: "iOS" },
-        { value: 15, name: "Android" }
-      ];
-
-      // 数据库类型
-      this.databaseType.chartData = [
-        { value: 5, name: "达梦数据库" },
-        { value: 15, name: "Oracal" },
-        { value: 30, name: "SqlServer" }
-      ];
-      this.databaseType.isSafePersent = 9;
-
       // 业务类型
       this.businessType.chartData = [
         { value: 10, name: "智慧城市项目" },
@@ -183,150 +205,8 @@ export default {
         { value: 5, name: "H5场景应用" }
       ];
 
-      // 服务类型
-      this.serviceType.chartData = [
-        { value: 60293, name: "个人服务" },
-        { value: 3004, name: "企业服务" },
-        { value: 20241, name: "其他业务服务" }
-      ];
-
-      // 服务器使用情况
-      this.serverUse.data = {
-        cpuOrder: [
-          {
-            hostIP: "10.1.2.123",
-            hostName: "测试应用1",
-            cpuUsedRatio: 0.0044,
-            ramUsedRatio: 0.7464,
-            diskUsedRatio: 0.2596
-          },
-          {
-            hostIP: "10.1.2.225",
-            hostName: "测试应用2",
-            cpuUsedRatio: 0.0007,
-            ramUsedRatio: 0.9449,
-            diskUsedRatio: 0.7136
-          },
-          {
-            hostIP: "10.1.2.215",
-            hostName: "测试应用3",
-            cpuUsedRatio: 0.0004,
-            ramUsedRatio: 0.2797,
-            diskUsedRatio: 0.7122
-          }
-        ],
-        ramOrder: [
-          {
-            hostIP: "10.1.2.218",
-            hostName: "测试应用4",
-            cpuUsedRatio: 0.0001,
-            ramUsedRatio: 0.9727,
-            diskUsedRatio: 0.4262
-          },
-          {
-            hostIP: "10.1.2.212",
-            hostName: "测试应用5",
-            cpuUsedRatio: 0.0007,
-            ramUsedRatio: 0.9449,
-            diskUsedRatio: 0.7136
-          },
-          {
-            hostIP: "10.1.2.134",
-            hostName: "测试应用6",
-            cpuUsedRatio: 0.0,
-            ramUsedRatio: 0.9108,
-            diskUsedRatio: 0.4133
-          }
-        ],
-        diskOrder: [
-          {
-            hostIP: "10.1.2.165",
-            hostName: "测试应用7",
-            cpuUsedRatio: 0.0,
-            ramUsedRatio: 0.5846,
-            diskUsedRatio: 0.8579
-          },
-          {
-            hostIP: "10.1.2.208",
-            hostName: "测试应用8",
-            cpuUsedRatio: 0.0003,
-            ramUsedRatio: 0.699,
-            diskUsedRatio: 0.854
-          },
-          {
-            hostIP: "10.1.2.156",
-            hostName: "测试应用9",
-            cpuUsedRatio: 0.0001,
-            ramUsedRatio: 0.8313,
-            diskUsedRatio: 0.7305
-          }
-        ]
-      };
-
       setTimeout(() => {
-        this.runtime.loading = false;
-        this.databaseType.loading = false;
         this.businessType.loading = false;
-        this.serviceType.loading = false;
-        this.serverUse.loading = false;
-      }, 500);
-      /* 测试数据-end */
-    },
-    // 定时获取应用使用情况
-    getSystemDevData() {
-      /* 测试数据-start */
-      this.SystemDev.month.data.chartData = [];
-      this.SystemDev.quarter.data.chartData = [];
-
-      for (let i = 0; i < 6; i++) {
-        this.SystemDev.month.data.chartData.push({
-          appName: appNames[i],
-          useCount: Math.round(Math.random() * 50)
-        });
-        this.SystemDev.month.pager.total = this.SystemDev.month.pager.pageSize;
-
-        this.SystemDev.quarter.data.chartData.push({
-          appName: appNames[i],
-          useCount: Math.round(Math.random() * 50)
-        });
-        this.SystemDev.quarter.pager.total = this.SystemDev.quarter.pager.pageSize;
-      }
-
-      // Api.getSystemDevData({
-      //   page: this.SystemDev.month.pager.pageNo,
-      //   pageSize: this.SystemDev.month.pager.pageSize,
-      //   byMonth: true
-      // })
-      //   .then(res => {
-      //     this.SystemDev.month.data.chartData = res.custom.data;
-      //     this.SystemDev.month.pager.total = res.custom.totalCount;
-      //     this.SystemDev.month.loading = false;
-      //     this.SystemDev.month.pager.pageNo++;
-      //     if(this.SystemDev.month.pager.pageNo > res.custom.pageCount){
-      //       this.SystemDev.month.pager.pageNo = 1;
-      //     }
-      //   })
-      //   .catch(err => (this.SystemDev.month.loading = false));
-      // 季度
-      // Api.getSystemDevData({
-      //   page: this.SystemDev.quarter.pager.pageNo,
-      //   pageSize: this.SystemDev.quarter.pager.pageSize,
-      //   byMonth: false
-      // })
-      //   .then(res => {
-      //     this.SystemDev.quarter.data.chartData = res.custom.data;
-      //     this.SystemDev.quarter.pager.total = res.custom.totalCount;
-      //     this.SystemDev.quarter.loading = false;
-      //     this.SystemDev.quarter.pager.pageNo++;
-      //     if(this.SystemDev.quarter.pager.pageNo > res.custom.pageCount){
-      //       this.SystemDev.quarter.pager.pageNo = 1;
-      //     }
-      //   })
-      //   .catch(err => (this.SystemDev.quarter.loading = false));
-
-      setTimeout(() => {
-        this.SystemDev.month.loading = false;
-        this.SystemDev.quarter.loading = false;
       }, 500);
       /* 测试数据-end */
     },
@@ -336,21 +216,6 @@ export default {
       this.requestTimer = setInterval(() => {
         this.getStatisticsData();
       }, 60 * 1000);
-
-      // 服务器使用情况TAB切换
-      let serverUseTabIndex = 0;
-      this.tabTimer = setInterval(() => {
-        serverUseTabIndex++;
-        if (serverUseTabIndex >= this.serverUse.tabs.length) {
-          serverUseTabIndex = 0;
-        }
-        this.serverUse.activeTab = this.serverUse.tabs[serverUseTabIndex];
-      }, 5 * 1000);
-
-      // 应用使用情况分页
-      this.SystemDevTimer = setInterval(() => {
-        this.getSystemDevData();
-      }, 5 * 1000);
     },
     // 清除定时器
     clearTimer(timers) {
@@ -364,149 +229,46 @@ export default {
 
 .statistics-screen-3 {
   padding-left: 15rem * $baseUnit;
-}
 
-.system-situation-layout {
-  justify-content: space-between;
-
-  &-left {
-    margin-right: 10rem * $baseUnit;
-
-    &__top {
-      // height: 400rem * $baseUnit;
-      width: 815rem * $baseUnit;
-      flex-wrap: wrap;
-    }
-  }
-
-  &-right {
-    width: 100%;
-    padding-bottom: 5rem * $baseUnit;
+  &__left{
+    margin-right: 15rem * $baseUnit;
   }
 }
 
-.pie-chart-container {
-  margin-right: 15rem * $baseUnit;
-  margin-bottom: 12rem * $baseUnit;
+.ranking-container {
+  margin-bottom: 15rem * $baseUnit;
+  margin-left: -6rem * $baseUnit;
+  @include background-setting(
+    "../../../../assets/screen_images/img_03.png",
+    33%,
+    655rem * $baseUnit
+  );
+
+  .statistics-frame-title {
+    left: 25rem * $baseUnit;
+  }
+}
+
+.business-type-container {
   color: #99dced;
 
   @include background-setting(
     "../../../../assets/screen_images/img_02.png",
-    400rem * $baseUnit,
-    322rem * $baseUnit
+    32%,
+    335rem * $baseUnit
   );
 
   .statistics-frame-content {
-    padding-left: 20rem * $baseUnit;
-    padding-right: 20rem * $baseUnit;
-    // padding-top: 25rem * $baseUnit;
+    padding-left: 10rem * $baseUnit;
+    padding-right: 10rem * $baseUnit;
   }
 
   .chart-content {
-    margin-left: -105rem * $baseUnit;
+    margin-left: -115rem * $baseUnit;
   }
 
   &:nth-child(2n) {
     margin-right: 0;
-  }
-}
-
-.server-use-container {
-  @include background-setting(
-    "../../../../assets/screen_images/img_04.png",
-    100%,
-    340rem * $baseUnit
-  );
-
-  .statistics-tab {
-    top: 25rem * $baseUnit;
-  }
-
-  .statistics-frame-content {
-    padding-top: 60rem * $baseUnit;
-  }
-}
-
-.system-use {
-  &-container {
-    position: relative;
-
-    @include background-setting(
-      "../../../../assets/screen_images/img_03.png",
-      100%,
-      100%
-    );
-
-    .statistics-frame-title {
-      top: 25rem * $baseUnit;
-      left: 25rem * $baseUnit;
-    }
-
-    .statistics-frame-content {
-      padding: 60rem * $baseUnit 25rem * $baseUnit 15rem * $baseUnit 25rem *
-        $baseUnit;
-    }
-  }
-
-  &-quarter,
-  &-month {
-    height: 455rem * $baseUnit;
-
-    &__title {
-      @include background-setting(
-        "../../../../assets/screen_images/img_shiyong_2.png",
-        100%,
-        50rem * $baseUnit
-      );
-      line-height: 50rem * $baseUnit;
-      padding: 0 15rem * $baseUnit;
-      justify-content: space-between;
-
-      .name {
-        color: #45fbf7;
-      }
-
-      .yellow {
-        color: $color-yellow;
-        font-style: normal;
-        margin-right: 5rem * $baseUnit;
-        font-weight: bold;
-      }
-    }
-
-    &__content {
-      height: 340rem * $baseUnit;
-      margin-top: 15rem * $baseUnit;
-    }
-  }
-
-  &-month {
-    margin-top: 15rem * $baseUnit;
-  }
-}
-
-.statistics {
-  &-tab {
-    position: absolute;
-    top: 32rem * $baseUnit;
-    right: 20rem * $baseUnit;
-    &-item {
-      padding: 10rem * $baseUnit;
-      // background: #092e60;
-      @include background-setting(
-        "../../../../assets/screen_images/img_shiyong.png",
-        100%,
-        100%
-      );
-      margin: 0 4rem * $baseUnit;
-      color: #99dced;
-      &.is-active {
-        color: $color-yellow;
-        font-weight: bold;
-        background-color: #154688;
-        // border-
-      }
-    }
   }
 }
 </style>

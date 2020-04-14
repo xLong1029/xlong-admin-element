@@ -207,8 +207,8 @@ export default {
           borderWidth: 0,
           top: "20%",
           bottom: "10%",
-          left: "8%",
-          right: "5%",
+          left: "7%",
+          right: "3%",
           textStyle: {
             color: "#fff"
           }

@@ -15,6 +15,7 @@
             :contrast-radio="contrastRadio"
             :popup-msg="popupMsg"
             :message="message"
+            @msg-popup="reduceTempMsgs"
           />
         </div>
         <!-- 第二屏 -->
@@ -30,7 +31,6 @@
             :loading-background="loadingBackground"
             :contrast-radio="contrastRadio"
             :popup-msg="popupMsg"
-            :message="message"
           />
         </div>
       </div>
@@ -44,6 +44,10 @@ import SplitScreenOne from "./screen-1";
 import SplitScreenTwo from "./screen-2";
 import SplitScreenThree from "./screen-3";
 import ScreenHeader from "components/statistics-screen/Header";
+
+import areaJson from "mock/guangxi-area.json";
+
+import { timeTrans } from "utils";
 
 import Response from "mixins/response";
 
@@ -84,12 +88,17 @@ export default {
         width: 3500,
         height: 1080
       },
+      // 消息通知
+      message: {
+        loading: false,
+        list: []
+      },
       // 地图弹窗消息
       popupMsg: {},
       // 存储消息队列
       tempMsgs: [],
       // 定时器
-      receiveMsgTimer: null,
+      popupMsgTimer: null,
       msgTimer: null,
       // signalR连接
       connection: null,
@@ -105,7 +114,7 @@ export default {
     this.init();
   },
   beforeDestroy() {
-    this.clearTimer([this.rankingTimer, this.msgTimer]);
+    this.clearTimer([this.popupMsgTimer, this.msgTimer]);
   },
   methods: {
     /**
@@ -134,19 +143,11 @@ export default {
           2;
       }, 100);
     },
-    // 获取受理排行数据
-    getRankingData() {
-      /* 测试数据-start */
-      this.ranking.defaultChartData = areaJson.map(e => {
-        return {
-          name: e.name,
-          count: Math.round(Math.random() * 20)
-        };
-      });
-      this.ranking.data.chartData = [...this.ranking.defaultChartData];
-      setTimeout(() => (this.ranking.loading = false), 500);
-      /* 测试数据-end */
-    },
+    // 初始化
+    init() {
+      this.getDefaultMsgData();
+      this.setTimer();
+    },    
     // 默认独取三条数据
     getDefaultMsgData() {
       /* 测试数据-start */
@@ -197,6 +198,28 @@ export default {
     },
     // 设置定时器
     setTimer() {
+      this.popupMsgTimer = setInterval(() => {
+        // 30秒后若无操作则清除所有消息
+        if (this.countTag > 10) {
+          this.popupMsg = {};
+          this.countTag = 1;
+        } else {
+          this.countTag++;
+        }
+
+        if (this.tempMsgs.length > 0) {
+          this.countTag = 1;
+          let data = this.tempMsgs[0];
+          // 消息动画效果
+          const firstItem = $(".msg-list-item").eq(0);
+          firstItem.css({ width: 0 });
+          firstItem.animate({ width: "100%" }, 1000);
+          this.message.list.unshift(data);
+          // 地图显示消息弹窗
+          this.popupMsg = data;
+        }
+      }, 3 * 1000);
+
       // 模拟signalR每秒获取数据
       this.msgTimer = setInterval(() => {
         this.receiveMessage();
@@ -238,15 +261,15 @@ export default {
     //   width: 33.33%;
     // }
     #statisticsScreen1 {
-      width: 37%;
+      width: 30%;
     }
 
     #statisticsScreen2 {
-      width: 25%;
+      width: 30%;
     }
 
     #statisticsScreen3 {
-      width: 38%;
+      width: 40%;
     }
   }
 }
