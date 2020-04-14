@@ -308,7 +308,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../../../styles/statistics-screen.scss";
+@import "../../../../styles/statistics-screen.scss";
 .statistics-screen-1 {
   padding-right: 15rem * $baseUnit;
 }
@@ -322,7 +322,7 @@ export default {
   margin-bottom: 15rem * $baseUnit;
   margin-right: 10rem * $baseUnit;
   @include background-setting(
-    "../../../assets/screen_images/img_01.png",
+    "../../../../assets/screen_images/img_01.png",
     70%,
     655rem * $baseUnit
   );
@@ -337,7 +337,7 @@ export default {
   width: 100%;
   margin-bottom: 15rem * $baseUnit;
   @include background-setting(
-    "../../../assets/screen_images/img_03.png",
+    "../../../../assets/screen_images/img_03.png",
     30%,
     655rem * $baseUnit
   );
@@ -351,7 +351,7 @@ export default {
   width: 100%;
   height: 350rem * $baseUnit;
   @include background-setting(
-    "../../../assets/screen_images/imgs_bg_Tl.png",
+    "../../../../assets/screen_images/imgs_bg_Tl.png",
     100%,
     340rem * $baseUnit
   );

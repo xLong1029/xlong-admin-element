@@ -31,7 +31,7 @@ import ScreenHeader from "components/statistics-screen/Header";
 import Response from "mixins/response";
 
 export default {
-  name: "StatisticsScreen",
+  name: "StatisticsScreenPageOne",
   components: {
     SplitScreenOne,
     SplitScreenTwo,
@@ -81,7 +81,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import "../../styles/statistics-screen.scss";
+@import "../../../styles/statistics-screen.scss";
 .statistics-screen {
   color: $color-light-blue;
   background: #000a25;
@@ -92,7 +92,7 @@ export default {
   &-container {
     width: 100%;
     @include background-setting(
-      "../../assets/screen_images/img_bg.png",
+      "../../../assets/screen_images/img_bg.png",
       100%,
       100%
     );

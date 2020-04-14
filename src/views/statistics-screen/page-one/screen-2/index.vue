@@ -184,12 +184,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../../../styles/statistics-screen.scss";
-@import "../../../styles/start.scss";
+@import "../../../../styles/statistics-screen.scss";
+@import "../../../../styles/start.scss";
 
 .statistics-screen-2 {
   overflow: hidden;
-  background: url("../../../assets/screen_images/img_zhujian.png") center center
+  background: url("../../../../assets/screen_images/img_zhujian.png") center center
     no-repeat;
   background-size: 60%;
   background-position: 50% 28%;
@@ -239,7 +239,7 @@ export default {
 
       &.left {
         @include background-setting(
-          "../../../assets/screen_images/img_zongshu.png",
+          "../../../../assets/screen_images/img_zongshu.png",
           232rem * $baseUnit,
           189rem * $baseUnit
         );
@@ -251,7 +251,7 @@ export default {
 
       &.right {
         @include background-setting(
-          "../../../assets/screen_images/img_shuliang.png",
+          "../../../../assets/screen_images/img_shuliang.png",
           232rem * $baseUnit,
           189rem * $baseUnit
         );
@@ -286,7 +286,7 @@ export default {
   z-index: 99;
 
   @include background-setting(
-    "../../../assets/screen_images/img_04.png",
+    "../../../../assets/screen_images/img_04.png",
     100%,
     340rem * $baseUnit
   );

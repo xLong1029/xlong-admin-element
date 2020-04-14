@@ -18,7 +18,7 @@ import { mapState } from "vuex";
 const whiteList = ["Home", "ExpertsList", "AccountSettings"];
 
 export default {
-  name: "Layout",
+  name: "LayoutDefault",
   components: {
     AppMain,
     Navbar,

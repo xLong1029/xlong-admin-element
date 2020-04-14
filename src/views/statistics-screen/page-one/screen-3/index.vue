@@ -565,7 +565,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../../../styles/statistics-screen.scss";
+@import "../../../../styles/statistics-screen.scss";
 
 .statistics-screen-3 {
   padding-left: 15rem * $baseUnit;
@@ -596,7 +596,7 @@ export default {
   color: #99dced;
 
   @include background-setting(
-    "../../../assets/screen_images/img_02.png",
+    "../../../../assets/screen_images/img_02.png",
     400rem * $baseUnit,
     322rem * $baseUnit
   );
@@ -618,7 +618,7 @@ export default {
 
 .server-use-container {
   @include background-setting(
-    "../../../assets/screen_images/img_04.png",
+    "../../../../assets/screen_images/img_04.png",
     100%,
     340rem * $baseUnit
   );
@@ -637,7 +637,7 @@ export default {
     position: relative;
 
     @include background-setting(
-      "../../../assets/screen_images/img_03.png",
+      "../../../../assets/screen_images/img_03.png",
       100%,
       100%
     );
@@ -659,7 +659,7 @@ export default {
 
     &__title {
       @include background-setting(
-        "../../../assets/screen_images/img_shiyong_2.png",
+        "../../../../assets/screen_images/img_shiyong_2.png",
         100%,
         50rem * $baseUnit
       );
@@ -699,7 +699,7 @@ export default {
       padding: 10rem * $baseUnit;
       // background: #092e60;
       @include background-setting(
-        "../../../assets/screen_images/img_shiyong.png",
+        "../../../../assets/screen_images/img_shiyong.png",
         100%,
         100%
       );
