@@ -5,7 +5,7 @@
 
 <script>
 /* eslint-disable */
-// 参考地址：https://gallery.echartsjs.com/editor.html?c=xdExzKlpOh
+// 参考地址：https://gallery.echartsjs.com/editor.html?c=xBkVnciA0b
 import echarts from "echarts";
 require("echarts/theme/macarons"); // echarts theme
 import resize from "mixins/chart/resize";
@@ -109,7 +109,11 @@ export default {
   },
   watch: {
     popupMsg(data) {
-      this.getMsg();
+      const keys = Object.keys(this.popupMsg);
+      // 非空对象
+      if (keys.length) {
+        this.getMsg();
+      }
     }
   },
   data() {
@@ -152,6 +156,20 @@ export default {
           bottom: 0,
           top: "12%"
         },
+        // 地图选取控件
+        visualMap: {
+          show: false,
+          min: 0,
+          max: 500,
+          left: "left",
+          top: "bottom",
+          text: ["高", "低"], // 文本，默认为数值文本
+          calculable: true,
+          seriesIndex: [0],
+          inRange: {
+            color: ["#0f0c29", "#3a3d9a", "#223db3"]
+          }
+        },
         // 地图
         geo: {
           map: "广西",
@@ -177,13 +195,77 @@ export default {
           }
         },
         series: [
-          // 坐标点
+          // 地图样式，配合控件使用
+          {
+            type: "map",
+            map: "广西",
+            geoIndex: 0,
+            aspectScale: 1, //长宽比
+            label: {
+              normal: {
+                show: false
+              },
+              emphasis: {
+                show: false,
+                textStyle: {
+                  color: "#fff"
+                }
+              }
+            },
+            roam: true,
+            itemStyle: {
+              normal: {
+                areaColor: "#04235b",
+                borderColor: "#0692a4"
+              },
+              emphasis: {
+                areaColor: "#011031"
+              }
+            },
+            animation: false,
+            data: this.chartData
+          },
+          // 涟漪坐标点
           {
             type: "effectScatter",
             coordinateSystem: "geo",
             z: 1,
             data: coordinateData,
-            symbolSize: 3 * this.scale,
+            showEffectOn: "render",
+            rippleEffect: {
+              brushType: "stroke"
+            },
+            symbolSize: val => {
+              let size = 0;
+
+              const keys = Object.keys(this.popupMsg);
+              // 非空对象
+              if (keys.length) {
+                if (
+                  val[1] === this.popupMsg.latitude &&
+                  val[0] === this.popupMsg.longitude
+                ) {
+                  size = 20;
+                }
+              }
+              return size * this.scale;
+            },
+            label: {
+              normal: {
+                show: false
+              }
+            },
+            itemStyle: {
+              color: "rgba(4, 191, 255, 0.75)"
+            }
+          },
+          // 坐标点
+          {
+            type: "scatter",
+            coordinateSystem: "geo",
+            z: 10,
+            data: coordinateData,
+            symbolSize: 5 * this.scale,
             label: {
               normal: {
                 show: true,
@@ -195,43 +277,37 @@ export default {
               color: "#08baec"
             }
           },
-          {
-            type: "lines",
-            zlevel: 1,
-            effect: {
-              show: true,
-              period: 3,
-              trailLength: 0.7,
-              color: "#fff",
-              symbolSize: 3
-            },
-            lineStyle: {
-              normal: {
-                color: "#3ed4ff",
-                width: 0,
-                curveness: 0.2
-              }
-            },
-            animationDelayUpdate: 5000,
-            data: []
-          },
           // 数值点
           {
             name: "点",
             type: "scatter",
             coordinateSystem: "geo",
             symbol: "pin",
-            symbolSize: 50,
+            symbolSize: val => {
+              let size = 50;
+
+              const keys = Object.keys(this.popupMsg);
+              // 非空对象
+              if (keys.length) {
+                if (
+                  val[1] === this.popupMsg.latitude &&
+                  val[0] === this.popupMsg.longitude
+                ) {
+                  size = 80;
+                }
+              }
+              return size * this.scale;
+            },
             label: {
               normal: {
                 show: true,
-                formatter: function(val) {
+                formatter: val => {
                   const data = val.data.value[2];
                   return data;
                 },
                 textStyle: {
                   color: "#fff",
-                  fontSize: 12
+                  fontSize: 12 * this.scale
                 }
               }
             },
@@ -240,7 +316,7 @@ export default {
                 color: "#F62157" //标志颜色
               }
             },
-            zlevel: 26,
+            zlevel: 10,
             data: this.convertData(this.chartData)
           }
         ]

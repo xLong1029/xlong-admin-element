@@ -187,13 +187,11 @@ export default {
       this.countTag = 1;
       // 将消息存储至队列，用到地图上显示
       if (this.tempMsgs.length <= 10) {
-        console.log(res);
         this.tempMsgs.push(res); // 从结尾添加
       }
     },
     // 减少队列消息
     reduceTempMsgs(msg) {
-      console.log(this.tempMsgs, this.msg);
       if (this.tempMsgs.length > 0) {
         this.tempMsgs.shift(); // 从开头删除
       }

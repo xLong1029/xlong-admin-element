@@ -4,7 +4,7 @@
     <div class="statistics-screen-3__left">
       <!-- 排行榜 -->
       <div class="ranking-container statistics-frame">
-        <span class="statistics-frame-title">服务用户排行</span>
+        <span class="statistics-frame-title">当日新增用户排行</span>
         <div
           class="statistics-frame-content"
           v-loading="ranking.loading"

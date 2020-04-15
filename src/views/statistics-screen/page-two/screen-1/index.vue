@@ -143,7 +143,7 @@ export default {
         this.map.geoCoordMap[areaJson[i].name] = areaJson[i].coordinate;
         this.map.chartData.push({
           name: areaJson[i].name,
-          value: Math.round(Math.random() * 10)
+          value: Math.round(Math.random() * 300) + 10
         });
       }
       setTimeout(() => (this.map.loading = false), 500);

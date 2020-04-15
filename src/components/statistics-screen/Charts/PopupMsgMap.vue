@@ -107,7 +107,7 @@ export default {
       const keys = Object.keys(data);
       // 非空对象
       if (keys.length) {
-        this.getMsg(true);
+        this.getMsg();
       } else {
         this.initChart();
       }
