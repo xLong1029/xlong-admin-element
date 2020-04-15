@@ -71,49 +71,49 @@
           v-loading="projects.loading"
           element-loading-background="loadingBackground"
         >
-          <template v-if="projects.data.length">
+          <template v-if="projects.data.length && chartsVisiable">
             <div class="charts-container flex">
               <div
-              v-for="(item, index) in projects.data"
-              :key="index"
-              class="charts-item"
-              :class="`charts-counts-${grid}`"
-            >
-              <h4 class="charts-item-title">{{ item.title }}</h4>
-              <div class="charts-item-summary flex">
-                <div
-                  class="charts-item-summary__block"
-                  v-for="(sub, subIndex) in item.tabBarData"
-                  :key="subIndex"
-                >
-                  <h4>{{ sub.value }}</h4>
-                  <span>{{ sub.label }}</span>
+                v-for="(item, index) in projects.data"
+                :key="index"
+                class="charts-item"
+                :class="`charts-counts-${grid}`"
+              >
+                <h4 class="charts-item-title">{{ item.title }}</h4>
+                <div class="charts-item-summary flex">
+                  <div
+                    class="charts-item-summary__block"
+                    v-for="(sub, subIndex) in item.tabBarData"
+                    :key="subIndex"
+                  >
+                    <h4>{{ sub.value }}</h4>
+                    <span>{{ sub.label }}</span>
+                  </div>
+                </div>
+                <div class="charts-item-chart">
+                  <project-statistics-chat
+                    v-if="item.chartType === 'bar'"
+                    :key="`chart-${index}`"
+                    :class-name="`chart-index`"
+                    width="100%"
+                    :height="`${grid === 4 ? 340 * contrastRadio +'px' : 180 * contrastRadio + 'px'}`"
+                    :chart-data="item.chart"
+                    :title="item.chart.title"
+                    :scale="contrastRadio"
+                  ></project-statistics-chat>
+                  <projects-pie-chart
+                    v-else
+                    :key="`pie-${index}`"
+                    :class-name="`chart-${index}`"
+                    width="100%"
+                    :height="`${340 * contrastRadio}px`"
+                    :chart-data="item.chart"
+                    :scale="contrastRadio"
+                    :title="item.chart.title"
+                  ></projects-pie-chart>
                 </div>
               </div>
-              <div class="charts-item-chart">
-                <project-statistics-chat
-                  v-if="item.chartType === 'bar'"
-                  :key="`chart-${index}`"
-                  :class-name="`chart-index`"
-                  width="100%"
-                  :height="`${grid === 4 ? 340 * contrastRadio +'px' : 180 * contrastRadio + 'px'}`"
-                  :chart-data="item.chart"
-                  :title="item.chart.title"
-                  :scale="contrastRadio"
-                ></project-statistics-chat>
-                <projects-pie-chart
-                  v-else
-                  :key="`pie-${index}`"
-                  :class-name="`chart-${index}`"
-                  width="100%"
-                  :height="`${340 * contrastRadio}px`"
-                  :chart-data="item.chart"
-                  :scale="contrastRadio"
-                  :title="item.chart.title"
-                ></projects-pie-chart>
-              </div>
             </div>
-            </div>            
           </template>
           <empty v-else :height="`${800*contrastRadio}px`" />
         </div>
@@ -170,6 +170,7 @@ export default {
       this.ranking.data.chartData = arr;
     },
     activeIndex() {
+      this.chartsVisiable = false;
       const chart = JSON.parse(
         JSON.stringify(JsonData.statisticsSystemsChart[this.activeIndex].data)
       );
@@ -180,9 +181,14 @@ export default {
       });
 
       this.projects.data = chart;
-      this.grid = this.projects.data.length % 4 === 0 ? 4 : this.projects.data.length % 4;
 
-      console.log(this.grid);
+      this.grid =
+        this.projects.data.length % 4 === 0 ? 4 : this.projects.data.length % 4;
+      
+      // 解决切换tab时，图表宽度保留上一次的问题
+      setTimeout(() => {
+        this.chartsVisiable = true;
+      }, 0);
     }
   },
   data() {
@@ -242,6 +248,7 @@ export default {
         data: []
       },
       activeIndex: 0,
+      chartsVisiable: true,
       // 栅格
       grid: 1,
       tabTimer: null
@@ -307,7 +314,7 @@ export default {
     },
     // Tab切换
     changeTab(index) {
-      this.activeIndex = index;      
+      this.activeIndex = index;
     },
     // 设置定时器
     setTimer() {
@@ -409,8 +416,8 @@ export default {
     100%,
     99.5%
   );
-  
-  .charts-container{
+
+  .charts-container {
     flex-wrap: wrap;
   }
 
