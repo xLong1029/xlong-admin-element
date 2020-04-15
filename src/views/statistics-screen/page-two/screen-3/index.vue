@@ -337,7 +337,6 @@ export default {
 @import "../../../../styles/statistics-screen.scss";
 
 .statistics-screen-3 {
-  padding-left: 15rem * $baseUnit;
   justify-content: space-between;
 
   &__left {

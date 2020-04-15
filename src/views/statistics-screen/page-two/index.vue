@@ -236,18 +236,14 @@ export default {
 @import "../../../styles/statistics-screen.scss";
 .statistics-screen {
   color: $color-light-blue;
-  background: #000a25;
+  background: #010f39;
   height: 100vh;
   overflow-y: hidden;
   overflow-x: auto;
 
   &-container {
     width: 100%;
-    @include background-setting(
-      "../../../assets/screen_images/img_bg.png",
-      100%,
-      100%
-    );
+    background: #000e38;
   }
 
   &-content {

@@ -3,42 +3,38 @@
   <div id="bgStars" class="statistics-screen-2">
     <!-- 大楼 -->
     <div class="building-container">
+      <div class="income-container">
+        <div class="income-title">2020年总收益</div>
+        <div class="income-content">123456,89<span class="unit">元</span></div>
+      </div>
       <!-- 数量统计 -->
-      <div class="count-container">
+      <div class="count-container flex">
         <!-- 开发应用数量 -->
-        <div class="systems">
-          <div class="count-card-wrapper left">
-            <div class="count-card-container">
-              <div class="count-card-content" :style="{ color: '#ff3333' }">{{ systemsCount.count }}</div>
-              <div class="count-card-title">{{ systemsCount.name }}</div>
-            </div>
+        <div class="count-card-wrapper systems">
+          <div class="count-card-container">
+            <div class="count-card-content">{{ systemsCount.count }}</div>
+            <div class="count-card-title">{{ systemsCount.name }}</div>
           </div>
         </div>
         <!-- 服务企业数量 -->
-        <div class="company">
-          <div class="count-card-wrapper left">
-            <div class="count-card-container">
-              <div class="count-card-content" :style="{ color: '#2cf768' }">{{ companyCount.count }}</div>
-              <div class="count-card-title">{{ companyCount.name }}</div>
-            </div>
-          </div>
-        </div>
-        <!-- 监控服务器数量 -->
-        <div class="server">
-          <div class="count-card-wrapper right">
-            <div class="count-card-container">
-              <div class="count-card-content" :style="{ color: '#fed539' }">{{ serverCount.count }}</div>
-              <div class="count-card-title">{{ serverCount.name }}</div>
-            </div>
+        <div class="count-card-wrapper company">
+          <div class="count-card-container">
+            <div class="count-card-content">{{ companyCount.count }}</div>
+            <div class="count-card-title">{{ companyCount.name }}</div>
           </div>
         </div>
         <!-- 服务用户数量 -->
-        <div class="user">
-          <div class="count-card-wrapper right">
-            <div class="count-card-container">
-              <div class="count-card-content" :style="{ color: '#00fee9' }">{{ userCount.count }}</div>
-              <div class="count-card-title">{{ userCount.name }}</div>
-            </div>
+        <div class="count-card-wrapper user">
+          <div class="count-card-container">
+            <div class="count-card-content">{{ userCount.count }}</div>
+            <div class="count-card-title">{{ userCount.name }}</div>
+          </div>
+        </div>
+        <!-- 监控服务器数量 -->
+        <div class="count-card-wrapper server">
+          <div class="count-card-container">
+            <div class="count-card-content">{{ serverCount.count }}</div>
+            <div class="count-card-title">{{ serverCount.name }}</div>
           </div>
         </div>
       </div>
@@ -60,6 +56,7 @@
               :axis="areaStatistics.axis"
               :series="areaStatistics.series"
               :sort="true"
+              width="100%"
               :height="`${300*contrastRadio}px`"
             />
             <empty v-else :height="`${280*contrastRadio}px`" />
@@ -141,7 +138,7 @@ export default {
             name: "监控服务器",
             property: "servicer",
             type: "line"
-          },
+          }
         ],
         axis: {
           property: "name"
@@ -207,11 +204,12 @@ export default {
 @import "../../../../styles/start.scss";
 
 .statistics-screen-2 {
+  padding: 0 15rem * $baseUnit;
   overflow: hidden;
-  background: url("../../../../assets/screen_images/img_zhujian.png") center
+  background: url("../../../../assets/screen_images/img_background_2.jpg") center
     center no-repeat;
-  background-size: 55%;
-  background-position: 50% 28%;
+  background-size: 100%;
+  background-position: 50% 12%;
 }
 
 .building-container {
@@ -220,83 +218,82 @@ export default {
   margin-bottom: 15rem * $baseUnit;
 }
 
+.income {
+  &-container {
+    width: 40%;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 150rem * $baseUnit;
+  }
+
+  &-title {
+    font-size: 24rem * $baseUnit;
+    color: #fff;
+  }
+
+  &-content {
+    font-size: 60rem * $baseUnit;
+    color: #ec2c68;
+    background-image: -webkit-linear-gradient(-180deg, #ec2c68, #ffa42e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    .unit{
+      font-size:24rem * $baseUnit;
+    }
+  }
+  
+}
+
 .count {
   &-container {
-    width: 100%;
-
-    .systems,
-    .company,
-    .server,
-    .user {
-      position: absolute;
-    }
-
-    .systems {
-      top: 350rem * $baseUnit;
-      left: 80rem * $baseUnit;
-    }
-
-    .company {
-      top: 110rem * $baseUnit;
-      left: 140rem * $baseUnit;
-    }
-
-    .server {
-      top: 280rem * $baseUnit;
-      right: 70rem * $baseUnit;
-    }
-
-    .user {
-      top: 50rem * $baseUnit;
-      right: 150rem * $baseUnit;
-    }
+    width: 90%;
+    margin: 0 auto;
+    padding-top: 40rem * $baseUnit;
   }
 
   &-card {
     &-wrapper {
+      width: 100%;
       position: relative;
+      height: 80rem * $baseUnit;
+      padding-left: 80rem * $baseUnit;
 
-      &.left {
-        @include background-setting(
-          "../../../../assets/screen_images/img_zongshu.png",
-          232rem * $baseUnit,
-          189rem * $baseUnit
-        );
-
-        .count-card-container {
-          left: 15rem * $baseUnit;
-        }
+      &.systems {
+        background: url("../../../../assets/screen_images/icon-systems.png")
+          no-repeat;
       }
 
-      &.right {
-        @include background-setting(
-          "../../../../assets/screen_images/img_shuliang.png",
-          232rem * $baseUnit,
-          189rem * $baseUnit
-        );
-        .count-card-container {
-          right: 15rem * $baseUnit;
-        }
+      &.company {
+        background: url("../../../../assets/screen_images/icon-company.png")
+          no-repeat;
+      }
+
+      &.server {
+        background: url("../../../../assets/screen_images/icon-server.png")
+          no-repeat;
+      }
+
+      &.user {
+        background: url("../../../../assets/screen_images/icon-user.png")
+          no-repeat;
       }
     }
     &-container {
       position: absolute;
-      width: 185rem * $baseUnit;
-      height: 78rem * $baseUnit;
-      text-align: center;
       top: 0;
     }
 
     &-title {
-      color: #2fc2c3;
-      padding: 5rem * $baseUnit;
-      padding: 5rem * $baseUnit;
+      color: #fff;
       font-size: 14rem * $baseUnit;
     }
     &-content {
-      font-size: 24rem * $baseUnit;
+      color: #ec2c68;
+      font-size: 26rem * $baseUnit;
       font-weight: bold;
-      padding: 10rem * $baseUnit;
+      padding: 10rem * $baseUnit 0;
     }
   }
 }
@@ -310,7 +307,7 @@ export default {
     340rem * $baseUnit
   );
 
-  .statistics-frame-content{
+  .statistics-frame-content {
     padding-top: 20rem * $baseUnit;
   }
 }

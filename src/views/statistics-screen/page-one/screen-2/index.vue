@@ -189,7 +189,7 @@ export default {
 
 .statistics-screen-2 {
   overflow: hidden;
-  background: url("../../../../assets/screen_images/img_zhujian.png") center center
+  background: url("../../../../assets/screen_images/img_background_1.png") center center
     no-repeat;
   background-size: 60%;
   background-position: 50% 28%;

@@ -159,7 +159,6 @@ export default {
 <style lang="scss" scoped>
 @import "../../../../styles/statistics-screen.scss";
 .statistics-screen-1 {
-  padding-right: 15rem * $baseUnit;
 }
 
 .accpet-container,
