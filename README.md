@@ -43,6 +43,8 @@ xlong-admin-element 是一套基于 Vue + Element +Bmob 开发的单页面客户
 
 ![Image text](static/images/screen-5.gif)
 
+![Image text](static/images/screen-6.gif)
+
 ## 目录结构
 
 ```
