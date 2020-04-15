@@ -185,7 +185,7 @@ export default {
       this.grid =
         this.projects.data.length % 4 === 0 ? 4 : this.projects.data.length % 4;
       
-      // 解决切换tab时，图表宽度保留上一次的问题
+      // 切换tab时，图表宽度保留上一次栅格的宽度
       setTimeout(() => {
         this.chartsVisiable = true;
       }, 0);
@@ -319,12 +319,12 @@ export default {
     // 设置定时器
     setTimer() {
       // Tab
-      // this.tabTimer = setInterval(() => {
-      //   this.activeIndex =
-      //     this.activeIndex + 1 >= this.projectsTab.length
-      //       ? 0
-      //       : this.activeIndex + 1;
-      // }, 5 * 1000);
+      this.tabTimer = setInterval(() => {
+        this.activeIndex =
+          this.activeIndex + 1 >= this.projectsTab.length
+            ? 0
+            : this.activeIndex + 1;
+      }, 5 * 1000);
     },
     // 清除定时器
     clearTimer(timers) {

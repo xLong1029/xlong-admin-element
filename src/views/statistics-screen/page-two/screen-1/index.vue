@@ -12,8 +12,9 @@
         >
           <template v-if="!map.loading">
             <div v-if="map.geoCoordMap" class="chart-content">
-              <popup-msg-map
+              <statistics-msg-map
                 :geo-coord-map="map.geoCoordMap"
+                :chart-data="map.chartData"
                 :popup-msg="popupMsg"
                 :width="`${1000*contrastRadio}px`"
                 :height="`${800*contrastRadio}px`"
@@ -68,14 +69,14 @@
 <script>
 /* eslint-disable */
 import Empty from "components/common/Empty";
-import PopupMsgMap from "components/statistics-screen/Charts/PopupMsgMap";
+import StatisticsMsgMap from "components/statistics-screen/Charts/StatisticsMsgMap";
 
 import areaJson from "mock/guangxi-area.json";
 
 export default {
   name: "SplitScreenOne",
   components: {    
-    PopupMsgMap,
+    StatisticsMsgMap,
     Empty
   },
   props: {
@@ -103,13 +104,25 @@ export default {
       default: () => ({})
     }
   },
+  watch: {
+    popupMsg(data) {
+      let arr = [...this.map.chartData];
+      arr.forEach(e => {
+        if (e.name == data.cityName) {
+          e.value++;
+        }
+      });
+      this.map.chartData = arr;
+    },
+  },
   data() {
     return {
       // 地图数据
       map: {
         loading: false,
         popupMsg: {},
-        geoCoordMap: {}
+        geoCoordMap: {},
+        chartData: []
       }
     };
   },
@@ -128,6 +141,10 @@ export default {
       /* 测试数据-start */
       for (let i = 0; i < areaJson.length; i++) {
         this.map.geoCoordMap[areaJson[i].name] = areaJson[i].coordinate;
+        this.map.chartData.push({
+          name: areaJson[i].name,
+          value: Math.round(Math.random() * 10)
+        });
       }
       setTimeout(() => (this.map.loading = false), 500);
       /* 测试数据-end */

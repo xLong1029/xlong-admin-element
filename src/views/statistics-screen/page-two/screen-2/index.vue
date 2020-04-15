@@ -233,22 +233,22 @@ export default {
 
     .systems {
       top: 350rem * $baseUnit;
-      left: 70rem * $baseUnit;
+      left: 80rem * $baseUnit;
     }
 
     .company {
       top: 110rem * $baseUnit;
-      left: 120rem * $baseUnit;
+      left: 140rem * $baseUnit;
     }
 
     .server {
       top: 280rem * $baseUnit;
-      right: 50rem * $baseUnit;
+      right: 70rem * $baseUnit;
     }
 
     .user {
       top: 50rem * $baseUnit;
-      right: 130rem * $baseUnit;
+      right: 150rem * $baseUnit;
     }
   }
 

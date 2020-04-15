@@ -13,7 +13,7 @@ import { deepClone } from "utils";
 import geoJson from "mock/guangxi.json";
 
 export default {
-  name: "PopupMsgMap",
+  name: "StatisticsMsgMap",
   mixins: [resize],
   props: {
     // 图表名称
@@ -27,6 +27,11 @@ export default {
       default: () => ({
         南宁市: [108.467414, 23.055856]
       })
+    },
+    // 图表数据
+    chartData: {
+      type: Array,
+      default: () => []
     },
     // 弹窗消息
     popupMsg: {
@@ -104,21 +109,14 @@ export default {
   },
   watch: {
     popupMsg(data) {
-      const keys = Object.keys(data);
-      // 非空对象
-      if (keys.length) {
-        this.getMsg(true);
-      } else {
-        this.initChart();
-      }
+      this.getMsg();
     }
   },
   data() {
     return {
       chart: null,
       option: {},
-      linesData: [],
-      popMsgZIndex: 10,
+      linesData: []
     };
   },
   mounted() {
@@ -145,83 +143,9 @@ export default {
         });
       }
 
-      // 处理消息显示数据格式
-      let msgSeries = [];
-      this.colorList.forEach(color => {
-        msgSeries.push({
-          type: "effectScatter",
-          coordinateSystem: "geo",
-          z: this.popMsgZIndex,
-          data: [],
-          symbolSize: 10 * this.scale,
-          label: {
-            normal: {
-              show: true,
-              formatter: function(params) {
-                const msg = params.data;
-
-                // // 截取字符串
-                // const num = msg.operator.length > 12 ? msg.operator.length : 12;
-                // let appName = '';
-                // for(let i = 0; i <= msg.appName.length/num; i++){
-                //   appName += msg.appName.substring(i*num, (i+1)*num) + '\n';
-                // }
-                // let matter = '';
-                // for(let i = 0; i <= msg.matter.length/num; i++){
-                //   matter += msg.matter.substring(i*num, (i+1)*num) + '\n';
-                // }
-
-                // return `{fline|用户：${msg.operator}}\n{tline|系统：${msg.appName}}{tline|${msg.action}：${msg.matter}}`;
-                return `{tline|用户：${msg.operator}}\n{tline|使用系统：${msg.appName}}`;
-              },
-              position: "top",
-              backgroundColor: color,
-              padding: [0, 0],
-              borderRadius: 3 * this.scale,
-              lineHeight: 24 * this.scale,
-              color: "#ffffff",
-              rich: {
-                fline: {
-                  padding: [
-                    0,
-                    10 * this.scale,
-                    5 * this.scale,
-                    10 * this.scale
-                  ],
-                  color: "#ffffff"
-                },
-                tline: {
-                  padding: [0, 10 * this.scale, 0, 10 * this.scale],
-                  color: "#ffffff"
-                }
-              }
-            },
-            emphasis: {
-              show: true
-            }
-          },
-          itemStyle: {
-            color
-          }
-        });
-      });
-
-      var planePath =
-        "path://M.6,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705";
-
       this.option = {
         backgroundColor: this.background,
-        // title: {
-        //   text: this.title,
-        //   subtext: "",
-        //   left: "left",
-        //   textStyle: {
-        //     color: "#fff"
-        //   }
-        // },
-        // tooltip: {
-        //   trigger: "item"
-        // },
+
         grid: {
           left: 0,
           right: 0,
@@ -253,7 +177,6 @@ export default {
           }
         },
         series: [
-          ...msgSeries,
           // 坐标点
           {
             type: "effectScatter",
@@ -291,79 +214,73 @@ export default {
             },
             animationDelayUpdate: 5000,
             data: []
+          },
+          // 数值点
+          {
+            name: "点",
+            type: "scatter",
+            coordinateSystem: "geo",
+            symbol: "pin",
+            symbolSize: 50,
+            label: {
+              normal: {
+                show: true,
+                formatter: function(val) {
+                  const data = val.data.value[2];
+                  return data;
+                },
+                textStyle: {
+                  color: "#fff",
+                  fontSize: 12
+                }
+              }
+            },
+            itemStyle: {
+              normal: {
+                color: "#F62157" //标志颜色
+              }
+            },
+            zlevel: 26,
+            data: this.convertData(this.chartData)
           }
         ]
       };
 
       this.chart.setOption(this.option, true);
-
-      // 测试数据-建议保留做调试
-      // const timer = setInterval(() => {
-      //   var runidx = Math.floor(Math.random() * 3);
-      //   this.option.series[runidx].data = [
-      //     {
-      //       name: "",
-      //       operator: "测试内容",
-      //       appName: "",
-      //       matter: "",
-      //       value: [108.467414, 23.055856] // 坐标
-      //     }
-      //   ];
-      //   if(this.chart){
-      //     this.chart.setOption(this.option, true);
-      //   }
-      // }, 3000);
     },
     getMsg() {
-      if (!this.popupMsg){
+      if (!this.popupMsg) {
         this.clearAllMsg();
-        return
+        return;
       }
-
-      // 弹窗配置
-      const index = Math.floor(Math.random() * this.colorList.length);
-      if (this.popMsgZIndex > 9999) {
-        this.popMsgZIndex = 10;
-      }
-      this.popMsgZIndex += 1;
-      this.option.series[index].z = this.popMsgZIndex; // 新消息永远置于顶层
-      this.option.series[index].data = [
-        {
-          name: "",
-          operator: this.popupMsg.operator,
-          appName: this.popupMsg.appName,
-          action: this.popupMsg.action,
-          matter: this.popupMsg.matter,
-          value: [this.popupMsg.longitude, this.popupMsg.latitude, 5] // 坐标
-        }
-      ];
-
-      // 飞线配置
-      let linesSeries = this.option.series.find(e => e.type === 'lines');
-
-      const fromCoord = this.popupMsg.operationType === 1 ? [108.467414, 23.055856] : [this.popupMsg.longitude, this.popupMsg.latitude];
-      const toCoord = this.popupMsg.operationType === 1 ? [this.popupMsg.longitude, this.popupMsg.latitude] : [108.467414, 23.055856];
-
-      linesSeries.data = [
-        [{ coord: fromCoord  },{ coord: toCoord }]
-      ];      
-
-      linesSeries.effect.color = this.colorList[index];
 
       // 返回当前消息
       this.$emit("msg-popup", this.popupMsg);
 
       if (this.chart) {
-        this.chart.setOption(this.option, true);
+        this.initChart();
       }
     },
-    clearAllMsg(){
-      this.linesData = [];
+    clearAllMsg() {
       this.option.series.forEach(e => {
-        if(e.type === 'effectScatter' || e.type === 'lines'){
+        if (e.type === "scatter") {
           e.data = [];
         }
-      })
+      });
+    },
+    // 转换数据
+    convertData(data) {
+      var res = [];
+      for (var i = 0; i < data.length; i++) {
+        var geoCoord = this.geoCoordMap[data[i].name];
+        if (geoCoord) {
+          res.push({
+            name: data[i].name,
+            value: geoCoord.concat(data[i].value)
+          });
+        }
+      }
+      return res;
     }
   }
 };
