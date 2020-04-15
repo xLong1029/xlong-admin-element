@@ -123,11 +123,6 @@ export default {
         loading: false,
         series: [
           {
-            name: "服务器",
-            property: "servicer",
-            type: "bar"
-          },
-          {
             name: "服务企业",
             property: "company",
             type: "bar"
@@ -135,13 +130,18 @@ export default {
           {
             name: "服务用户",
             property: "user",
-            type: "line"
+            type: "bar"
           },
           {
             name: "开发应用",
             property: "systems",
             type: "line"
-          }
+          },
+          {
+            name: "监控服务器",
+            property: "servicer",
+            type: "line"
+          },
         ],
         axis: {
           property: "name"
@@ -179,7 +179,7 @@ export default {
           name: e.name,
           servicer: Math.round(Math.random() * 3) + 3,
           company: Math.round(Math.random() * 20) + 15,
-          user: Math.round(Math.random() * 15) + 20,
+          user: Math.round(Math.random() * 15) + 30,
           systems: Math.round(Math.random() * 20) + 20
         };
       });

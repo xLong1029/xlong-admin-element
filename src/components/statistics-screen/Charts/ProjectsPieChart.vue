@@ -77,7 +77,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.initChart()
+      this.initChart();
     })
   },
   beforeDestroy() {
@@ -98,7 +98,7 @@ export default {
         backgroundColor: this.background,
         legend: {
           type: 'scroll',
-          bottom: 30 * this.scale,
+          bottom: 0,
           itemWidth: 16,
           itemHeight: 8,
           textStyle: {
@@ -107,14 +107,14 @@ export default {
             fontWeight: 0
           }
         },
-        title: {
-          text: this.chartData.title,
-          textStyle: {
-            color: '#ffffff',
-            fontSize: 12 * this.scale
-          },
-          top: '8%'
-        },
+        // title: {
+        //   text: this.chartData.title,
+        //   textStyle: {
+        //     color: '#ffffff',
+        //     fontSize: 12 * this.scale
+        //   },
+        //   top: '8%'
+        // },
         tooltip: {
           trigger: 'item',
           formatter: '{b} : {c} ({d}%)'
@@ -129,7 +129,7 @@ export default {
         series: [
           {
             type: 'pie',
-            radius: [0, 120 * this.scale],
+            radius: [0, 110 * this.scale],
             label: {
               normal: {
                 formatter: '{c}',
@@ -144,7 +144,7 @@ export default {
               }
             },
             itemStyle: {},
-            data: this.appendBaseColor(this.chartData, this.colorList, 0.6)
+            data: this.appendBaseColor(this.chartData, this.colorList, 0.8)
           }
         ]
       }

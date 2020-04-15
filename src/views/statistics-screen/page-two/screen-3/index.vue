@@ -71,8 +71,14 @@
           v-loading="projects.loading"
           element-loading-background="loadingBackground"
         >
-          <template v-if="projects.chartData.length">
-            <div v-for="(item, index) in projects.chartData" :key="index" class="charts-item">
+          <template v-if="projects.data.length">
+            <div class="charts-container flex">
+              <div
+              v-for="(item, index) in projects.data"
+              :key="index"
+              class="charts-item"
+              :class="`charts-counts-${grid}`"
+            >
               <h4 class="charts-item-title">{{ item.title }}</h4>
               <div class="charts-item-summary flex">
                 <div
@@ -87,25 +93,27 @@
               <div class="charts-item-chart">
                 <project-statistics-chat
                   v-if="item.chartType === 'bar'"
-                  :key="`chart-${activeIndex}-${index}`"
-                  :class-name="`project-statistics-chat-${activeIndex}-${index}`"
-                  :height="`${400 * contrastRadio}px`"
+                  :key="`chart-${index}`"
+                  :class-name="`chart-index`"
+                  width="100%"
+                  :height="`${grid === 4 ? 340 * contrastRadio +'px' : 180 * contrastRadio + 'px'}`"
                   :chart-data="item.chart"
                   :title="item.chart.title"
                   :scale="contrastRadio"
                 ></project-statistics-chat>
                 <projects-pie-chart
                   v-else
-                  carousel
-                  :key="`pie-${activeIndex}-${index}`"
+                  :key="`pie-${index}`"
+                  :class-name="`chart-${index}`"
+                  width="100%"
+                  :height="`${340 * contrastRadio}px`"
                   :chart-data="item.chart"
                   :scale="contrastRadio"
                   :title="item.chart.title"
-                  :class-name="`project-statistics-chat-${activeIndex}-${index}`"
-                  :height="`${400 * contrastRadio}px`"
                 ></projects-pie-chart>
               </div>
             </div>
+            </div>            
           </template>
           <empty v-else :height="`${800*contrastRadio}px`" />
         </div>
@@ -123,6 +131,7 @@ import PieChart from "components/statistics-screen/Charts/PieChart";
 import Empty from "components/common/Empty";
 
 import areaJson from "mock/guangxi-area.json";
+import JsonData from "mock/data.json";
 
 export default {
   name: "SplitScreenThree",
@@ -159,6 +168,21 @@ export default {
         }
       });
       this.ranking.data.chartData = arr;
+    },
+    activeIndex() {
+      const chart = JSON.parse(
+        JSON.stringify(JsonData.statisticsSystemsChart[this.activeIndex].data)
+      );
+      chart.forEach(e => {
+        if (e.chartType === "pie") {
+          e.chart = e.chart.data;
+        }
+      });
+
+      this.projects.data = chart;
+      this.grid = this.projects.data.length % 4 === 0 ? 4 : this.projects.data.length % 4;
+
+      console.log(this.grid);
     }
   },
   data() {
@@ -189,38 +213,37 @@ export default {
       // 应用
       projectsTab: [
         {
-          title: "智慧城市项目",
-          show: true,
-          charts: ["bar", "bar", "pie"]
+          title: "智慧城市类",
+          show: true
         },
         {
-          title: "小程序应用",
-          show: true,
-          charts: ["bar", "bar", "bar"]
+          title: "小程序",
+          show: true
         },
         {
           title: "企业网站",
-          show: true,
-          charts: ["pie", "pie"]
+          show: true
         },
         {
-          title: "App应用",
-          show: true,
-          charts: ["bar", "bar"]
+          title: "电商",
+          show: true
         },
         {
-          title: "H5场景应用",
-          show: true,
-          charts: ["bar", "bar"]
+          title: "App开发",
+          show: true
+        },
+        {
+          title: "H5场景",
+          show: true
         }
       ],
       projects: {
         loading: false,
-        chartData: [],
+        data: []
       },
       activeIndex: 0,
-      // 定时器
-      requestTimer: null,
+      // 栅格
+      grid: 1,
       tabTimer: null
     };
   },
@@ -228,7 +251,7 @@ export default {
     this.init();
   },
   beforeDestroy() {
-    this.clearTimer([this.requestTimer]);
+    this.clearTimer([this.tabTimer]);
   },
   methods: {
     // 初始化
@@ -259,12 +282,12 @@ export default {
     getBusinessTypeData() {
       /* 测试数据-start */
       this.businessType.chartData = [
-        { value: 10, name: "智慧城市项目" },
-        { value: 10, name: "小程序应用" },
-        { value: 20, name: "企业网站" },
-        { value: 5, name: "电商项目" },
-        { value: 5, name: "App应用" },
-        { value: 5, name: "H5场景应用" }
+        { value: 4, name: "智慧城市类" },
+        { value: 4, name: "小程序" },
+        { value: 4, name: "企业网站" },
+        { value: 4, name: "电商" },
+        { value: 4, name: "App开发" },
+        { value: 2, name: "H5场景" }
       ];
 
       setTimeout(() => {
@@ -275,7 +298,7 @@ export default {
     // 获取应用数据
     getProjectsData() {
       /* 测试数据-start */
-
+      this.projects.data = JsonData.statisticsSystemsChart[0].data;
 
       setTimeout(() => {
         this.businessType.loading = false;
@@ -284,22 +307,17 @@ export default {
     },
     // Tab切换
     changeTab(index) {
-      this.activeIndex = index;
+      this.activeIndex = index;      
     },
     // 设置定时器
     setTimer() {
-      // 请求
-      this.requestTimer = setInterval(() => {
-        this.getBusinessTypeData();
-      }, 60 * 1000);
-
       // Tab
-      this.tabTimer = setInterval(() => {
-        this.activeIndex =
-          this.activeIndex + 1 >= this.projectsTab.length
-            ? 0
-            : this.activeIndex + 1;
-      }, 5 * 1000);
+      // this.tabTimer = setInterval(() => {
+      //   this.activeIndex =
+      //     this.activeIndex + 1 >= this.projectsTab.length
+      //       ? 0
+      //       : this.activeIndex + 1;
+      // }, 5 * 1000);
     },
     // 清除定时器
     clearTimer(timers) {
@@ -313,14 +331,14 @@ export default {
 
 .statistics-screen-3 {
   padding-left: 15rem * $baseUnit;
-  justify-content:space-between;
+  justify-content: space-between;
 
   &__left {
     width: 30%;
     margin-right: 15rem * $baseUnit;
   }
 
-  &__right{
+  &__right {
     width: 70%;
   }
 }
@@ -364,7 +382,7 @@ export default {
 
 .statistics {
   &-tab {
-    position:absolute;
+    position: absolute;
     top: 22rem * $baseUnit;
     right: 12rem * $baseUnit;
     &-item {
@@ -386,24 +404,35 @@ export default {
 }
 
 .projects-container {
-
   @include background-setting(
     "../../../../assets/screen_images/img_01.png",
     100%,
-    100%
+    99.5%
   );
+  
+  .charts-container{
+    flex-wrap: wrap;
+  }
 
   .charts {
+    &-counts-1 {
+      width: 100%;
+    }
+
     &-counts-2 {
-      width: 50%;
+      width: 100%;
     }
 
     &-counts-3 {
-      width: 33.33%;
+      width: 100%;
+    }
+
+    &-counts-4 {
+      width: 50%;
     }
 
     &-item {
-      width: 100%;
+      // width: 100%;
       padding: 8rem * $baseUnit 20rem * $baseUnit;
 
       &-title {
