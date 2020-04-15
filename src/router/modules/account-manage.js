@@ -1,6 +1,6 @@
 const router = {
   path: '/account-manage',
-  component: () => import('@/layout/index'),
+  component: () => import('@/layout/default'),
   redirect: '/account-manage/index',
   children: [
     {

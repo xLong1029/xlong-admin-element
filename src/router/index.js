@@ -3,8 +3,8 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-/* Layout */
-import Layout from '@/layout'
+/* LayoutDefault */
+import LayoutDefault from '@/layout/default'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -35,7 +35,7 @@ import Layout from '@/layout'
 export const constantRoutes = [
   {
     path: '/redirect',
-    component: Layout,
+    component: LayoutDefault,
     hidden: true,
     children: [
       {
@@ -57,7 +57,7 @@ export const constantRoutes = [
   },
   {
     path: '/',
-    component: () => import('@/layout/index'),
+    component: LayoutDefault,
     redirect: '/home',
     children: [
       {
@@ -70,11 +70,11 @@ export const constantRoutes = [
   },
   {
     path: '/components',
-    component: () => import('@/layout/index'),
+    component: LayoutDefault,
     redirect: '/components/index',
     children: [
       {
-        path: '/components/index',
+        path: '/index',
         component: () => import('@/views/components/index'),
         name: 'Components',
         meta: {
@@ -86,7 +86,7 @@ export const constantRoutes = [
   },
   {
     path: '/change-password',
-    component: () => import('@/layout/index'),
+    component: LayoutDefault,
     redirect: '/change-password/index',
     hidden: true,
     children: [

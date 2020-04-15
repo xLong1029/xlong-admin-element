@@ -107,7 +107,7 @@ export default {
       const keys = Object.keys(data);
       // 非空对象
       if (keys.length) {
-        this.getMsg(true);
+        this.getMsg();
       } else {
         this.initChart();
       }
@@ -272,27 +272,6 @@ export default {
               color: "#08baec"
             }
           },
-          // 飞线
-          // {
-          //   type: "lines",
-          //   zlevel: 2,
-          //   effect: {
-          //     show: true,
-          //     period: 6,
-          //     trailLength: 0,
-          //     symbol: planePath,
-          //     symbolSize: 15
-          //   },
-          //   lineStyle: {
-          //     normal: {
-          //       color: "#3ed4ff",
-          //       width: 1,
-          //       opacity: 0.4,
-          //       curveness: 0.2
-          //     }
-          //   },
-          //   data: []
-          // },
           {
             type: "lines",
             zlevel: 1,

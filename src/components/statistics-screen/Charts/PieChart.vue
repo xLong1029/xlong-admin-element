@@ -97,7 +97,7 @@ export default {
           orient: "vartical",
           // x: "right",
           top: "center",
-          right: 10 * this.scale,
+          right: 5 * this.scale,
           // bottom: "0%",
           itemWidth: 16,
           itemHeight: 8,
