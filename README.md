@@ -97,15 +97,20 @@ xlong-admin-element 是一套基于 Vue + Element +Bmob 开发的单页面客户
 │  │  └─statistics-screen // 监控大屏相关组件
 │  │
 │  ├─layout // 布局
-│  │  │  index.vue
 │  │  │
-│  │  └─components // 布局组件
-│  │     │  index.js
-│  │     │  
-│  │     ├─AppFooter // 底部
-│  │     ├─AppMain // 主页面
-│  │     ├─Breadcrumb // 面包屑
-│  │     └─Navbar // 导航
+│  │  │  
+│  │  ├─ default // 基础布局
+│  │  │   │  index.vue
+│  │  │   │
+│  │  │   └─components // 布局组件
+│  │  │      │  index.js
+│  │  │      │  
+│  │  │      ├─AppFooter // 底部
+│  │  │      ├─AppMain // 主页面
+│  │  │      ├─Breadcrumb // 面包屑
+│  │  │      └─Navbar // 导航
+│  │  │
+│  │  └─ fullscreen // 全屏布局
 │  │
 │  ├─views // 视图
 │  │  │
