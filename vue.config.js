@@ -17,7 +17,7 @@ module.exports = {
   // 代理服务
   devServer: {
     port: 9090,
-    open: true,
+    // open: true, //禁用后只打开1次页面
     overlay: {
       warnings: false,
       errors: true
