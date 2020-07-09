@@ -98,6 +98,7 @@
         <description title="文件上传组件">
           <el-form-item label="附件：" prop="fileList" class="components__example">
             <file-upload
+              file-format="doc / docx"
               :file-list="form.fileList"
               :file-size="10240"
               :on-check-format="checkFileFormat"
