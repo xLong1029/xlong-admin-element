@@ -247,7 +247,7 @@ export default {
     font-size: 12px;
     line-height: 16px;
     margin-top: 10px;
-    color: #f0ad4e;
+    color: #ed3f14;
   }
 }
 .file-upload-text {
