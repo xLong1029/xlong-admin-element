@@ -13,7 +13,7 @@
           <div class="img-shade">
             <img class="img-shade-thumbnail" :src="item.url" />
             <div class="img-shade-actions">
-              <span class="img-shade-preview" @click="imgUploadCardPreview(item)">
+              <span class="img-shade-preview" @click="preview(item)">
                 <i class="el-icon-zoom-in"></i>
               </span>
             </div>
@@ -49,11 +49,26 @@
 </template>
 <script>
 /* eslint-disable */
-import UploadImg from "mixins/upload-img.js";
+import UploadMixins from "mixins/upload.js";
+
+function defaultFormat(file) {
+  // 文件格式
+  if (
+    !(
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/gif"
+    )
+  ) {
+    this.$message.warning("图片只能是 png 、jpg 、gif 格式");
+    return false;
+  }
+  return true;
+}
 
 export default {
   name: "BackgroundUpload",
-  mixins: [UploadImg],
+  mixins: [UploadMixins],
   props: {
     // 所有图片列表
     imgList: {
@@ -74,10 +89,23 @@ export default {
     fileSize: {
       type: Number,
       default: 150
+    },
+    // 检查上传文件格式
+    onCheckFormat: {
+      type: Function,
+      default: defaultFormat
     }
   },
   data() {
-    return {};
+    return {
+      // 图片上传分时
+      imgAccept: ".png,.jpg,.jpeg,.gif",
+      // 上传进度
+      imgProgress: {
+        visible: false,
+        percentage: 0
+      }
+    };
   },
   methods: {
     // 图片选中状态
@@ -86,11 +114,14 @@ export default {
       this.$emit("select-img", this.imgList[index].url);
     },
     // 上传背景图
-    uploadBackground(params) {
-      const file = params.file;
+    uploadBackground(options) {
+      const file = options.file;
 
       this.uploadToBomb(file)
         .then(res => {
+          this.imgProgress.percentage = 100;
+          this.imgProgress.visible = false;
+
           const url = res[0].url;
 
           const foundImg = this.imgList.find(e => e.url === url);
@@ -101,7 +132,6 @@ export default {
             const activeIndex = this.imgList.length - 1;
             this.$emit("update:img-select-index", activeIndex);
             this.$emit("upload-success", url);
-            this.$message.success("图片上传成功");
           } else {
             const activeIndex = this.imgList.findIndex(e => e.url === url);
             this.$emit("update:img-select-index", activeIndex);
@@ -109,11 +139,41 @@ export default {
           }
           this.$emit("update:img-list", this.imgList);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.log(err);
+          this.imgProgress.visible = false;
+        });
     },
-    // 预览图片
-    imgUploadCardPreview(file) {
-      this.$emit("preview", file);
+    // 图片上传前
+    imgBeforeUpload(file) {
+      const {
+        $message,
+        fileSize,
+        createUploadRecord,
+        onCheckFormat,
+        getSize
+      } = this;
+
+      if (name.length > 100) {
+        $message.warning(`文件名称过长，请修改后重新上传`);
+        return false;
+      }
+
+      const format = onCheckFormat(file);
+      if (!format) return false;
+
+      // 控制文件大小
+      if (file.size / 1024 > fileSize) {
+        $message.warning(`上传图片大小不能超过${getSize(fileSize)}`);
+        return false;
+      }
+
+      this.imgProgress.visible = true;
+      this.imgProgress.percentage = 0;
+    },
+    // 图片上传进度
+    imgUploadProgress(res) {
+      this.imgProgress.percentage = Math.floor(res.percent);
     }
   }
 };

@@ -319,11 +319,11 @@ import Api from "api/account-manage";
 import { docElmScrollTo } from "utils/scroll-to";
 import { compareDate, timeTrans, arrToStr, strToArr } from "utils";
 import { validEmail, validMobile } from "utils/validate";
-import UploadImg from "mixins/upload-img.js";
+import UploadMixins from "mixins/upload.js";
 
 export default {
   name: "AccountStore",
-  mixins: [UploadImg],
+  mixins: [UploadMixins],
   props: {
     // 弹窗可见性
     visible: {
@@ -525,6 +525,8 @@ export default {
       tag: 2,
       saveLoading: false,
       fileSize: 1024,
+      // 图片上传格式
+      imgAccept: ".png,.jpg,.jpeg,.gif"
     };
   },
   watch: {
@@ -666,13 +668,36 @@ export default {
     deleteWorkExp(row, index) {
       this.form.workExperience.splice(index, 1);
     },
+    // 图片上传前
+    imgBeforeUpload(file) {
+      // 文件格式
+      if (
+        !(
+          file.type === "image/jpeg" ||
+          file.type === "image/png" ||
+          file.type === "image/gif"
+        )
+      ) {
+        this.$message.warning("图片只能是 png 、jpg 、gif 格式");
+        return false;
+      }
+      // 控制文件大小
+      if (file.size / 1024 > this.fileSize) {
+        const overHint =
+          this.fileSize > 1024
+            ? Math.floor(this.fileSize / 1024) + "M"
+            : this.fileSize + "KB";
+        this.$message.warning(`上传图片大小不能超过${overHint}`);
+        return false;
+      }
+    },
     // 上传头像
     uploadHead(params) {
       // console.log("uploadFile", params);
       const file = params.file;
 
       this.uploadToBomb(file)
-        .then(res =>  this.form.face = res[0].url)
+        .then(res => (this.form.face = res[0].url))
         .catch(err => console.log(err));
     },
     // 重置表单
