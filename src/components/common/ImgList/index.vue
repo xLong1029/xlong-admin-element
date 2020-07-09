@@ -6,7 +6,7 @@
       <li v-for="(file, index) in imgList" :key="index" class="img-list__item img-shade">
         <img
           class="img-shade-thumbnail"
-          :src="file.ID ? `${thumbnailUrl}?id=${file.ID}` : defaultImg"
+          :src="file.url ? file.url : defaultImg"
         />
         <div class="img-shade-actions">
           <span v-if="canPreview" class="img-shv-if=ade-preview" @click="preview(file)">
@@ -57,7 +57,7 @@ export default {
     // 下载图片
     download(file) {
       var a = window.document.createElement("a");
-      a.download = file.AttachmentName + file.AttachmentExt;
+      a.download = file.filename;
       a.href = `${this.imgUrl}?id=${file.ID}`;
       document.body.appendChild(a);
       a.click();
