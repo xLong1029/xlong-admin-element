@@ -134,8 +134,50 @@
                 </p>
                 <p>事件：</p>
                 <p>
-                  <span class="attr-text">preview</span>：点击预览按钮时触发，返回该文件file
+                  <span class="attr-text">download</span>：点击下载按钮时触发，返回该文件
                 </p>
+              </div>
+            </el-collapse-item>
+          </el-collapse>
+        </description>
+        <description title="文件上传组件（列表形式）">
+          <el-form-item label="附件：" prop="fileList" class="components__example">
+            <list-upload
+              file-format="doc / docx"
+              :file-list="form.fileList2"
+              :file-size="10240"
+              :on-check-format="checkFileFormat"
+              @upload-success="upload($event, 'form', 'fileList2')"
+              @preview="imgPreview"
+            />
+          </el-form-item>
+          <el-collapse :model="1">
+            <el-collapse-item title="查看属性" name="1">
+              <div class="components__desc">
+                <p>属性：</p>
+                <p>
+                  <span class="attr-text">fileList</span>：文件列表。Array类型
+                </p>
+                <p>
+                  <span class="attr-text">showSizeHint</span>：是否显示尺寸提示文本。Boolean类型，默认值为true
+                </p>
+                <p>
+                  <span class="attr-text">fileSize</span>：设置最大文件大小，单位以上KB，单位kb。Number类型，默认值为150
+                </p>
+                <p>
+                  <span class="attr-text">canDownload</span>：是否可下载。Boolean类型，默认值为true
+                </p>
+                <p>
+                  <span class="attr-text">data</span>
+                  ：上传要附带的额外参数。Object类型，默认值为{}
+                </p>
+                <p>
+                  <span class="attr-text">fileFormat</span>：提示文件格式。String类型，默认值为""
+                </p>
+                <p>
+                  <span class="attr-text">onCheckFormat</span>：检查上传文件格式。Function类型，默认值为noop(file)
+                </p>
+                <p>事件：</p>
                 <p>
                   <span class="attr-text">download</span>：点击下载按钮时触发，返回该文件
                 </p>
@@ -159,10 +201,11 @@
 import BackgroundUpload from "components/common/Upload/BackgroundUpload";
 import ImgUpload from "components/common/Upload/ImgUpload";
 import FileUpload from "components/common/Upload/FileUpload";
+import ListUpload from "components/common/Upload/ListUpload";
 
 export default {
   name: "Components",
-  components: { BackgroundUpload, ImgUpload, FileUpload },
+  components: { BackgroundUpload, ImgUpload, FileUpload, ListUpload },
   data() {
     return {
       // 预览窗口
@@ -175,7 +218,8 @@ export default {
       form: {
         imgUrl: "",
         imgList: [],
-        fileList: []
+        fileList: [],
+        fileList2: []
       }
     };
   },
@@ -228,6 +272,7 @@ export default {
     },
     // 上传
     upload(e, formName, attr) {
+      console.log(e);
       this.form[attr] = e;
       if (e.length && formName) {
         this.$refs[formName].clearValidate(attr);
@@ -256,6 +301,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+/deep/ .el-collapse-item__content {
+  padding-bottom: 5px;
+}
+
+/deep/ .el-collapse-item__header{
+  padding-left: 10px;
+
+  &.is-active {
+  background: #f8f8f8;
+  }
+}
+
 .components {
   &__desc {
     color: #888;

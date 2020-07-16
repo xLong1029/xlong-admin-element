@@ -22,7 +22,7 @@
         </div>
         <div slot="file" slot-scope="{file}">
           <!-- {{ file }} -->
-          <div class="file-upload-text flex" v-if="file.status === 'ready'"><div>{{ file.name }}</div><span>上传中...</span></div>
+          <div class="file-upload-text flex" v-if="file.status === 'ready'"><span>{{ file.name }}</span><span>上传中...</span></div>
           <div class="file-upload-text" v-if="file.status === 'fail'">上传失败</div>
           <div class="file-item flex" v-if="file.status === 'success'">
             <div class="file-item__left mr-10 flex">
@@ -31,6 +31,7 @@
                   v-if="isImg(file)"
                   class="file-thumbnail"
                   :src="file.url ? file.url : defaultImg"
+                  @error="setDefaultImg"
                 />
                 <span v-else>
                   <i v-if="(file.filename).indexOf('.doc') >= 0" class="iconfont icon-word"></i>
@@ -57,6 +58,8 @@
             <!-- 原本el组件的名称 -->
             <div>
               <div class="file-name">{{ file.name }}</div>
+              <!-- request请求才有用 -->
+              <!-- <i class="el-icon-close" @click="cancelUpload(file)"></i> -->
             </div>
             <el-progress
               class="mt-10"
@@ -133,38 +136,12 @@ export default {
   },
   data() {
     return {
-      defaultImg: require("@/assets/images/no-found-pic.jpg"),
       imgReg: /\.(bmp|jpg|jpeg|png|gif|webp|JPG|PNG|GIF)$/
     };
   },
   methods: {
     parsePercentage(val) {
       return parseInt(val, 10);
-    },
-    // 上传前
-    beforeUpload(file) {
-      const {
-        $message,
-        fileSize,
-        progress,
-        createUploadRecord,
-        onCheckFormat,
-        getSize
-      } = this;
-
-      if (file.name.length > 100) {
-        $message.warning(`文件名称过长，请修改后重新上传`);
-        return false;
-      }
-
-      const format = onCheckFormat(file);
-      if (!format) return false;
-
-      // 控制文件大小
-      if (file.size / 1024 > fileSize) {
-        $message.warning(`上传文件大小不能超过${getSize(fileSize)}`);
-        return false;
-      }
     },
     // 自定义上传处理
     handleUpload(options) {

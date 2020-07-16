@@ -11,7 +11,7 @@
           @click="selectImg(index)"
         >
           <div class="img-shade">
-            <img class="img-shade-thumbnail" :src="item.url" />
+            <img class="img-shade-thumbnail" :src="item.url" @error="setDefaultImg" />
             <div class="img-shade-actions">
               <span class="img-shade-preview" @click="preview(item)">
                 <i class="el-icon-zoom-in"></i>

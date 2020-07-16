@@ -19,7 +19,7 @@
           <div class="file-upload-text" v-if="file.status === 'ready'">上传中...</div>
           <div class="file-upload-text" v-if="file.status === 'fail'">上传失败</div>
           <div class="img-shade" v-if="file.status === 'success'">
-            <img class="img-shade-thumbnail" :src="file.url ? file.url : defaultImg" />
+            <img class="img-shade-thumbnail" :src="file.url ? file.url : defaultImg" @error="setDefaultImg" />
             <div class="img-shade-actions">
               <span v-if="canPreview" class="img-shv-if=ade-preview" @click="preview(file)">
                 <i class="el-icon-zoom-in"></i>
@@ -131,37 +131,12 @@ export default {
   },
   data() {
     return {
-      uploadList: [],
-      defaultImg: require("@/assets/images/no-found-pic.jpg")
+      uploadList: []
     };
   },
   methods: {
     parsePercentage(val) {
       return parseInt(val, 10);
-    },
-    // 上传前
-    beforeUpload(file) {
-      const {
-        $message,
-        fileSize,
-        createUploadRecord,
-        onCheckFormat,
-        getSize
-      } = this;
-
-      if (file.name.length > 100) {
-        $message.warning(`文件名称过长，请修改后重新上传`);
-        return false;
-      }
-
-      const format = onCheckFormat(file);
-      if (!format) return false;
-
-      // 控制文件大小
-      if (file.size / 1024 > fileSize) {
-        $message.warning(`上传图片大小不能超过${getSize(fileSize)}`);
-        return false;
-      }
     },
     // 自定义上传处理
     handleUpload(options) {
