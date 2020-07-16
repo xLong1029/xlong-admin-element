@@ -7,6 +7,7 @@
         <img
           class="img-shade-thumbnail"
           :src="file.url ? file.url : defaultImg"
+          @error="setDefaultImg"
         />
         <div class="img-shade-actions">
           <span v-if="canPreview" class="img-shv-if=ade-preview" @click="preview(file)">
@@ -66,6 +67,11 @@ export default {
     // 预览图片
     preview(file) {
       this.$emit("preview", file);
+    },
+    // 设置默认图片
+    setDefaultImg(e) {
+      e.currentTarget.src = this.defaultImg;
+      e.currentTarget.onerror = null;
     }
   }
 };

@@ -8,7 +8,7 @@
     width="900px"
     @close="close"
   >
-    <img class="preview-img" :src="url" />
+    <img class="preview-img" :src="url" @error="setDefaultImg" />
   </el-dialog>
 </template>
 <script>
@@ -48,6 +48,11 @@ export default {
     close() {
       this.$emit("close", false);
       this.$emit("update:visible", false);
+    },
+    // 设置默认图片
+    setDefaultImg(e) {
+      e.currentTarget.src = this.defaultImg;
+      e.currentTarget.onerror = null;
     }
   }
 };

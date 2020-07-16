@@ -8,13 +8,43 @@
 export default {
     data() {
         return {
+            defaultImg: require("@/assets/images/no-found-pic.jpg")
         }
     },
     methods: {
+        // 设置默认图片
+        setDefaultImg(e) {
+            e.currentTarget.src = this.defaultImg;
+            e.currentTarget.onerror = null;
+        },
         // 单位从kb开始计算
         getSize(fileSize) {
             if (fileSize < 1) return `${Math.floor(fileSize * 1024 * 100) / 100}B`;
             return fileSize >= 1024 ? fileSize / 1024 >= 1024 ? `${Math.floor(fileSize / 1024 / 1024 * 100) / 100}GB` : `${Math.floor(fileSize / 1024 * 100) / 100}MB` : `${Math.floor(fileSize * 100) / 100}KB`;
+        },
+        // 上传前
+        beforeUpload(file) {
+            const {
+                $message,
+                fileSize,
+                createUploadRecord,
+                onCheckFormat,
+                getSize
+            } = this;
+
+            if (file.name.length > 100) {
+                $message.warning(`文件名称过长，请修改后重新上传`);
+                return false;
+            }
+
+            const format = onCheckFormat(file);
+            if (!format) return false;
+
+            // 控制文件大小
+            if (file.size / 1024 > fileSize) {
+                $message.warning(`大小不能超过${getSize(fileSize)}`);
+                return false;
+            }
         },
         // 上传至Bomb
         uploadToBomb(file) {
@@ -47,6 +77,11 @@ export default {
         // 预览
         preview(file) {
             this.$emit("preview", file);
-        }
+        },
+        // // 取消上传,request请求才有用
+        // cancelUpload(file) {
+        //     this.$refs.fileUpload.abort(file);
+        //     this.$refs.fileUpload.uploadFiles.splice(this.$refs.fileUpload.uploadFiles.indexOf(file), 1);
+        // }
     }
 }
