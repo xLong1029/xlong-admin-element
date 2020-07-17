@@ -145,7 +145,6 @@ export default {
         .then(res => {
           let imgList = [...this.imgList, ...res];
           this.$emit("upload-success", imgList);
-          this.$emit("update:img-list", imgList);
         })
         .catch(err => {
           console.log(err);
@@ -158,7 +157,6 @@ export default {
       if (!imgList.length) return;
       imgList.splice(imgList.indexOf(file), 1);
       this.$emit("upload-success", imgList);
-      this.$emit("update:img-list", imgList);
     }
   }
 };
