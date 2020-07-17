@@ -78,6 +78,19 @@ export default {
         preview(file) {
             this.$emit("preview", file);
         },
+        handleUpload(options) {
+            const file = options.file;
+            this.uploadToBomb(file)
+              .then(res => {
+                console.log(res);
+                let fileList = [...this.fileList, ...res];
+                this.$emit("upload-success", fileList);
+              })
+              .catch(err => {
+                console.log(err);
+                this.del(file);
+              });
+          },
         // // 取消上传,request请求才有用
         // cancelUpload(file) {
         //     this.$refs.fileUpload.abort(file);

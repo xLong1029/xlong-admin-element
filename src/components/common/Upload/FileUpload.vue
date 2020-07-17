@@ -143,21 +143,6 @@ export default {
     parsePercentage(val) {
       return parseInt(val, 10);
     },
-    // 自定义上传处理
-    handleUpload(options) {
-      const file = options.file;
-      this.uploadToBomb(file)
-        .then(res => {
-          console.log(res);
-          let fileList = [...this.fileList, ...res];
-          this.$emit("upload-success", fileList);
-          this.$emit("update:file-list", fileList);
-        })
-        .catch(err => {
-          console.log(err);
-          this.del(file);
-        });
-    },
     // 是否是图片格式
     isImg(file) {
       if (this.imgReg.test(file.filename)) {
@@ -171,7 +156,6 @@ export default {
       if (!list.length) return;
       list.splice(list.indexOf(file), 1);
       this.$emit("upload-success", list);
-      this.$emit("update:file-list", list);
     }
   }
 };

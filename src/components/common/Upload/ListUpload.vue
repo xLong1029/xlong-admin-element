@@ -11,18 +11,7 @@
     </div>
     <!-- 图片列表 -->
     <div class="list-upload">
-      <el-table ref="table" class="table" :data="fileList" border>
-        <el-table-column type="index" label="序号" width="50" align="center" header-align="center"></el-table-column>
-        <el-table-column prop="name" label="文件名称" header-align="center">
-          <template slot-scope="{ row }">{{ row.filename }}</template>
-        </el-table-column>
-        <el-table-column prop="action" label="操作" align="center" header-align="center" width="125">
-          <template slot-scope="{ row, $index }">
-            <el-button size="mini" type="text" icon="el-icon-download" @click="download(row)">下载</el-button>
-            <el-button size="mini" type="text" icon="el-icon-delete" @click="del($index)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <file-list :file-list="fileList" @delete-success="del" />
       <el-upload
         ref="fileUpload"
         multiple
@@ -59,6 +48,8 @@
 /* eslint-disable */
 // mixins
 import UploadMixins from "mixins/upload.js";
+// 组件
+import FileList from "components/common/FileList/index.vue";
 
 function noop() {
   return true;
@@ -67,6 +58,7 @@ function noop() {
 export default {
   name: "ListUpload",
   mixins: [UploadMixins],
+  components: { FileList },
   props: {
     // 所有文件列表
     fileList: {
@@ -108,28 +100,9 @@ export default {
     return {};
   },
   methods: {
-    // 自定义上传处理
-    handleUpload(options) {
-      const file = options.file;
-      this.uploadToBomb(file)
-        .then(res => {
-          console.log(res);
-          let fileList = [...this.fileList, ...res];
-          this.$emit("upload-success", fileList);
-          this.$emit("update:file-list", fileList);
-        })
-        .catch(err => {
-          console.log(err);
-          this.del(file);
-        });
-    },
     // 删除
-    del(index) {
-      let list = [...this.fileList];
-      if (!list.length) return;
-      list.splice(index, 1);
+    del(list) {
       this.$emit("upload-success", list);
-      this.$emit("update:file-list", list);
     }
   }
 };
