@@ -11,7 +11,7 @@
     </div>
     <!-- 图片列表 -->
     <div class="list-upload">
-      <file-list :file-list="fileList" @delete-success="del" />
+      <file-list :file-list="fileList" :can-delete="canDelete" @delete-success="del" />
       <el-upload
         ref="fileUpload"
         multiple
@@ -77,6 +77,11 @@ export default {
     },
     // 是否可下载
     canDownload: {
+      type: Boolean,
+      default: true
+    },
+    // 是否可删除
+    canDelete: {
       type: Boolean,
       default: true
     },

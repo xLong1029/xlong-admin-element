@@ -168,6 +168,9 @@
                   <span class="attr-text">canDownload</span>：是否可下载。Boolean类型，默认值为true
                 </p>
                 <p>
+                  <span class="attr-text">canDelete</span>：是否可删除。Boolean类型，默认值为true
+                </p>
+                <p>
                   <span class="attr-text">data</span>
                   ：上传要附带的额外参数。Object类型，默认值为{}
                 </p>
