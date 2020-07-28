@@ -48,7 +48,7 @@ export default {
     // 是否可删除
     canDelete: {
       type: Boolean,
-      default: true
+      default: false
     },
     // 是否可下载
     canDownload: {
