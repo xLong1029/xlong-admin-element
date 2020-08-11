@@ -29,9 +29,7 @@ router.beforeEach(async (to, from, next) => {
           console.log(`Get role's value, and the user's roles is ${roles}.`)
 
           // 获取可通过的路由
-          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-          // 动态添加路由
-          router.addRoutes(accessRoutes)
+          await store.dispatch('permission/generateRoutes', roles)
 
           // hack方法以确保addroutes是完整的
           // 设置replace:true，这样导航就不会留下历史记录
