@@ -118,7 +118,7 @@ export const asyncRoutes = requireRouter.keys().map(fileName => {
   // 获取组件配置
   return requireRouter(fileName).default || requireRouter(fileName)
 })
-const createRouter = () =>
+export const createRouter = () =>
   new Router({
     // mode: 'history', // require service support
     scrollBehavior: () => ({ y: 0 }),

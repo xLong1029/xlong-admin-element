@@ -1,4 +1,6 @@
 import { asyncRoutes, constantRoutes } from '@/router'
+import router from '@/router'
+import { createRouter } from '@/router'
 
 /**
  * 使用meta.role判断当前用户是否具有权限访问
@@ -34,6 +36,14 @@ export function filterAsyncRoutes(routes, roles) {
   return res
 }
 
+/**
+ *  清空路由
+ */
+export function resetRouter() {
+  const newRouter = createRouter()
+  router.matcher = newRouter.matcher
+}
+
 const state = {
   routes: [],
   addRoutes: []
@@ -49,9 +59,11 @@ const actions = {
   // 生成路由
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
+      resetRouter()
       const accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       // 404重定向配置放结尾
       accessedRoutes.push({ path: '*', redirect: '/404', hidden: true })
+      router.addRoutes(accessedRoutes)
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)
     })
