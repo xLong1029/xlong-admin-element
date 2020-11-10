@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "725731",
+      "name": "用户",
+      "font_class": "yonghu",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
       "icon_id": "382901",
       "name": "file01",
       "font_class": "file",
@@ -95,13 +102,6 @@
       "font_class": "home",
       "unicode": "e612",
       "unicode_decimal": 58898
-    },
-    {
-      "icon_id": "1112554",
-      "name": "mine2",
-      "font_class": "mine2",
-      "unicode": "e616",
-      "unicode_decimal": 58902
     },
     {
       "icon_id": "1112561",
