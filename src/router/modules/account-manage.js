@@ -9,7 +9,7 @@ const router = {
       name: 'AccountManage',
       meta: {
         title: '账户管理',
-        icon: 'iconfont icon-mine2',
+        icon: 'el-icon-user-solid',
         roles: ['admin']
       }
     }
