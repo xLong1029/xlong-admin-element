@@ -111,15 +111,15 @@
         @selection-change="getSelectList"
       >
         <el-table-column type="selection" width="55" fixed="left"></el-table-column>
-        <el-table-column prop="action" label="操作" width="70" fixed="left">
-          <template slot-scope="{ row }">
-            <el-button size="mini" type="text" icon="el-icon-edit" @click="showStore(row)">编辑</el-button>
-          </template>
-        </el-table-column>
         <el-table-column prop="enabledState" label="状态" align="center" width="100" fixed="right">
           <template slot-scope="{ row }">
             <el-tag v-if="row.enabledState === 1" type="success">启用</el-tag>
             <el-tag v-else type="danger">禁用</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="action" label="操作" width="70" fixed="right">
+          <template slot-scope="{ row }">
+            <el-button size="mini" type="text" icon="el-icon-edit" @click="showStore(row)">编辑</el-button>
           </template>
         </el-table-column>
       </dynamic-table>
