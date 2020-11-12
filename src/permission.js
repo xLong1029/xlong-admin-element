@@ -5,7 +5,7 @@ import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth'
 import getPageTitle from '@/utils/get-page-title'
 
-const whiteList = ['/login', '/401', '/404'] // 重定向白名单
+const whiteList = ['/login', '/404'] // 重定向白名单
 
 router.beforeEach(async (to, from, next) => {
   // 页面标题
