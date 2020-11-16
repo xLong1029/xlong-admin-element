@@ -38,7 +38,6 @@
 <script>
 /* eslint-disable */
 import { setLocalS, getLocalS, delLocalS, encrypt, decrypt } from "utils";
-import Api from "api/user";
 
 export default {
   name: "Login",
@@ -65,7 +64,8 @@ export default {
         password: [
           { required: true, message: "登录密码不能为空", trigger: "blur" }
         ]
-      }
+      },
+      redirect: ""
     };
   },
   watch: {
