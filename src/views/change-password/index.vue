@@ -91,7 +91,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (this.form.oldPassword == this.form.newPassword) {
-            this.$Message.error("旧密码和新密码不能相同！");
+            this.$message.error("旧密码和新密码不能相同！");
             return false;
           }
 
