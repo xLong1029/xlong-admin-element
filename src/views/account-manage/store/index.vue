@@ -7,13 +7,13 @@
     width="900px"
     @close="close"
   >
-    <div class="expert-detail-container" v-loading="loading" element-loading-text="加载中，请稍后...">
-      <div class="expert-detail__left">
+    <div class="account-detail-container" v-loading="loading" element-loading-text="加载中，请稍后...">
+      <div class="account-detail__left">
         <el-tabs
           :value="activeTab.name"
           :stretch="true"
           tab-position="left"
-          class="expert-detail-tab"
+          class="account-detail-tab"
           @tab-click="selectTab"
         >
           <el-tab-pane
@@ -24,11 +24,11 @@
           ></el-tab-pane>
         </el-tabs>
       </div>
-      <div class="expert-detail__right ml-15">
-        <div ref="detailContent" class="expert-detail-content" @scroll="contentScorll">
+      <div class="account-detail__right ml-15">
+        <div ref="detailContent" class="account-detail-content" @scroll="contentScorll">
           <el-form ref="form" :model="form" :rules="validate">
-            <div class="expert-detail-content__title" id="baseInfo">基本信息</div>
-            <div class="expert-detail-content__cont">
+            <div class="account-detail-content__title" id="baseInfo">基本信息</div>
+            <div class="account-detail-content__cont">
               <div class="info-table">
                 <div class="flex">
                   <div style="width:100%">
@@ -146,8 +146,8 @@
               </div>
             </div>
 
-            <div class="expert-detail-content__title" id="workInfo">工作信息</div>
-            <div class="expert-detail-content__cont">
+            <div class="account-detail-content__title" id="workInfo">工作信息</div>
+            <div class="account-detail-content__cont">
               <div class="info-table">
                 <div class="info-table__tr">
                   <div class="info-table__th">
@@ -212,8 +212,8 @@
               </div>
             </div>
 
-            <div class="expert-detail-content__title" id="workExperience">工作经历</div>
-            <div class="expert-detail-content__cont">
+            <div class="account-detail-content__title" id="workExperience">工作经历</div>
+            <div class="account-detail-content__cont">
               <el-table ref="table" :data="form.workExperience" border class="table">
                 <el-table-column align="center" header-align="center">
                   <template slot="header">
@@ -776,7 +776,7 @@ $height: calc(100vh - 270px);
   margin-top: 50px !important;
 }
 
-.expert-detail {
+.account-detail {
   &-container {
     height: $height;
     display: flex;
