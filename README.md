@@ -118,20 +118,21 @@ xlong-admin-element 是一套基于 Vue + Element +Bmob 开发的单页面客户
 │  │
 │  ├─views // 视图
 │  │  │
-│  │  ├─Layout // 布局视图
-│  │  ├─Home // 主页
-│  │  ├─Components // 组件展示相关
-│  │  ├─Error // 错误页面
-│  │  ├─Examples // 操作示例相关
-│  │  ├─Passport // 通行验证，登录注册等
-│  │  └─Profile // 个人信息相关
+│  │  ├─account-manage // 账户管理
+│  │  ├─change-password // 修改密码
+│  │  ├─components // 组件展示相关
+│  │  ├─error-page // 错误页面
+│  │  ├─home // 主页
+│  │  ├─login // 登录
+│  │  ├─redirect // 重定向
+│  │  └─statistics-screen // 监控大屏
 │  │
 │  ├─mixins // 混合模块
 │  │  │  date-range-picker.js // 日期范围选择配置
 │  │  │  response.js // 响应式配置
 │  │  │  page.js // 页码配置
 │  │  │  table.js // 表格相关操作
-│  │  │  upload-img.js // 上传图片
+│  │  │  upload.js // 上传图片
 │  │  │
 │  │  └─chart
 │  │
