@@ -62,7 +62,7 @@
                   </div>
                   <div class="info-table__tr">
                     <div class="info-table__td head-pic img-shade">
-                      <img :src="form.face ? form.face : require('@/assets/images/head.jpg')" />
+                      <img :src="form.face ? form.face : defaultFaceImg" @error="setdefaultFaceImg" />
                       <div class="img-shade-actions">
                         <el-upload
                           class="img-shade-actions-btn"
@@ -526,7 +526,9 @@ export default {
       saveLoading: false,
       fileSize: 1024,
       // 图片上传格式
-      imgAccept: ".png,.jpg,.jpeg,.gif"
+      imgAccept: ".png,.jpg,.jpeg,.gif",
+      // 默认头像
+      defaultFaceImg: require("@/assets/images/head.jpg")
     };
   },
   watch: {
@@ -755,6 +757,11 @@ export default {
           this.$message.error("提交失败！请检查填写是否有误");
         }
       });
+    },
+    // 设置默认图片
+    setdefaultFaceImg(e) {
+      e.currentTarget.src = this.defaultFaceImg;
+      e.currentTarget.onerror = null;
     }
   }
 };
