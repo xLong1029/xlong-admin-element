@@ -2,7 +2,7 @@
 
 ## 介绍
 
-xlong-admin-element 是一套基于 Vue + Element +Bmob 开发的单页面客户端渲染管理后台系统示例。  
+xlong-admin-element 是一套基于 Vue + Element + Bmob 开发的单页面客户端渲染管理后台系统示例。  
 
 温馨提示：  
 1. 因我的Bmob用的是开发版套餐，所有查询只有全匹配查询，无模糊查询，请根据自行需求进行修改。
