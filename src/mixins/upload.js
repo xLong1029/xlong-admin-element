@@ -27,7 +27,6 @@ export default {
             const {
                 $message,
                 fileSize,
-                createUploadRecord,
                 onCheckFormat,
                 getSize
             } = this;
