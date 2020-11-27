@@ -49,9 +49,9 @@
         </div>
         <div slot="reference" class="right-menu-item hover-effect fr">
           <div class="icon-wrapper">
-            <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar"> -->
             <span class="user-name">
-              <i class="el-icon-user-solid mr-5"></i>
+              <img v-if="avatar" :src="avatar" class="user-avatar mr-10" />
+              <i v-else class="el-icon-user-solid mr-5"></i>
               {{ nickName }}
             </span>
             <i class="el-icon-caret-bottom" />
@@ -78,7 +78,8 @@ export default {
       "username",
       "nickName",
       "realName",
-      "gender"
+      "gender",
+      "avatar"
     ]),
     activeMenu() {
       const route = this.$route;
@@ -176,9 +177,18 @@ $right-menu-height: 50px;
       }
 
       .user-name {
+        display: flex;
+        align-items: center;
+
         i {
           font-size: 16px;
         }
+      }
+      .user-avatar{
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        overflow: hidden;
       }
     }
   }
