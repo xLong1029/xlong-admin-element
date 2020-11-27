@@ -69,7 +69,7 @@
                           action="customize"
                           :accept="imgAccept"
                           :before-upload="imgBeforeUpload"
-                          :http-request="uploadHead"
+                          :http-request="uploadFace"
                           :show-file-list="false"
                         >
                           <i class="el-icon-edit"></i>编辑
@@ -694,7 +694,7 @@ export default {
       }
     },
     // 上传头像
-    uploadHead(params) {
+    uploadFace(params) {
       // console.log("uploadFile", params);
       const file = params.file;
 
