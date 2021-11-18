@@ -9,7 +9,7 @@ function resolve(dir) {
 
 // 相关配置请参考 https://cli.vuejs.org/config/
 module.exports = {
-  publicPath: production ? '/xlong-admin-element/' : '/',
+  publicPath: production ? './' : '/',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
