@@ -237,6 +237,8 @@ $right-menu-height: 50px;
       font-size: 16px;
       color: $menuText;
 
+      
+
       i {
         color: $menuText;
       }
@@ -245,7 +247,8 @@ $right-menu-height: 50px;
         background: transparent !important;
       }
 
-      &:hover {
+      &:hover,
+      &.is-active {
         color: $menuActiveText !important;
         background: transparent !important;
         i {
