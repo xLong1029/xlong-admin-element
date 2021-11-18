@@ -321,7 +321,7 @@ aside {
 .overspread-page {
   min-height: calc(100vh - 130px);
   // max-height: calc(100vh - 130px);
-  ::v-deep .el-card{
-    min-height: calc(100vh - 130px);
+  .el-card{
+    min-height: calc(100vh - 130px) !important;
   }
 }
