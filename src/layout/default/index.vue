@@ -42,8 +42,9 @@ export default {
     init(route) {
       const navH = 60;
       const breadcrumbH = 40;
+      const footerH = 62;
       this.breadcrumbVisible = true;
-      appMain.style.minHeight = `calc(100vh - ${navH + breadcrumbH}px)`;
+      appMain.style.minHeight = `calc(100vh - ${navH + breadcrumbH + footerH}px)`;
     }
   }
 };
