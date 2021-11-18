@@ -7,7 +7,6 @@
         <el-form-item label="用户编号">
           <el-input
             v-model.trim="filterParams.id"
-            size="small"
             clearable
             placeholder="请输入内容"
             @keyup.enter.native="search()"
@@ -16,7 +15,6 @@
         <el-form-item label="手机号码">
           <el-input
             v-model.trim="filterParams.mobile"
-            size="small"
             clearable
             placeholder="请输入内容"
             @keyup.enter.native="search()"
@@ -25,7 +23,6 @@
         <el-form-item label="邮箱">
           <el-input
             v-model.trim="filterParams.email"
-            size="small"
             clearable
             placeholder="请输入内容"
             @keyup.enter.native="search()"
