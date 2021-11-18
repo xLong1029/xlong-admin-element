@@ -769,10 +769,10 @@ export default {
 
 <style lang="scss" scoped>
 $height: calc(100vh - 270px);
-/deep/ .el-dialog__body {
+::v-deep .el-dialog__body {
   padding: 15px 10px 25px 20px;
 }
-/deep/ .el-dialog {
+::v-deep .el-dialog {
   margin-top: 50px !important;
 }
 
@@ -804,19 +804,19 @@ $height: calc(100vh - 270px);
 
   &-tab {
     min-width: 120px;
-    /deep/ .el-tabs__nav {
+    ::v-deep .el-tabs__nav {
       height: $height;
       min-width: 120px;
     }
-    /deep/ .el-tabs__item.is-left {
+    ::v-deep .el-tabs__item.is-left {
       text-align: center;
     }
 
-    /deep/ .el-tabs__item.is-active {
+    ::v-deep .el-tabs__item.is-active {
       background-color: #def7f3;
     }
 
-    /deep/ .el-tabs__header.is-left {
+    ::v-deep .el-tabs__header.is-left {
       margin-right: 15px;
     }
 
@@ -927,7 +927,7 @@ $border: 1px solid #ebeef5;
 .table {
   width: 100%;
 
-  /deep/ td {
+  ::v-deep td {
     padding-bottom: 0;
   }
 
@@ -982,7 +982,7 @@ $border: 1px solid #ebeef5;
       cursor: pointer;
     }
 
-    /deep/ .el-upload:focus {
+    ::v-deep .el-upload:focus {
       color: #fff;
     }
   }

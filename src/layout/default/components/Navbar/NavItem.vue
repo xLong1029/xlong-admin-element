@@ -133,7 +133,7 @@ export default {
       }
     }
 
-    /deep/ .el-menu-item {
+    ::v-deep .el-menu-item {
       &.is-active {
         font-weight: bold;
 
@@ -165,7 +165,7 @@ export default {
       }
     }
 
-    /deep/ .el-menu-item {
+    ::v-deep .el-menu-item {
       i {
         color: $subMenuText;
       }

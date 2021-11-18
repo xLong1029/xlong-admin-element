@@ -182,7 +182,7 @@ export default {
     /* 266 = sidetree-title + padding-top + topbar + navbar + breadcrumb */
     // height: calc(100vh - 266px);
 
-    /deep/ .el-tree-node {
+    ::v-deep .el-tree-node {
       padding: 2px 0;
       &:focus > .el-tree-node__content {
         background: transparent; // 与当前激活状态有冲突，因此改为透明
@@ -195,7 +195,7 @@ export default {
       }
     }
 
-    /deep/ .el-tree-node__content {
+    ::v-deep .el-tree-node__content {
       padding: 5px 0;
       height: auto;
     }

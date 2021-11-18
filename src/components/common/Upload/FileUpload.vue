@@ -168,7 +168,7 @@ export default {
     max-width: 500px;
     line-height: 20px !important;
 
-    /deep/ .el-upload-dragger {
+    ::v-deep .el-upload-dragger {
       width: 100%;
       padding: 0 30px;
       max-width: 360px;
@@ -183,7 +183,7 @@ export default {
       }
     }
 
-    /deep/ .el-upload-list__item {
+    ::v-deep .el-upload-list__item {
       position: relative;
       transition: none !important;
       line-height: 20px !important;
@@ -197,7 +197,7 @@ export default {
       }
     }
 
-    /deep/ .el-progress {
+    ::v-deep .el-progress {
       // width: 98% !important;
       left: 0;
       top: 8px;

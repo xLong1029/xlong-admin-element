@@ -175,12 +175,12 @@ export default {
   &__btn {
     cursor: pointer;
 
-    /deep/ .el-upload-dragger {
+    ::v-deep .el-upload-dragger {
       @include img-frame;
       border: none;
     }
 
-    /deep/ .el-upload--picture-card {
+    ::v-deep .el-upload--picture-card {
       @include img-frame;
       border: 1px dashed #dcdfe6;
       margin: 0 8px 15px 0;
@@ -198,7 +198,7 @@ export default {
       }
     }
 
-    /deep/ .el-upload-list__item {
+    ::v-deep .el-upload-list__item {
       @include img-frame;
       transition: none !important;
       border: 1px solid #dcdfe6;
@@ -211,12 +211,12 @@ export default {
       }
     }
 
-    /deep/ .el-progress {
+    ::v-deep .el-progress {
       width: 80px !important;
       height: 80px !important;
     }
 
-    /deep/ .el-progress-circle {
+    ::v-deep .el-progress-circle {
       width: 80px !important;
       height: 80px !important;
     }

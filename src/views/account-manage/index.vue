@@ -315,13 +315,13 @@ export default {
     text-align: center;
   }
 
-  /deep/  .tr-disbale {
+  ::v-deep  .tr-disbale {
     background: #f8f8f9;
     color: #ccc;
   }  
 }
 .form-container {
-  /deep/ .el-form-item {
+  ::v-deep .el-form-item {
     margin-bottom: 15px;
   }
 }

@@ -192,7 +192,7 @@ export default {
     @include img-frame;
     line-height: 75px;
 
-    /deep/ .el-upload {
+    ::v-deep .el-upload {
       width: 100%;
       height: 100%;
     }
