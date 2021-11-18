@@ -186,7 +186,7 @@ export default {
     color: #888;
   }
 
-  /deep/ .el-button {
+  ::v-deep .el-button {
     width: 100%;
   }
 }

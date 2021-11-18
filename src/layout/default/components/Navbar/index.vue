@@ -227,15 +227,17 @@ $right-menu-height: 50px;
     margin-top: 5px;
     margin-left: 50px;
 
-    /deep/ .el-menu {
+    ::v-deep .el-menu {
       background: transparent;
     }
 
-    /deep/ .el-menu-item {
+    ::v-deep .el-menu-item {
       height: $right-menu-height;
       line-height: $right-menu-height;
       font-size: 16px;
       color: $menuText;
+
+      
 
       i {
         color: $menuText;
@@ -245,7 +247,8 @@ $right-menu-height: 50px;
         background: transparent !important;
       }
 
-      &:hover {
+      &:hover,
+      &.is-active {
         color: $menuActiveText !important;
         background: transparent !important;
         i {
@@ -254,7 +257,7 @@ $right-menu-height: 50px;
       }
     }
 
-    /deep/ .el-submenu__title {
+    ::v-deep .el-submenu__title {
       height: $right-menu-height;
       line-height: $right-menu-height;
       font-size: 16px;
@@ -264,11 +267,11 @@ $right-menu-height: 50px;
       }
     }
 
-    /deep/ .el-menu--horizontal {
+    ::v-deep .el-menu--horizontal {
       border-bottom: none;
     }
 
-    /deep/ .el-submenu__title {
+    ::v-deep .el-submenu__title {
       color: $menuText;
 
       &:focus {
@@ -291,7 +294,7 @@ $right-menu-height: 50px;
       }
     }
 
-    /deep/ .el-submenu__icon-arrow {
+    ::v-deep .el-submenu__icon-arrow {
       position: relative;
       top: inherit;
       right: inherit;

@@ -304,11 +304,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-/deep/ .el-collapse-item__content {
+::v-deep .el-collapse-item__content {
   padding-bottom: 5px;
 }
 
-/deep/ .el-collapse-item__header{
+::v-deep .el-collapse-item__header{
   padding-left: 10px;
 
   &.is-active {

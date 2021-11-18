@@ -46,7 +46,7 @@ export default {
     width: 79%;
     float: left;
 
-    /deep/ .el-progress-bar__outer{
+    ::v-deep .el-progress-bar__outer{
       background: #000a23;
     }
   }
