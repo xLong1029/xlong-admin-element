@@ -7,7 +7,11 @@
     width="900px"
     @close="close"
   >
-    <div class="account-detail-container" v-loading="loading" element-loading-text="加载中，请稍后...">
+    <div
+      class="account-detail-container"
+      v-loading="loading"
+      element-loading-text="加载中，请稍后..."
+    >
       <div class="account-detail__left">
         <el-tabs
           :value="activeTab.name"
@@ -25,9 +29,15 @@
         </el-tabs>
       </div>
       <div class="account-detail__right ml-15">
-        <div ref="detailContent" class="account-detail-content" @scroll="contentScorll">
+        <div
+          ref="detailContent"
+          class="account-detail-content"
+          @scroll="contentScorll"
+        >
           <el-form ref="form" :model="form" :rules="validate">
-            <div class="account-detail-content__title" id="baseInfo">基本信息</div>
+            <div class="account-detail-content__title" id="baseInfo">
+              基本信息
+            </div>
             <div class="account-detail-content__cont">
               <div class="info-table">
                 <div class="flex">
@@ -38,7 +48,10 @@
                       </div>
                       <div class="info-table__td">
                         <el-form-item prop="realname">
-                          <el-input v-model="form.realname" placeholder="请输入内容"></el-input>
+                          <el-input
+                            v-model="form.realname"
+                            placeholder="请输入内容"
+                          ></el-input>
                         </el-form-item>
                       </div>
                     </div>
@@ -62,7 +75,10 @@
                   </div>
                   <div class="info-table__tr">
                     <div class="info-table__td head-pic img-shade">
-                      <img :src="form.face ? form.face : defaultFaceImg" @error="setdefaultFaceImg" />
+                      <img
+                        :src="form.face ? form.face : defaultFaceImg"
+                        @error="setdefaultFaceImg"
+                      />
                       <div class="img-shade-actions">
                         <el-upload
                           class="img-shade-actions-btn"
@@ -110,7 +126,10 @@
                   </div>
                   <div class="info-table__td">
                     <el-form-item prop="mobile">
-                      <el-input v-model="form.mobile" placeholder="请输入内容"></el-input>
+                      <el-input
+                        v-model="form.mobile"
+                        placeholder="请输入内容"
+                      ></el-input>
                     </el-form-item>
                   </div>
                   <div class="info-table__th">
@@ -118,7 +137,10 @@
                   </div>
                   <div class="info-table__td">
                     <el-form-item prop="email">
-                      <el-input v-model="form.email" placeholder="请输入内容"></el-input>
+                      <el-input
+                        v-model="form.email"
+                        placeholder="请输入内容"
+                      ></el-input>
                     </el-form-item>
                   </div>
                 </div>
@@ -126,7 +148,10 @@
                   <div class="info-table__th">通讯地址</div>
                   <div class="info-table__td">
                     <el-form-item>
-                      <el-input v-model="form.address" placeholder="请输入内容"></el-input>
+                      <el-input
+                        v-model="form.address"
+                        placeholder="请输入内容"
+                      ></el-input>
                     </el-form-item>
                   </div>
                 </div>
@@ -146,7 +171,9 @@
               </div>
             </div>
 
-            <div class="account-detail-content__title" id="workInfo">工作信息</div>
+            <div class="account-detail-content__title" id="workInfo">
+              工作信息
+            </div>
             <div class="account-detail-content__cont">
               <div class="info-table">
                 <div class="info-table__tr">
@@ -155,7 +182,10 @@
                   </div>
                   <div class="info-table__td">
                     <el-form-item prop="companyName">
-                      <el-input v-model="form.companyName" placeholder="请输入内容"></el-input>
+                      <el-input
+                        v-model="form.companyName"
+                        placeholder="请输入内容"
+                      ></el-input>
                     </el-form-item>
                   </div>
                   <div class="info-table__th">
@@ -188,7 +218,11 @@
                         class="mr-10"
                         style="width:80%"
                       ></el-date-picker>
-                      <el-checkbox v-model="form.isGraduate" @change="graduateChange">尚未毕业</el-checkbox>
+                      <el-checkbox
+                        v-model="form.isGraduate"
+                        @change="graduateChange"
+                        >尚未毕业</el-checkbox
+                      >
                     </el-form-item>
                   </div>
                 </div>
@@ -212,9 +246,16 @@
               </div>
             </div>
 
-            <div class="account-detail-content__title" id="workExperience">工作经历</div>
+            <div class="account-detail-content__title" id="workExperience">
+              工作经历
+            </div>
             <div class="account-detail-content__cont">
-              <el-table ref="table" :data="form.workExperience" border class="table">
+              <el-table
+                ref="table"
+                :data="form.workExperience"
+                border
+                class="table"
+              >
                 <el-table-column align="center" header-align="center">
                   <template slot="header">
                     <span class="required">起止年月</span>
@@ -224,7 +265,11 @@
                       label
                       :key="'workExperience.' + $index + '.date'"
                       :prop="'workExperience.' + $index + '.date'"
-                      :rules="{ required: true, message: '请输入起止年月', trigger: 'blur' }"
+                      :rules="{
+                        required: true,
+                        message: '请输入起止年月',
+                        trigger: 'blur'
+                      }"
                       class="mb-20"
                     >
                       <el-input
@@ -245,7 +290,11 @@
                       label
                       :key="'workExperience.' + $index + '.unitAndPost'"
                       :prop="'workExperience.' + $index + '.unitAndPost'"
-                      :rules="{ required: true, message: '请输入单位及职务/职称', trigger: 'blur' }"
+                      :rules="{
+                        required: true,
+                        message: '请输入单位及职务/职称',
+                        trigger: 'blur'
+                      }"
                       class="mb-20"
                     >
                       <el-input
@@ -257,7 +306,11 @@
                     </el-form-item>
                   </template>
                 </el-table-column>
-                <el-table-column prop="witness" align="center" header-align="center">
+                <el-table-column
+                  prop="witness"
+                  align="center"
+                  header-align="center"
+                >
                   <template slot="header">
                     <span class="required">证明人</span>
                   </template>
@@ -266,7 +319,11 @@
                       label
                       :key="'workExperience.' + $index + '.witness'"
                       :prop="'workExperience.' + $index + '.witness'"
-                      :rules="{ required: true, message: '请输入证明人', trigger: 'blur' }"
+                      :rules="{
+                        required: true,
+                        message: '请输入证明人',
+                        trigger: 'blur'
+                      }"
                       class="mb-20"
                     >
                       <el-input
@@ -292,7 +349,8 @@
                       icon="el-icon-delete"
                       class="mb-15"
                       @click="deleteWorkExp(row, $index)"
-                    >删除</el-button>
+                      >删除</el-button
+                    >
                   </template>
                 </el-table-column>
               </el-table>
@@ -306,9 +364,9 @@
     </div>
     <div slot="footer">
       <el-button @click="close">取消</el-button>
-      <template>
-        <el-button type="primary" @click="submit()" :loading="saveLoading">提交保存</el-button>
-      </template>
+      <el-button type="primary" @click="submit()" :loading="saveLoading"
+        >提交保存</el-button
+      >
     </div>
   </el-dialog>
 </template>
