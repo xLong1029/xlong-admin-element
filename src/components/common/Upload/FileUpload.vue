@@ -34,15 +34,15 @@
                   @error="setDefaultImg"
                 />
                 <span v-else>
-                  <i v-if="(file.filename).indexOf('.doc') >= 0" class="iconfont icon-word"></i>
-                  <i v-else-if="(file.filename).indexOf('.ppt') >= 0" class="iconfont icon-ppt"></i>
-                  <i v-else-if="(file.filename).indexOf('.pdf') >= 0" class="iconfont icon-pdf"></i>
-                  <i v-else-if="(file.filename).indexOf('.xls') >= 0" class="iconfont icon-excel"></i>
-                  <i v-else-if="(file.filename).indexOf('.zip') >= 0" class="iconfont icon-zip"></i>
+                  <i v-if="(file.name).indexOf('.doc') >= 0" class="iconfont icon-word"></i>
+                  <i v-else-if="(file.name).indexOf('.ppt') >= 0" class="iconfont icon-ppt"></i>
+                  <i v-else-if="(file.name).indexOf('.pdf') >= 0" class="iconfont icon-pdf"></i>
+                  <i v-else-if="(file.name).indexOf('.xls') >= 0" class="iconfont icon-excel"></i>
+                  <i v-else-if="(file.name).indexOf('.zip') >= 0" class="iconfont icon-zip"></i>
                   <i v-else class="iconfont icon-file"></i>
                 </span>
               </div>
-              <div class="file-name">{{ file.filename }}</div>
+              <div class="file-name">{{ file.name }}</div>
               <!-- <span class="file-size">（{{ getSize(file.size / 1024) }}）</span> -->
             </div>
             <div class="file-item__right file-actions">
@@ -86,7 +86,6 @@
   </div>
 </template>
 <script>
-
 // mixins
 import UploadMixins from "mixins/upload.js";
 
@@ -145,18 +144,11 @@ export default {
     },
     // 是否是图片格式
     isImg(file) {
-      if (this.imgReg.test(file.filename)) {
+      if (this.imgReg.test(file.name)) {
         return true;
       }
       return false;
     },
-    // 删除
-    del(file) {
-      let list = [...this.fileList];
-      if (!list.length) return;
-      list.splice(list.indexOf(file), 1);
-      this.$emit("upload-success", list);
-    }
   }
 };
 </script>

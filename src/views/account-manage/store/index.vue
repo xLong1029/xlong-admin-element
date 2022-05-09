@@ -753,11 +753,10 @@ export default {
     },
     // 上传头像
     uploadFace(params) {
-      // console.log("uploadFile", params);
       const file = params.file;
 
-      this.uploadToBomb(file)
-        .then(res => (this.form.face = res[0].url))
+      this.uploadFileDemo(file)
+        .then(res => (this.form.face = res.data.url))
         .catch(err => console.log(err));
     },
     // 重置表单

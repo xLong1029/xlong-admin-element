@@ -77,7 +77,6 @@ xlong-admin-element 是一套基于 Vue + Element + Mock 开发的单页面客�
 │  ├─store  // 应用级数据（state）
 │  ├─styles  // 样式
 │  │
-│  │
 │  ├─mock // 模拟请求数据
 │  │    index.js // mock数据
 │  │    mock-handle.js // mock数据处理
@@ -134,7 +133,7 @@ xlong-admin-element 是一套基于 Vue + Element + Mock 开发的单页面客�
 │  │    index.js
 │  │    auth.js // 读写token
 │  │    get-page-title.js // 页面标题
-│  │    request.js // 请求配置，因用了bmob，所以没用到requrest请求
+│  │    request.js // 请求配置
 │  │    scroll-to.js // 页面滚动
 │  │    validate.js // 验证
 │  │

@@ -3,7 +3,7 @@
   <el-table ref="table" class="table" :data="fileList" border>
     <el-table-column type="index" label="序号" width="50" align="center" header-align="center"></el-table-column>
     <el-table-column prop="name" label="文件名称" header-align="center">
-      <template slot-scope="{ row }">{{ row.filename || row.name }}</template>
+      <template slot-scope="{ row }">{{ row.name }}</template>
     </el-table-column>
     <el-table-column
       v-if="canDownload || canDelete"
@@ -32,9 +32,8 @@
     </el-table-column>
   </el-table>
 </template>
+
 <script>
-
-
 const VUE_APP_SERVER_AUTH = process.env.VUE_APP_SERVER_AUTH;
 
 export default {
@@ -68,9 +67,8 @@ export default {
   methods: {
     // 下载
     download(file) {
-      console.log(file);
       var a = window.document.createElement("a");
-      a.download = file.filename;
+      a.download = file.name;
       a.href = file.url;
       a.target = "_blank";
       document.body.appendChild(a);

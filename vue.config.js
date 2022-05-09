@@ -35,7 +35,6 @@ module.exports = {
         'config': resolve('src/config'),
         'components': resolve('src/components'),
         'views': resolve('src/views'),
-        'bmob': resolve('src/bmob'),
         'utils': resolve('src/utils'),
         'router': resolve('src/router'),
       }

@@ -200,7 +200,6 @@
 </template>
 
 <script>
-
 import BackgroundUpload from "components/common/Upload/BackgroundUpload";
 import ImgUpload from "components/common/Upload/ImgUpload";
 import FileUpload from "components/common/Upload/FileUpload";
@@ -275,7 +274,6 @@ export default {
     },
     // 上传
     upload(e, formName, attr) {
-      console.log(e);
       this.form[attr] = e;
       if (e.length && formName) {
         this.$refs[formName].clearValidate(attr);
