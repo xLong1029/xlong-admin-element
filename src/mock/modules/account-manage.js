@@ -58,7 +58,7 @@ const workExperience = new Array(
 
 let account = Mock.mock({
   // 10-20 个元素的数组
-  "list|10-20": [
+  "list|15-25": [
     {
       // 自增数，起始值为 1，每次增 1
       "sid|+1": 1,
@@ -129,8 +129,9 @@ export default [
 
         let list = deepClone(account.list);
 
-        // 筛选
+        // 筛选        
         const filters = JSON.parse(params);
+        delete filters["selectTime"];
         for (let i in filters) {
           if (filters[i]) {
             switch (i) {

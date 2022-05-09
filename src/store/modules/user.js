@@ -57,7 +57,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       Api.GetUser()
         .then(res => {
-          console.log(res);
           const { code, data } = res;
           // 登录成功
           if (code == 200) {

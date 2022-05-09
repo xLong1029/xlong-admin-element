@@ -35,7 +35,7 @@
         </el-form-item>
         <el-form-item label="创建日期">
           <el-date-picker
-            v-model="filterParams.createTime"
+            v-model="filterParams.selectTime"
             type="daterange"
             align="right"
             unlink-panels
@@ -197,8 +197,9 @@ export default {
   computed: {
     // 获取列表
     apiGetList(pageNo, pageSize) {
-      return (pageNo, pageSize) =>
-        Api.GetAccList(this.filterParams, pageNo, pageSize);
+      return (pageNo, pageSize) => {
+        return Api.GetAccList(this.filterParams, pageNo, pageSize);
+      };
     },
     // 删除操作接口
     apiDelete() {
@@ -206,7 +207,7 @@ export default {
     },
     // 启/禁用操作接口
     apiEnable(enabledState) {
-      return (enabledState) => Api.EnableAcc({ enabledState }, this.selectList);
+      return (enabledState) => Api.EnableAcc(enabledState, this.selectList);
     },
   },
   data() {
@@ -236,7 +237,7 @@ export default {
       tableHeader: [
         {
           title: "用户编号",
-          key: "objectId",
+          key: "id",
           align: "center",
           width: 200,
         },
@@ -275,7 +276,13 @@ export default {
         },
         {
           title: "创建时间",
-          key: "createdAt",
+          key: "createTime",
+          align: "center",
+          width: 200,
+        },
+        {
+          title: "更新时间",
+          key: "updateTime",
           align: "center",
           width: 200,
         },

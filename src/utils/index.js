@@ -488,12 +488,12 @@ export function clearLocalS() {
  * @param {*} dateOne 第一个日期
  * @param {*} dateTwo 第二个日期
  */
- export function CompareDate(dateOne, dateTwo) {
+ export function compareDate(dateOne, dateTwo) {
   // console.log(dateOne, typeof(dateOne), dateTwo, console.log(typeof(dateTwo)))
-  const CompareDateOne = typeof (dateOne) == 'string' ? new Date(dateOne.replace(/-/g, "\/")) : dateOne;
-  const CompareDateTwo = typeof (dateTwo) == 'string' ? new Date(dateTwo.replace(/-/g, "\/")) : dateTwo;
+  const compareDateOne = typeof (dateOne) == 'string' ? new Date(dateOne.replace(/-/g, "\/")) : dateOne;
+  const compareDateTwo = typeof (dateTwo) == 'string' ? new Date(dateTwo.replace(/-/g, "\/")) : dateTwo;
 
-  return CompareDateOne <= CompareDateTwo;
+  return compareDateOne <= compareDateTwo;
 }
 
 /**

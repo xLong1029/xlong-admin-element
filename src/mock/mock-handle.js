@@ -45,10 +45,8 @@ export const handleResponse = (code, message = null, data = null) => {
  */
 export const handleMock = (config, handleData) => {
     try {
-        const token = getToken();        
-
+        const token = getToken();
         const { url } = config;
-
         if (!token && url.indexOf("/api/user/login") < 0) {
             return handleResponse(401);
         }

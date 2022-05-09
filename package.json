@@ -27,7 +27,7 @@
     "echarts": "4.2.1",
     "core-js": "^3.6.4",
     "crypto-js": "^4.1.1",
-    "element-ui": "2.15.7",
+    "element-ui": "2.15.6",
     "js-cookie": "2.2.0",
     "mockjs": "^1.1.0",
     "path-to-regexp": "2.4.0",
