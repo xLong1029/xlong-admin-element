@@ -357,7 +357,7 @@ export default {
     // 显示编辑弹窗
     showStore(row) {
       this.storeDialog = {
-        id: row ? row.objectId : null,
+        id: row ? row.id : null,
         visible: true,
       };
     },

@@ -45,7 +45,7 @@ const phonePrefixs = new Array(
   "177"
 );
 const workExperience = new Array(
-  null,
+  [],
   [{ date: "2001.3.1-至今", unitAndPost: "华蓝集团", witness: "小凳子" }],
   [
     {
@@ -189,12 +189,14 @@ export default [
         const user = account.list.find(
           (e) => e.mobile == data.mobile || e.email == data.email
         );
+
         if (user) {
           if (user.mobile == data.mobile) {
+            console.log(222);
             return handleResponse(400, "手机号码已存在");
           }
           if (user.email == data.email) {
-            return handleResponse(400, "电子邮箱");
+            return handleResponse(400, "电子邮箱已存在");
           }
         }
 

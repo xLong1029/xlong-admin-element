@@ -41,7 +41,7 @@
             <div class="account-detail-content__cont">
               <div class="info-table">
                 <div class="flex">
-                  <div style="width:100%">
+                  <div style="width: 100%">
                     <div class="info-table__tr">
                       <div class="info-table__th">
                         <span class="required">真实姓名</span>
@@ -74,9 +74,9 @@
                     </div>
                   </div>
                   <div class="info-table__tr">
-                    <div class="info-table__td head-pic img-shade">
+                    <div class="info-table__td head-pic img-shade" style="padding-bottom: 12px">
                       <img
-                        :src="form.face ? form.face : defaultFaceImg"
+                        :src="form.avatar ? form.avatar : defaultFaceImg"
                         @error="setdefaultFaceImg"
                       />
                       <div class="img-shade-actions">
@@ -104,7 +104,7 @@
                         v-model="form.birthdate"
                         type="date"
                         placeholder="请选择日期"
-                        style="width:100%"
+                        style="width: 100%"
                       ></el-date-picker>
                     </el-form-item>
                   </div>
@@ -216,7 +216,7 @@
                         :placeholder="workTimePH"
                         :disabled="form.isGraduate"
                         class="mr-10"
-                        style="width:80%"
+                        style="width: 80%"
                       ></el-date-picker>
                       <el-checkbox
                         v-model="form.isGraduate"
@@ -232,7 +232,7 @@
                   </div>
                   <div class="info-table__td">
                     <el-form-item prop="profession">
-                      <el-checkbox-group v-model="professionValue">
+                      <el-checkbox-group v-model="form.profession">
                         <el-checkbox
                           v-for="(item, index) in professionList"
                           :key="'profession' + index"
@@ -268,7 +268,7 @@
                       :rules="{
                         required: true,
                         message: '请输入起止年月',
-                        trigger: 'blur'
+                        trigger: 'blur',
                       }"
                       class="mb-20"
                     >
@@ -293,7 +293,7 @@
                       :rules="{
                         required: true,
                         message: '请输入单位及职务/职称',
-                        trigger: 'blur'
+                        trigger: 'blur',
                       }"
                       class="mb-20"
                     >
@@ -322,7 +322,7 @@
                       :rules="{
                         required: true,
                         message: '请输入证明人',
-                        trigger: 'blur'
+                        trigger: 'blur',
                       }"
                       class="mb-20"
                     >
@@ -372,10 +372,9 @@
 </template>
 
 <script>
-
 import Api from "api/account-manage";
 import { docElmScrollTo } from "utils/scroll-to";
-import { compareDate, timeTrans, arrToStr, strToArr } from "utils";
+import { compareDate, timeTrans } from "utils";
 import { validEmail, validMobile } from "utils/validate";
 import UploadMixins from "mixins/upload.js";
 
@@ -386,28 +385,28 @@ export default {
     // 弹窗可见性
     visible: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 详情id
     id: {
       type: String | Number,
-      default: null
+      default: null,
     },
     // 职位
     jobList: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     // 省份
     provinceList: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     // 专业领域
     professionList: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   data() {
     const validBirthDate = (rule, value, callback) => {
@@ -452,10 +451,9 @@ export default {
     };
 
     const validateProfession = (rule, value, callback) => {
-      if (this.professionValue.length <= 0)
+      if (!value || value.length <= 0)
         return callback(new Error("请选择专业领域"));
       else {
-        this.form.profession = arrToStr(this.professionValue, ",");
         return callback();
       }
     };
@@ -468,20 +466,20 @@ export default {
           index: 1,
           name: "基本信息",
           anchor: "baseInfo",
-          anchorOffsetTop: 0
+          anchorOffsetTop: 0,
         },
         {
           index: 2,
           name: "工作信息",
           anchor: "workInfo",
-          anchorOffsetTop: 0
+          anchorOffsetTop: 0,
         },
         {
           index: 3,
           name: "工作经历",
           anchor: "workExperience",
-          anchorOffsetTop: 0
-        }
+          anchorOffsetTop: 0,
+        },
       ],
       // 当前激活tab
       activeTab: {},
@@ -491,18 +489,18 @@ export default {
         city: "",
         companyName: "",
         email: "",
-        face: null,
+        avatar: null,
         gender: "男",
         isGraduate: false,
         job: "",
         mobile: "",
-        profession: "",
+        profession: [],
         province: "",
         realname: "",
         workTime: null,
         address: "",
         remark: "",
-        workExperience: []
+        workExperience: [],
       },
       form: {
         area: "",
@@ -510,63 +508,63 @@ export default {
         city: "",
         companyName: "",
         email: "",
-        face: null,
+        avatar: null,
         gender: "男",
         isGraduate: false,
         job: "",
         mobile: "",
-        profession: "",
+        profession: [],
         province: "",
         realname: "",
         workTime: null,
         address: "",
         remark: "",
-        workExperience: []
+        workExperience: [],
       },
       // 验证规则
       validate: {
         realname: [
-          { required: true, message: "请输入真实姓名", trigger: "blur" }
+          { required: true, message: "请输入真实姓名", trigger: "blur" },
         ],
         gender: [{ required: true, message: "请选择性别", trigger: "change" }],
         birthdate: [
           {
             required: true,
             validator: validBirthDate,
-            trigger: "change"
-          }
+            trigger: "change",
+          },
         ],
         province: [
-          { required: true, message: "请选择所在省市", trigger: "change" }
+          { required: true, message: "请选择所在省市", trigger: "change" },
         ],
         mobile: [
           {
             required: true,
             validator: validateMobile,
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         email: [
           {
             required: true,
             validator: validateEmail,
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         companyName: [
-          { required: true, message: "请输入工作单位名称", trigger: "blur" }
+          { required: true, message: "请输入工作单位名称", trigger: "blur" },
         ],
         job: [{ required: true, message: "请选择职位", trigger: "change" }],
         workTime: [
           {
             required: true,
             validator: validateWorkTime,
-            trigger: "blur"
-          }
+            trigger: "blur",
+          },
         ],
         profession: [
-          { required: true, validator: validateProfession, trigger: "change" }
-        ]
+          { required: true, validator: validateProfession, trigger: "change" },
+        ],
       },
       // 工作时间
       workTimePH: "请选择日期",
@@ -575,7 +573,7 @@ export default {
       provinceListProps: {
         label: "name",
         value: "name",
-        children: "childs"
+        children: "childs",
       },
       // 专业领域
       professionValue: [],
@@ -586,7 +584,7 @@ export default {
       // 图片上传格式
       imgAccept: ".png,.jpg,.jpeg,.gif",
       // 默认头像
-      defaultFaceImg: require("@/assets/images/head.jpg")
+      defaultFaceImg: require("@/assets/images/head.jpg"),
     };
   },
   watch: {
@@ -594,7 +592,7 @@ export default {
       if (val) {
         this.init();
       }
-    }
+    },
   },
   methods: {
     // 初始化
@@ -612,16 +610,16 @@ export default {
 
       this.loading = true;
       Api.GetAccInfo(this.id)
-        .then(res => {
-          const result = res.data;
-          if (res.code == 200) {
+        .then((res) => {
+          const { code, data, message } = res;
+          if (code == 200) {
             // 设置数据
-            this.form = { ...this.defaultData, ...result };
+            this.form = { ...this.defaultData, ...data };
             // 设置省市值
             this.provinceValue = [
               this.form.province,
               this.form.city,
-              this.form.area
+              this.form.area,
             ];
             // 设置出生日期
             this.form.birthdate = this.form.birthdate
@@ -632,22 +630,22 @@ export default {
             this.form.workTime = this.form.workTime
               ? new Date(this.form.workTime)
               : "";
-            // 截取专业领域
-            this.professionValue = this.form.profession
-              ? strToArr(this.form.profession, ",")
-              : [];
 
             this.$nextTick(() => this.getTabsPosition());
-          } else this.$message.error("无该用户数据!");
+          } else this.$message.error(message);
         })
-        .catch(err => console.log(err))
+        .catch((err) => console.log(err))
         .finally(() => (this.loading = false));
+
+      this.$nextTick(() => {
+        this.$refs.form?.clearValidate();
+      })
     },
     // 获取每个tab对应的锚点位置
     getTabsPosition() {
       this.activeTab = this.tabTitles[0];
       setTimeout(() => {
-        this.tabTitles.forEach(e => {
+        this.tabTitles.forEach((e) => {
           const elm = document.getElementById(e.anchor);
           e.anchorOffsetTop = elm.offsetTop;
         });
@@ -663,7 +661,7 @@ export default {
         this.$refs.detailContent,
         destination.offsetTop - 69,
         500,
-        function() {
+        function () {
           _this.tag = 2;
         }
       );
@@ -721,7 +719,7 @@ export default {
       this.form.workExperience.push({
         date: "",
         unitAndPost: "",
-        witness: ""
+        witness: "",
       });
     },
     // 删除工作经验
@@ -756,14 +754,13 @@ export default {
       const file = params.file;
 
       this.uploadFileDemo(file)
-        .then(res => (this.form.face = res.data.url))
-        .catch(err => console.log(err));
+        .then((res) => (this.form.avatar = res.data.url))
+        .catch((err) => console.log(err));
     },
     // 重置表单
     reset() {
       this.$refs.form.resetFields();
       this.provinceValue = null;
-      this.professionValue = [];
       this.form = { ...this.defaultData };
     },
     // 关闭弹窗
@@ -775,7 +772,7 @@ export default {
     },
     // 提交表单
     submit() {
-      this.$refs.form.validate(valid => {
+      this.$refs.form.validate((valid) => {
         if (valid) {
           let params = { ...this.form };
           params.birthdate =
@@ -789,25 +786,27 @@ export default {
           this.saveLoading = true;
           if (this.id) {
             Api.EditAccount(params, this.id)
-              .then(res => {
-                if (res.code == 200) {
+              .then((res) => {
+                const { code, message } = res;
+                if (code == 200) {
                   this.$message.success("编辑成功");
                   this.$emit("submit", 1);
                   this.close();
-                } else this.$message.error(res.msg);
+                } else this.$message.error(message);
               })
-              .catch(err => this.$message.error("操作失败"))
+              .catch((err) => console.log(err))
               .finally(() => (this.saveLoading = false));
           } else {
             Api.AddAccount(params)
-              .then(res => {
-                if (res.code == 200) {
+              .then((res) => {
+                const { code, message } = res;
+                if (code == 200) {
                   this.$message.success("添加成功");
                   this.$emit("submit", 0);
                   this.close();
-                } else this.$message.error(res.msg);
+                } else this.$message.error(message);
               })
-              .catch(err => this.$message.error("操作失败"))
+              .catch((err) => console.log(err))
               .finally(() => (this.saveLoading = false));
           }
         } else {
@@ -819,8 +818,8 @@ export default {
     setdefaultFaceImg(e) {
       e.currentTarget.src = this.defaultFaceImg;
       e.currentTarget.onerror = null;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -972,7 +971,7 @@ $border: 1px solid #ebeef5;
   img {
     min-width: 100px;
     max-width: 100px;
-    max-height: 138px;
+    max-height: 117px;
   }
 }
 
