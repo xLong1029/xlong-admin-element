@@ -1,10 +1,11 @@
+@use 'sass:math';
 @import './variables.scss';
 
 // 响应式配置，保留使用
 $designWidth: 1909;
 $designHeight: 1076;
-$baseUnit: 1/100; // 设计图大小为1909*1076px，对应根字体大小为100px
-$widthHeightRatio: $designWidth / $designHeight;
+$baseUnit: math.div(1, 100); // 设计图大小为1909*1076px，对应根字体大小为100px
+$widthHeightRatio: math.div($designWidth, $designHeight);
 
 $color-light-blue: #99dced;
 $color-yellow: #fddc31;

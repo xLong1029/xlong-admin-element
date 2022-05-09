@@ -29,7 +29,7 @@
         <el-button type="primary" long @click="submit('loginForm')" :loading="loading">登录</el-button>
       </el-form-item>
       <div class="info">普通用户登录账号: 18888888888 密码: 666666</div>
-      <div class="info">管理员登录账号: 13543501039 密码: 123456</div>
+      <div class="info">管理员登录账号: 17777075292 密码: 123456</div>
       <div class="info">超级管理员登录账号: 18376686974 密码: 123456</div>
     </el-form>
   </div>
