@@ -372,7 +372,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import Api from "api/account-manage";
 import { docElmScrollTo } from "utils/scroll-to";
 import { compareDate, timeTrans, arrToStr, strToArr } from "utils";

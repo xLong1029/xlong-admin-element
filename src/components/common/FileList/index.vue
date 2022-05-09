@@ -33,7 +33,7 @@
   </el-table>
 </template>
 <script>
-/* eslint-disable */
+
 
 const VUE_APP_SERVER_AUTH = process.env.VUE_APP_SERVER_AUTH;
 

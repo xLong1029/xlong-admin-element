@@ -39,13 +39,13 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import SplitScreenOne from "./screen-1";
 import SplitScreenTwo from "./screen-2";
 import SplitScreenThree from "./screen-3";
 import ScreenHeader from "components/statistics-screen/Header";
 
-import areaJson from "mock/guangxi-area.json";
+import areaJson from "assets/json/guangxi-area.json";
 
 import { timeTrans } from "utils";
 

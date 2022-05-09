@@ -8,7 +8,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import { mapState } from "vuex";
 
 const whiteList = ["Home", "ExpertsList", "AccountSettings"];

@@ -67,11 +67,11 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import Empty from "components/common/Empty";
 import StatisticsMsgMap from "components/statistics-screen/Charts/StatisticsMsgMap";
 
-import areaJson from "mock/guangxi-area.json";
+import areaJson from "assets/json/guangxi-area.json";
 
 export default {
   name: "SplitScreenOne",

@@ -89,11 +89,11 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import Empty from "components/common/Empty";
 import PopupMsgMap from "components/statistics-screen/Charts/PopupMsgMap";
 import RankingBarChart from "components/statistics-screen/Charts/RankingBarChart";
-import areaJson from "mock/guangxi-area.json";
+import areaJson from "assets/json/guangxi-area.json";
 import { logInfo, timeTrans } from "utils";
 
 const appNames = [

@@ -71,7 +71,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import ServerStatisticsCard from "./ServerStatisticsCard";
 import Empty from "@/components/common/Empty";
 

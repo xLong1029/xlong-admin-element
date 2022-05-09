@@ -200,7 +200,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import BackgroundUpload from "components/common/Upload/BackgroundUpload";
 import ImgUpload from "components/common/Upload/ImgUpload";
 import FileUpload from "components/common/Upload/FileUpload";

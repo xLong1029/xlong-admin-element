@@ -15,7 +15,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import { scrollTo } from "@/utils/scroll-to";
 
 export default {

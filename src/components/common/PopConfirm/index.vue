@@ -13,7 +13,7 @@
   </el-popover>
 </template>
 <script>
-/* eslint-disable */
+
 export default {
   name: "PopConfirm",
   props: {

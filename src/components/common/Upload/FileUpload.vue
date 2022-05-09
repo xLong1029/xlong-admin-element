@@ -86,7 +86,7 @@
   </div>
 </template>
 <script>
-/* eslint-disable */
+
 // mixins
 import UploadMixins from "mixins/upload.js";
 

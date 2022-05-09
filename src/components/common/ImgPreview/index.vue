@@ -12,7 +12,7 @@
   </el-dialog>
 </template>
 <script>
-/* eslint-disable */
+
 
 export default {
   name: "ImgPreview",

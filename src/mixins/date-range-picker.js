@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 import { logInfo } from '@/utils'
 
 export default {

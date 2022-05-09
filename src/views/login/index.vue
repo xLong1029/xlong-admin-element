@@ -22,7 +22,7 @@
           @keyup.enter.native="submit('loginForm')"
         />
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="line-height: inherit;">
         <el-checkbox v-model="remeberPwd">记住密码</el-checkbox>
       </el-form-item>
       <el-form-item>
@@ -36,8 +36,8 @@
 </template>
 
 <script>
-/* eslint-disable */
-import { setLocalS, getLocalS, delLocalS, encrypt, decrypt } from "utils";
+
+import { setLocalS, getLocalS, delLocalS, encrypt, AESDecrypt } from "utils";
 
 export default {
   name: "Login",
@@ -93,7 +93,7 @@ export default {
     if (getLocalS("username")) {
       // 获取本地存储的用户名和密码
       this.loginForm.username = getLocalS("username");
-      this.loginForm.password = decrypt(getLocalS("password"));
+      this.loginForm.password = AESDecrypt(getLocalS("password"));
       this.remeberPwd = true;
     }
   },

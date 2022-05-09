@@ -48,7 +48,7 @@
   </div>
 </template>
 <script>
-/* eslint-disable */
+
 import UploadMixins from "mixins/upload.js";
 
 function defaultFormat(file) {

@@ -4,7 +4,7 @@
  * 日期 : 2020-01-09
  * 版本 : version 2.2
  */
-/* eslint-disable */
+
 import { APPLICATION_ID, REST_API_KEY } from 'config/index.js'
 import { objOmit } from 'utils'
 

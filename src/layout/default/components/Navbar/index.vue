@@ -64,7 +64,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import { mapGetters } from "vuex";
 import NavItem from "./NavItem";
 import variables from "@/styles/variables.scss";

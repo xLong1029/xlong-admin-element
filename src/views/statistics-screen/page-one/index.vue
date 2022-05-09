@@ -22,7 +22,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import SplitScreenOne from './screen-1';
 import SplitScreenTwo from './screen-2';
 import SplitScreenThree from './screen-3';

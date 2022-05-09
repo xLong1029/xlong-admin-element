@@ -4,7 +4,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 // 参考地址：https://gallery.echartsjs.com/editor.html?c=xdExzKlpOh
 import echarts from "echarts";
 require("echarts/theme/macarons"); // echarts theme

@@ -123,14 +123,14 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import RankingBarChart from "components/statistics-screen/Charts/RankingBarChart";
 import ProjectsPieChart from "components/statistics-screen/Charts/ProjectsPieChart";
 import ProjectStatisticsChat from "components/statistics-screen/Charts/ProjectStatisticsChat";
 import PieChart from "components/statistics-screen/Charts/PieChart";
 import Empty from "components/common/Empty";
 
-import areaJson from "mock/guangxi-area.json";
+import areaJson from "assets/json/guangxi-area.json";
 import JsonData from "mock/data.json";
 
 export default {
