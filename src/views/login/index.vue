@@ -22,22 +22,22 @@
           @keyup.enter.native="submit('loginForm')"
         />
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="line-height: inherit;">
         <el-checkbox v-model="remeberPwd">记住密码</el-checkbox>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" long @click="submit('loginForm')" :loading="loading">登录</el-button>
       </el-form-item>
       <div class="info">普通用户登录账号: 18888888888 密码: 666666</div>
-      <div class="info">管理员登录账号: 13543501039 密码: 123456</div>
+      <div class="info">管理员登录账号: 17777075292 密码: 123456</div>
       <div class="info">超级管理员登录账号: 18376686974 密码: 123456</div>
     </el-form>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
-import { setLocalS, getLocalS, delLocalS, encrypt, decrypt } from "utils";
+
+import { setLocalS, getLocalS, delLocalS, encrypt, AESDecrypt } from "utils";
 
 export default {
   name: "Login",
@@ -93,7 +93,7 @@ export default {
     if (getLocalS("username")) {
       // 获取本地存储的用户名和密码
       this.loginForm.username = getLocalS("username");
-      this.loginForm.password = decrypt(getLocalS("password"));
+      this.loginForm.password = AESDecrypt(getLocalS("password"));
       this.remeberPwd = true;
     }
   },
@@ -138,7 +138,10 @@ export default {
                 query: this.otherQuery
               });
             })
-            .catch(err => this.$message.error(err.error))
+            .catch(err => {
+              console.log(err);
+              this.$message.error(err.message || "登录失败");
+            })
             .finally(() => (this.loading = false));
         } else this.$message.error("登录失败!填写有误！");
       });

@@ -7,11 +7,15 @@
           v-for="(item, index) in imgList"
           :key="'default-img' + index"
           class="img-default-list__item"
-          :class="{ 'is-active': imgSelectIndex === index}"
+          :class="{ 'is-active': imgSelectIndex === index }"
           @click="selectImg(index)"
         >
           <div class="img-shade">
-            <img class="img-shade-thumbnail" :src="item.url" @error="setDefaultImg" />
+            <img
+              class="img-shade-thumbnail"
+              :src="item.url"
+              @error="setDefaultImg"
+            />
             <div class="img-shade-actions">
               <span class="img-shade-preview" @click="preview(item)">
                 <i class="el-icon-zoom-in"></i>
@@ -33,10 +37,10 @@
         </li>
       </ul>
       <div class="img-upload__tip">
-        <span v-if="sizeHint">建议上传尺寸： {{ sizeHint }}，</span>文件格式：png / jpg / gif，
-        文件大小：
+        <span v-if="sizeHint">建议上传尺寸： {{ sizeHint }}，</span
+        >文件格式：png / jpg / gif， 文件大小：
         <span v-if="fileSize < 1024">{{ fileSize }}kb</span>
-        <span v-else>{{ Math.floor(fileSize/1024) }}M</span>以内
+        <span v-else>{{ Math.floor(fileSize / 1024) }}M</span>以内
       </div>
       <el-progress
         class="img-upload__progress"
@@ -48,7 +52,6 @@
   </div>
 </template>
 <script>
-/* eslint-disable */
 import UploadMixins from "mixins/upload.js";
 
 function defaultFormat(file) {
@@ -73,28 +76,28 @@ export default {
     // 所有图片列表
     imgList: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     // 当前选中索引
     imgSelectIndex: {
       type: Number,
-      default: 0
+      default: 0,
     },
     // 上传按钮尺寸提示文本
     sizeHint: {
       type: String,
-      default: "100*100px"
+      default: "100*100px",
     },
     // 图片文件大小限制，单位KB
     fileSize: {
       type: Number,
-      default: 150
+      default: 150,
     },
     // 检查上传文件格式
     onCheckFormat: {
       type: Function,
-      default: defaultFormat
-    }
+      default: defaultFormat,
+    },
   },
   data() {
     return {
@@ -103,8 +106,8 @@ export default {
       // 上传进度
       imgProgress: {
         visible: false,
-        percentage: 0
-      }
+        percentage: 0,
+      },
     };
   },
   methods: {
@@ -117,14 +120,16 @@ export default {
     uploadBackground(options) {
       const file = options.file;
 
-      this.uploadToBomb(file)
-        .then(res => {
+      this.uploadFileDemo(file)
+        .then((res) => {
           this.imgProgress.percentage = 100;
           this.imgProgress.visible = false;
 
-          const url = res[0].url;
+          const {
+            data: { url },
+          } = res;
 
-          const foundImg = this.imgList.find(e => e.url === url);
+          const foundImg = this.imgList.find((e) => e.url === url);
           if (!foundImg) {
             // 添加至图片列表
             this.imgList.push({ url });
@@ -133,25 +138,21 @@ export default {
             this.$emit("update:img-select-index", activeIndex);
             this.$emit("upload-success", url);
           } else {
-            const activeIndex = this.imgList.findIndex(e => e.url === url);
+            const activeIndex = this.imgList.findIndex((e) => e.url === url);
             this.$emit("update:img-select-index", activeIndex);
             this.$message.warning("图片已存在");
           }
           this.$emit("update:img-list", this.imgList);
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           this.imgProgress.visible = false;
         });
     },
     // 图片上传前
     imgBeforeUpload(file) {
-      const {
-        $message,
-        fileSize,
-        onCheckFormat,
-        getSize
-      } = this;
+      const { $message, fileSize, createUploadRecord, onCheckFormat, getSize } =
+        this;
 
       if (name.length > 100) {
         $message.warning(`文件名称过长，请修改后重新上传`);
@@ -173,8 +174,8 @@ export default {
     // 图片上传进度
     imgUploadProgress(res) {
       this.imgProgress.percentage = Math.floor(res.percent);
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped lang="scss">

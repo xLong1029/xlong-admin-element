@@ -42,7 +42,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import Pagination from "@/components/common/Pagination";
 import Empty from "@/components/common/Empty";
 import Page from "@/mixins/page.js";

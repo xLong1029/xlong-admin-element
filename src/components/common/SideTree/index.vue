@@ -20,7 +20,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 
 import { addClass, removeClass, getScrollTop } from "@/utils";
 

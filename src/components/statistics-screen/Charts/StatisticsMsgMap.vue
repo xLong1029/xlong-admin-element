@@ -4,13 +4,13 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 // 参考地址：https://gallery.echartsjs.com/editor.html?c=xBkVnciA0b
 import echarts from "echarts";
 require("echarts/theme/macarons"); // echarts theme
 import resize from "mixins/chart/resize";
 import { deepClone } from "utils";
-import geoJson from "mock/guangxi.json";
+import geoJson from "assets/json/guangxi.json";
 
 export default {
   name: "StatisticsMsgMap",

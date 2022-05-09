@@ -72,9 +72,9 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import RegionMultipleChart from "@/components/statistics-screen/Charts/RegionMultipleChart";
-import areaJson from "mock/guangxi-area.json";
+import areaJson from "assets/json/guangxi-area.json";
 
 export default {
   name: "SplitScreenTwo",

@@ -209,7 +209,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import StatisticsProgress from "components/statistics-screen/StatisticsProgress";
 import PieChart from "components/statistics-screen/Charts/PieChart";
 import PoleChart from "components/statistics-screen/Charts/PoleChart";

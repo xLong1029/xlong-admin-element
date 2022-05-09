@@ -21,17 +21,15 @@ Vue.use(Element, {
   size: Cookies.get('size') || 'medium'
 })
 
-// Bomb配置
-import Bmob from 'hydrogen-js-sdk'
-import BmobServer from './bmob/bmob-server'
-Vue.prototype.Bmob = Bmob
-BmobServer.Init()
-
 // 过滤器配置
 import * as filters from './filters'
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
+
+// 启动Mock
+import { setupMock } from './mock/mock-server'
+setupMock()
 
 // 注册组件
 const requireComponents = require['context'](

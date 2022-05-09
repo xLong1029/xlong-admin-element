@@ -42,7 +42,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import path from "path";
 import { isExternal } from "@/utils/validate";
 import Item from "./Item";

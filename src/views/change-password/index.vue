@@ -22,7 +22,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import { validPassword, isEqual } from "utils/validate";
 // Api方法
 import Api from "api/user";

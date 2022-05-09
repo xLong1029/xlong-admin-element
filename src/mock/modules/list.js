@@ -1,4 +1,58 @@
-﻿[
+export const jobList = [
+  {
+    id: 1,
+    name: "管理",
+  },
+  {
+    id: 2,
+    name: "设计",
+  },
+  {
+    id: 3,
+    name: "开发",
+  },
+  {
+    id: 8,
+    name: "其他",
+  },
+];
+
+export const professionList = [
+  {
+    id: 1,
+    name: "建筑设计",
+  },
+  {
+    id: 2,
+    name: "网页设计",
+  },
+  {
+    id: 3,
+    name: "UI设计",
+  },
+  {
+    id: 4,
+    name: "WEB前端开发",
+  },
+  {
+    id: 5,
+    name: ".NET开发",
+  },
+  {
+    id: 6,
+    name: "JAVA开发",
+  },
+  {
+    id: 7,
+    name: "PHP开发",
+  },
+  {
+    id: 8,
+    name: "其他专业",
+  },
+];
+
+export const cityList =[
   {
     "code": 11,
     "name": "北京市",
@@ -9512,12 +9566,12 @@
       {
         "code": 4419,
         "name": "东莞市",
-        "childs": null
+        "childs": []
       },
       {
         "code": 4420,
         "name": "中山市",
-        "childs": null
+        "childs": []
       },
       {
         "code": 4451,
@@ -10252,12 +10306,12 @@
       {
         "code": 4603,
         "name": "三沙市",
-        "childs": null
+        "childs": []
       },
       {
         "code": 4604,
         "name": "儋州市",
-        "childs": null
+        "childs": []
       },
       {
         "code": 4690,
@@ -14768,16 +14822,221 @@
   {
     "code": 71,
     "name": "台湾省",
-    "childs": null
+    "childs": []
   },
   {
     "code": 81,
     "name": "香港特别行政区",
-    "childs": null
+    "childs": []
   },
   {
     "code": 82,
     "name": "澳门特别行政区",
-    "childs": null
+    "childs": []
   }
 ]
+
+export const expressCompanys = [
+  {
+      "id": 1,
+      "name": "顺丰速运"
+  },
+  {
+      "id": 2,
+      "name": "EMS邮政特快"
+  },
+  {
+      "id": 3,
+      "name": "申通快递"
+  },
+  {
+      "id": 4,
+      "name": "圆通快递"
+  },
+  {
+      "id": 5,
+      "name": "中通快递"
+  },
+  {
+      "id": 6,
+      "name": "韵达快递"
+  },
+  {
+      "id": 7,
+      "name": "百世快递"
+  },
+  {
+      "id": 8,
+      "name": "中国邮政"
+  },
+  {
+      "id": 9,
+      "name": "天天快递"
+  },
+  {
+      "id": 10,
+      "name": "宅急送"
+  },
+  {
+      "id": 11,
+      "name": "德邦快递"
+  }
+];
+
+export const companyNames = [
+  {
+      "id": 1,
+      "name": "xLong设计工作室"
+  },
+  {
+      "id": 2,
+      "name": "华蓝集团"
+  },
+  {
+      "id": 3,
+      "name": "百度网络有限公司"
+  },
+  {
+      "id": 4,
+      "name": "上海建筑设计有限公司"
+  },
+  {
+      "id": 5,
+      "name": "设计通有限责任公司"
+  },
+  {
+      "id": 6,
+      "name": "爱美达设计公司"
+  },
+  {
+      "id": 7,
+      "name": "康众畅想信息科技有限公司"
+  },
+  {
+      "id": 8,
+      "name": "华建信息科技有限公司"
+  },
+  {
+      "id": 9,
+      "name": "杭州雁行信息科技有限公司"
+  },
+  {
+      "id": 10,
+      "name": "南宁云海风网络科技有限公司"
+  },
+  {
+      "id": 11,
+      "name": "南宁风生水传媒有限公司"
+  }
+]
+
+export const articleTags = [
+  {
+      "id": 1,
+      "name": "设计"
+  },
+  {
+      "id": 2,
+      "name": "IT技术"
+  },
+  {
+      "id": 3,
+      "name": "故事"
+  },
+  {
+      "id": 4,
+      "name": "星座"
+  },
+  {
+      "id": 5,
+      "name": "其他"
+  },
+  {
+      "id": 6,
+      "name": "科学"
+  }
+]
+
+export const avatars = [
+  "https://img1.baidu.com/it/u=2383052339,2925526515&fm=26&fmt=auto",
+  "https://img0.baidu.com/it/u=977697838,3935105105&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
+  "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
+  "https://img0.baidu.com/it/u=1519847170,1145536098&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
+  "https://img1.baidu.com/it/u=284598427,3453401726&fm=253&fmt=auto&app=138&f=JPG?w=501&h=500",
+  "https://img1.baidu.com/it/u=537589116,2159225688&fm=253&fmt=auto&app=138&f=JPEG?w=360&h=360",
+  "https://img1.baidu.com/it/u=1047817807,648960205&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
+  "https://img2.baidu.com/it/u=723218057,1373778259&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400",
+  "https://img1.baidu.com/it/u=4097746964,1192305186&fm=253&fmt=auto&app=138&f=JPEG?w=360&h=360",
+  "https://img2.baidu.com/it/u=3391243472,2077858391&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500",
+  "https://img0.baidu.com/it/u=1040843630,4036288707&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400",
+  "https://img2.baidu.com/it/u=3684583854,4246651056&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400"
+]
+
+export default [
+  {
+    url: "/api/list/job",
+    method: "get",
+    response: () => {
+      return {
+        code: 200,
+        message: "success",
+        data: jobList,
+      };
+    },
+  },
+  {
+    url: "/api/list/profession",
+    method: "get",
+    response: () => {
+      return {
+        code: 200,
+        message: "success",
+        data: professionList,
+      };
+    },
+  },
+  {
+    url: "/api/list/city",
+    method: "get",
+    response: () => {
+      return {
+        code: 200,
+        message: "success",
+        data: cityList,
+      };
+    },
+  },
+  {
+    url: "/api/list/expressCompanys",
+    method: "get",
+    response: () => {
+      return {
+        code: 200,
+        message: "success",
+        data: expressCompanys,
+      };
+    },
+  },
+  {
+    url: "/api/list/companyNames",
+    method: "get",
+    response: () => {
+      return {
+        code: 200,
+        message: "success",
+        data: companyNames,
+      };
+    },
+  },
+  {
+    url: "/api/list/articleTags",
+    method: "get",
+    response: () => {
+      return {
+        code: 200,
+        message: "success",
+        data: articleTags,
+      };
+    },
+  },
+];

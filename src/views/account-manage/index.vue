@@ -3,7 +3,12 @@
   <div class="account-manage-container overspread-page">
     <el-card shadow="never">
       <!-- 筛选 -->
-      <el-form ref="filterParams" :model="filterParams" :inline="true" class="form-container">
+      <el-form
+        ref="filterParams"
+        :model="filterParams"
+        :inline="true"
+        class="form-container"
+      >
         <el-form-item label="用户编号">
           <el-input
             v-model.trim="filterParams.id"
@@ -30,7 +35,7 @@
         </el-form-item>
         <el-form-item label="创建日期">
           <el-date-picker
-            v-model="filterParams.createTime"
+            v-model="filterParams.selectTime"
             type="daterange"
             align="right"
             unlink-panels
@@ -42,7 +47,11 @@
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="职位">
-          <el-select v-model="filterParams.job" placeholder="请选择职位" @keyup.enter.native="search()">
+          <el-select
+            v-model="filterParams.job"
+            placeholder="请选择职位"
+            @keyup.enter.native="search()"
+          >
             <el-option
               v-for="(item, index) in jobList"
               :key="'job' + index"
@@ -84,10 +93,27 @@
       <div class="operate-btn-container">
         <el-button type="primary" @click="showStore()">添加</el-button>
         <pop-confirm title="确认删除?" class="mr-10 ml-10" @confirm="del()">
-          <el-button type="warning" :disabled="selectList.length === 0" :loading="delLoading">删除</el-button>
+          <el-button
+            type="warning"
+            :disabled="selectList.length === 0"
+            :loading="delLoading"
+            >删除</el-button
+          >
         </pop-confirm>
-        <el-button type="primary" :disabled="selectList.length === 0" :loading="enableLoading" @click="enableOrDisable(1)">启用</el-button>
-        <el-button type="warning" :disabled="selectList.length === 0" :loading="disableLoading" @click="enableOrDisable(-1)">禁用</el-button>
+        <el-button
+          type="primary"
+          :disabled="selectList.length === 0"
+          :loading="enableLoading"
+          @click="enableOrDisable(1)"
+          >启用</el-button
+        >
+        <el-button
+          type="warning"
+          :disabled="selectList.length === 0"
+          :loading="disableLoading"
+          @click="enableOrDisable(-1)"
+          >禁用</el-button
+        >
       </div>
       <!-- 表格 -->
       <dynamic-table
@@ -107,8 +133,18 @@
         @pagination="getList"
         @selection-change="getSelectList"
       >
-        <el-table-column type="selection" width="55" fixed="left"></el-table-column>
-        <el-table-column prop="enabledState" label="状态" align="center" width="100" fixed="right">
+        <el-table-column
+          type="selection"
+          width="55"
+          fixed="left"
+        ></el-table-column>
+        <el-table-column
+          prop="enabledState"
+          label="状态"
+          align="center"
+          width="100"
+          fixed="right"
+        >
           <template slot-scope="{ row }">
             <el-tag v-if="row.enabledState === 1" type="success">启用</el-tag>
             <el-tag v-else type="danger">禁用</el-tag>
@@ -116,7 +152,13 @@
         </el-table-column>
         <el-table-column prop="action" label="操作" width="70" fixed="right">
           <template slot-scope="{ row }">
-            <el-button size="mini" type="text" icon="el-icon-edit" @click="showStore(row)">编辑</el-button>
+            <el-button
+              size="mini"
+              type="text"
+              icon="el-icon-edit"
+              @click="showStore(row)"
+              >编辑</el-button
+            >
           </template>
         </el-table-column>
       </dynamic-table>
@@ -134,16 +176,13 @@
 </template>
 
 <script>
-/* eslint-disable */
 // 组件
 import Pagination from "components/common/Pagination";
 import DynamicTable from "components/common/Table/DynamicTable";
 import AccountStoreDialog from "./store";
 // Api方法
 import Api from "api/account-manage";
-// Json数据
-import JsonCity from "mock/city.json";
-import JsonData from "mock/data.json";
+import PublicApi from "api/public";
 // mixins
 import Page from "mixins/page.js";
 import Table from "mixins/table.js";
@@ -158,16 +197,17 @@ export default {
   computed: {
     // 获取列表
     apiGetList(pageNo, pageSize) {
-      return (pageNo, pageSize) =>
-        Api.GetAccList(this.filterParams, pageNo, pageSize);
+      return (pageNo, pageSize) => {
+        return Api.GetAccList(this.filterParams, pageNo, pageSize);
+      };
     },
     // 删除操作接口
-    apiDelete(){
-        return () => Api.DeleteAcc(this.selectList);
+    apiDelete() {
+      return () => Api.DeleteAcc(this.selectList);
     },
     // 启/禁用操作接口
-    apiEnable(enabledState){
-        return (enabledState) => Api.EnableAcc({ enabledState }, this.selectList);
+    apiEnable(enabledState) {
+      return (enabledState) => Api.EnableAcc(enabledState, this.selectList);
     },
   },
   data() {
@@ -188,7 +228,7 @@ export default {
         // 结束时间
         eTime: "",
         // 状态
-        enabledState: ""
+        enabledState: "",
       },
       filterParams: {},
       jobList: [],
@@ -197,53 +237,59 @@ export default {
       tableHeader: [
         {
           title: "用户编号",
-          key: "objectId",
+          key: "id",
           align: "center",
-          width: 200
+          width: 200,
         },
         {
           title: "真实姓名",
           key: "realname",
           align: "center",
-          width: 200
+          width: 200,
         },
         {
           title: "性别",
           key: "gender",
-          align: "center"
+          align: "center",
         },
         {
           title: "手机号码",
           key: "mobile",
           align: "center",
-          width: 200
+          width: 200,
         },
         {
           title: "邮箱",
           key: "email",
           align: "center",
-          width: 200
+          width: 200,
         },
         {
           title: "职位",
           key: "job",
-          align: "center"
+          align: "center",
         },
         {
           title: "所在省市",
           key: "province",
-          align: "center"
+          align: "center",
         },
         {
           title: "创建时间",
-          key: "createdAt",
+          key: "createTime",
           align: "center",
-          width: 200
-        }
+          width: 200,
+        },
+        {
+          title: "更新时间",
+          key: "updateTime",
+          align: "center",
+          width: 200,
+        },
       ],
       tableProps: {
         prop: "key",
-        label: "title"
+        label: "title",
       },
       listData: [],
       selectList: [],
@@ -252,8 +298,8 @@ export default {
       disableLoading: false,
       storeDialog: {
         visible: false,
-        id: null
-      }
+        id: null,
+      },
     };
   },
   created() {
@@ -261,14 +307,30 @@ export default {
   },
   methods: {
     // 初始化
-    init() {
-      this.filterParams = { ...this.defaultParams };
-      this.jobList = JsonData.job;
-      this.professionList = JsonData.profession;
-      this.provinceList = JsonCity;      
+    async init() {
+      try {
+        this.filterParams = { ...this.defaultParams };
 
-      this.setTableHeight(385);
-      this.getList(1, this.page.pageSize);
+        const jobRes = await PublicApi.GetJobList();
+        if (jobRes.code === 200) {
+          this.jobList = jobRes.data;
+        }
+
+        const professionRes = await PublicApi.GetProfessionList();
+        if (professionRes.code === 200) {
+          this.professionList = professionRes.data;
+        }
+
+        const provinceRes = await PublicApi.GetCityList();
+        if (provinceRes.code === 200) {
+          this.provinceList = provinceRes.data;
+        }
+
+        this.setTableHeight(385);
+        this.getList(1, this.page.pageSize);
+      } catch (err) {
+        console.log(err);
+      }
     },
     // 日期改变
     dateChange(vals) {
@@ -295,15 +357,17 @@ export default {
     // 显示编辑弹窗
     showStore(row) {
       this.storeDialog = {
-        id: row ? row.objectId : null,
-        visible: true
-      }
+        id: row ? row.id : null,
+        visible: true,
+      };
     },
     // 存储操作成功 1 编辑 0 新增
-    storeSuccess(type){
-      type === 1 ? this.getList(this.page.pageNo, this.page.pageSize) : this.getList(1, this.page.pageSize);
-    }
-  }
+    storeSuccess(type) {
+      type === 1
+        ? this.getList(this.page.pageNo, this.page.pageSize)
+        : this.getList(1, this.page.pageSize);
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -312,10 +376,10 @@ export default {
     text-align: center;
   }
 
-  ::v-deep  .tr-disbale {
+  ::v-deep .tr-disbale {
     background: #f8f8f9;
     color: #ccc;
-  }  
+  }
 }
 .form-container {
   ::v-deep .el-form-item {

@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   data() {
     return {
@@ -13,9 +12,9 @@ export default {
         // 每页条数选择
         pageSizes: [15, 30, 50, 80],
         // 总数
-        total: 1
-      }
-    }
+        total: 1,
+      },
+    };
   },
   methods: {
     /**
@@ -29,11 +28,17 @@ export default {
       this.page.pageSize = pageSize;
 
       this.listLoading = true;
-      this.apiGetList(pageNo, pageSize).then(res => {
-        this.listLoading = false;
-        this.listData = res.data;
-        this.setPage(res.page);
-      }).catch(err => console.log(err));
+      this.apiGetList(pageNo, pageSize)
+        .then((res) => {
+          this.listLoading = false;
+
+          const { code, data, message } = res;
+          if (code === 200) {
+            this.listData = data.list;
+            this.setPage(data.page);
+          } else this.$message.warning(message);
+        })
+        .catch((err) => console.log(err));
     },
     /**
      * 配置页码
@@ -44,6 +49,6 @@ export default {
       this.page.pageNo = data.page;
       this.page.pageSize = data.size;
       this.page.total = data.count;
-    }
-  }
-}
+    },
+  },
+};

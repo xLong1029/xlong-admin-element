@@ -54,7 +54,7 @@
   </div>
 </template>
 <script>
-/* eslint-disable */
+
 // mixins
 import UploadMixins from "mixins/upload.js";
 import { Message } from 'element-ui'
@@ -129,6 +129,11 @@ export default {
       default: defaultFormat
     }
   },
+  computed:{
+    fileList(){
+      return this.imgList;
+    }
+  },
   data() {
     return {
       uploadList: []
@@ -138,26 +143,6 @@ export default {
     parsePercentage(val) {
       return parseInt(val, 10);
     },
-    // 自定义上传处理
-    handleUpload(options) {
-      const file = options.file;
-      this.uploadToBomb(file)
-        .then(res => {
-          let imgList = [...this.imgList, ...res];
-          this.$emit("upload-success", imgList);
-        })
-        .catch(err => {
-          console.log(err);
-          this.del(file);
-        });
-    },
-    // 删除
-    del(file) {
-      let imgList = [...this.imgList];
-      if (!imgList.length) return;
-      imgList.splice(imgList.indexOf(file), 1);
-      this.$emit("upload-success", imgList);
-    }
   }
 };
 </script>
@@ -242,6 +227,7 @@ export default {
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: center;
   @include img-frame;
 
   &-thumbnail {

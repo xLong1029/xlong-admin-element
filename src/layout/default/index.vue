@@ -11,7 +11,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import { AppMain, Navbar, AppFooter, Breadcrumb } from "./components";
 import { mapState } from "vuex";
 

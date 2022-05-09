@@ -123,15 +123,13 @@
 </template>
 
 <script>
-/* eslint-disable */
 import RankingBarChart from "components/statistics-screen/Charts/RankingBarChart";
 import ProjectsPieChart from "components/statistics-screen/Charts/ProjectsPieChart";
 import ProjectStatisticsChat from "components/statistics-screen/Charts/ProjectStatisticsChat";
 import PieChart from "components/statistics-screen/Charts/PieChart";
 import Empty from "components/common/Empty";
-
-import areaJson from "mock/guangxi-area.json";
-import JsonData from "mock/data.json";
+import areaJson from "assets/json/guangxi-area.json";
+import statisticsJson from "assets/json/statistics.json";
 
 export default {
   name: "SplitScreenThree",
@@ -172,7 +170,7 @@ export default {
     activeIndex() {
       this.chartsVisiable = false;
       const chart = JSON.parse(
-        JSON.stringify(JsonData.statisticsSystemsChart[this.activeIndex].data)
+        JSON.stringify(statisticsJson[this.activeIndex].data)
       );
       chart.forEach(e => {
         if (e.chartType === "pie") {
@@ -305,7 +303,7 @@ export default {
     // 获取应用数据
     getProjectsData() {
       /* 测试数据-start */
-      this.projects.data = JsonData.statisticsSystemsChart[0].data;
+      this.projects.data = statisticsJson[0].data;
 
       setTimeout(() => {
         this.businessType.loading = false;

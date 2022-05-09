@@ -14,7 +14,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+
 import Empty from "@/components/common/Empty";
 
 export default {

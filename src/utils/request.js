@@ -59,23 +59,8 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   response => {
-    const res = response.data
-
-    if (res.status) {
-      if (res.status.code === 0) {
-        Message({
-          message: res.status.text || 'Error',
-          type: 'error',
-          duration: 5 * 1000
-        })
-
-        return Promise.reject(new Error(res.status.text || 'Error'))
-      } else {
-        return res
-      }
-    }
-
-    return res.custom
+    const res = response.data;
+    return res
   },
   error => {
     if (error && error.response) {
