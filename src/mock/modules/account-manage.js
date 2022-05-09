@@ -116,8 +116,6 @@ account.list.forEach((e) => {
   e.area = area?.name;
 });
 
-console.log(account);
-
 export default [
   {
     url: "/api/account/list",

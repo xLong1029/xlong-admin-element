@@ -55,25 +55,13 @@ const actions = {
     state
   }) {
     return new Promise((resolve, reject) => {
-      const token = getToken();
-
-      Api.GetUser(token)
+      Api.GetUser()
         .then(res => {
+          console.log(res);
+          const { code, data } = res;
           // 登录成功
-          if (res.code == 200) {
-            const info = res.data;
-            const avatar = info.userFace ? info.userFace : null;
-            const roles = info.role ? strToArr(info.role, ',') : null;
-
-            const data = {
-              avatar,
-              roles,
-              realName: info.realName,
-              username: info.username,
-              nickName: info.nickName,              
-              gender: info.gender,
-              id: info.objectId
-            }
+          if (code == 200) {
+            data.roles = data.roles ? strToArr(data.roles, ',') : null
 
             commit('SET_USER', data);
             resolve(data);
@@ -110,12 +98,11 @@ const actions = {
     return new Promise((resolve, reject) => {
       Api.Login(from)
         .then(res => {
-          if (res.code == 200) {
-            const result = res.data;
-
+          const { code, data } = res;
+          if (code == 200) {
             // 存储token
-            setToken(result.token);
-            commit("SET_TOKEN", result.token);
+            setToken(data.token);
+            commit("SET_TOKEN", data.token);
             resolve(res);
           } else reject(res);
         })

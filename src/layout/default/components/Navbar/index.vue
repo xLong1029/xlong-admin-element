@@ -42,8 +42,11 @@
             </router-link>
           </div>
           <ul class="user-info-list mt-10">
+            <li class="user-info-list-item">角色：<el-tag>{{ roleTag }}</el-tag></li>
             <li class="user-info-list-item">账号：{{ username | isNull }}</li>
-            <li class="user-info-list-item">真实姓名：{{ realName | isNull }}</li>
+            <li class="user-info-list-item">
+              真实姓名：{{ realName | isNull }}
+            </li>
             <li class="user-info-list-item">性别：{{ gender | isNull }}</li>
           </ul>
         </div>
@@ -64,7 +67,6 @@
 </template>
 
 <script>
-
 import { mapGetters } from "vuex";
 import NavItem from "./NavItem";
 import variables from "@/styles/variables.scss";
@@ -79,8 +81,19 @@ export default {
       "nickName",
       "realName",
       "gender",
-      "avatar"
+      "avatar",
+      "roles",
     ]),
+    roleTag() {
+      if (this.roles.indexOf("admin") >= 0) {
+        return "超级管理员";
+      }
+      if (this.roles.indexOf("manage") >= 0) {
+        return "管理员";
+      } else {
+        return "普通用户";
+      }
+    },
     activeMenu() {
       const route = this.$route;
       const { meta, path } = route;
@@ -92,11 +105,11 @@ export default {
     },
     variables() {
       return variables;
-    }
+    },
   },
   data() {
     return {
-      logo: require("@/assets/images/logo-green.png")
+      logo: require("@/assets/images/logo-green.png"),
     };
   },
   methods: {
@@ -104,8 +117,8 @@ export default {
       await this.$store.dispatch("user/logout");
       this.$message.success("您已退出该系统");
       this.$router.push({ name: "Login" });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -184,7 +197,7 @@ $right-menu-height: 50px;
           font-size: 16px;
         }
       }
-      .user-avatar{
+      .user-avatar {
         width: 30px;
         height: 30px;
         border-radius: 15px;
@@ -236,8 +249,6 @@ $right-menu-height: 50px;
       line-height: $right-menu-height;
       font-size: 16px;
       color: $menuText;
-
-      
 
       i {
         color: $menuText;

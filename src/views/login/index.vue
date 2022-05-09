@@ -138,7 +138,10 @@ export default {
                 query: this.otherQuery
               });
             })
-            .catch(err => this.$message.error(err.error))
+            .catch(err => {
+              console.log(err);
+              this.$message.error(err.message || "登录失败");
+            })
             .finally(() => (this.loading = false));
         } else this.$message.error("登录失败!填写有误！");
       });

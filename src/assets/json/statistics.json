@@ -1,0 +1,873 @@
+[
+  {
+    "data": [
+      {
+        "title": "智慧灯杆",
+        "tabBarData": [
+          {
+            "label": "当前服务企业",
+            "value": 10
+          },
+          {
+            "label": "当前服务用户",
+            "value": 1234
+          },
+          {
+            "label": "累积开发人员",
+            "value": 5
+          }
+        ],
+        "chartType": "bar",
+        "chart": {
+          "data": [
+            {
+              "name": "2019年110月",
+              "value": 1200
+            },
+            {
+              "name": "2019年11月",
+              "value": 1301
+            },
+            {
+              "name": "2019年12月",
+              "value": 1100
+            },
+            {
+              "name": "2020年01月",
+              "value": 1056
+            },
+            {
+              "name": "2020年03月",
+              "value": 1204
+            },
+            {
+              "name": "2020年03月",
+              "value": 1200
+            },
+            {
+              "name": "2020年04月",
+              "value": 1234
+            }
+          ],
+          "title": "服务用户数"
+        }
+      },
+      {
+        "title": "智慧园区",
+        "tabBarData": [
+          {
+            "label": "当前服务企业",
+            "value": 7
+          },
+          {
+            "label": "当前服务用户",
+            "value": 2311
+          },
+          {
+            "label": "累积开发人员",
+            "value": 4
+          }
+        ],
+        "chartType": "bar",
+        "chart": {
+          "data": [
+            {
+              "name": "2019年110月",
+              "value": 2200
+            },
+            {
+              "name": "2019年11月",
+              "value": 2301
+            },
+            {
+              "name": "2019年12月",
+              "value": 2100
+            },
+            {
+              "name": "2020年01月",
+              "value": 2056
+            },
+            {
+              "name": "2020年03月",
+              "value": 2204
+            },
+            {
+              "name": "2020年03月",
+              "value": 2200
+            },
+            {
+              "name": "2020年04月",
+              "value": 2234
+            }
+          ],
+          "title": "服务用户数"
+        }
+      },
+      {
+        "title": "智慧物流",
+        "tabBarData": [
+          {
+            "label": "当前服务企业",
+            "value": 8
+          },
+          {
+            "label": "当前服务用户",
+            "value": 1232
+          },
+          {
+            "label": "累积开发人员",
+            "value": 6
+          }
+        ],
+        "chartType": "bar",
+        "chart": {
+          "data": [
+            {
+              "name": "2019年110月",
+              "value": 1200
+            },
+            {
+              "name": "2019年11月",
+              "value": 1321
+            },
+            {
+              "name": "2019年12月",
+              "value": 1100
+            },
+            {
+              "name": "2020年01月",
+              "value": 1356
+            },
+            {
+              "name": "2020年03月",
+              "value": 1304
+            },
+            {
+              "name": "2020年03月",
+              "value": 1200
+            },
+            {
+              "name": "2020年04月",
+              "value": 1232
+            }
+          ],
+          "title": "服务用户数"
+        }
+      }
+    ]
+  },
+  {
+    "data": [
+      {
+        "title": "扫码抗疫情",
+        "tabBarData": [
+          {
+            "label": "当前服务企业",
+            "value": 10
+          },
+          {
+            "label": "当前服务用户",
+            "value": 1234
+          },
+          {
+            "label": "累积开发人员",
+            "value": 5
+          }
+        ],
+        "chartType": "bar",
+        "chart": {
+          "data": [
+            {
+              "name": "2019年110月",
+              "value": 1200
+            },
+            {
+              "name": "2019年11月",
+              "value": 1301
+            },
+            {
+              "name": "2019年12月",
+              "value": 1100
+            },
+            {
+              "name": "2020年01月",
+              "value": 1056
+            },
+            {
+              "name": "2020年03月",
+              "value": 1204
+            },
+            {
+              "name": "2020年03月",
+              "value": 1200
+            },
+            {
+              "name": "2020年04月",
+              "value": 1234
+            }
+          ],
+          "title": "服务用户数"
+        }
+      },
+      {
+        "title": "在线开发票",
+        "tabBarData": [
+          {
+            "label": "当前服务用户",
+            "value": 2311
+          },
+          {
+            "label": "累积开发人员",
+            "value": 4
+          }
+        ],
+        "chartType": "bar",
+        "chart": {
+          "data": [
+            {
+              "name": "2019年110月",
+              "value": 2200
+            },
+            {
+              "name": "2019年11月",
+              "value": 2301
+            },
+            {
+              "name": "2019年12月",
+              "value": 2100
+            },
+            {
+              "name": "2020年01月",
+              "value": 2056
+            },
+            {
+              "name": "2020年03月",
+              "value": 2204
+            },
+            {
+              "name": "2020年03月",
+              "value": 2200
+            },
+            {
+              "name": "2020年04月",
+              "value": 2234
+            }
+          ],
+          "title": "服务用户数"
+        }
+      },
+      {
+        "title": "柳州乘车码",
+        "tabBarData": [
+          {
+            "label": "学生",
+            "value": 42039
+          },
+          {
+            "label": "企业人员",
+            "value": 22340
+          },
+          {
+            "label": "机构人员",
+            "value": 12039
+          }
+        ],
+        "chartType": "pie",
+        "chart": {
+          "data": [
+            {
+              "name": "学生",
+              "value": 42039
+            },
+            {
+              "name": "企业人员",
+              "value": 22340
+            },
+            {
+              "name": "机构人员",
+              "value": 12039
+            }
+          ],
+          "title": ""
+        }
+      },
+      {
+        "title": "医疗照护",
+        "tabBarData": [
+          {
+            "label": "服务企业",
+            "value": 1100
+          },
+          {
+            "label": "服务机构",
+            "value": 2234
+          }
+        ],
+        "chartType": "pie",
+        "chart": {
+          "data": [
+            {
+              "name": "服务企业",
+              "value": 1100
+            },
+            {
+              "name": "服务机构",
+              "value": 2234
+            }
+          ],
+          "title": ""
+        }
+      }
+    ]
+  },
+  {
+    "data": [
+      {
+        "title": "IT",
+        "tabBarData": [
+          {
+            "label": "当前服务企业",
+            "value": 10
+          },
+          {
+            "label": "当前服务用户",
+            "value": 1234
+          },
+          {
+            "label": "累积开发人员",
+            "value": 5
+          }
+        ],
+        "chartType": "bar",
+        "chart": {
+          "data": [
+            {
+              "name": "2019年110月",
+              "value": 1200
+            },
+            {
+              "name": "2019年11月",
+              "value": 1301
+            },
+            {
+              "name": "2019年12月",
+              "value": 1100
+            },
+            {
+              "name": "2020年01月",
+              "value": 1056
+            },
+            {
+              "name": "2020年03月",
+              "value": 1204
+            },
+            {
+              "name": "2020年03月",
+              "value": 1200
+            },
+            {
+              "name": "2020年04月",
+              "value": 1234
+            }
+          ],
+          "title": "服务用户数"
+        }
+      },
+      {
+        "title": "设计类",
+        "tabBarData": [
+          {
+            "label": "当前服务企业",
+            "value": 7
+          },
+          {
+            "label": "当前服务用户",
+            "value": 2311
+          },
+          {
+            "label": "累积开发人员",
+            "value": 4
+          }
+        ],
+        "chartType": "bar",
+        "chart": {
+          "data": [
+            {
+              "name": "2019年110月",
+              "value": 2200
+            },
+            {
+              "name": "2019年11月",
+              "value": 2301
+            },
+            {
+              "name": "2019年12月",
+              "value": 2100
+            },
+            {
+              "name": "2020年01月",
+              "value": 2056
+            },
+            {
+              "name": "2020年03月",
+              "value": 2204
+            },
+            {
+              "name": "2020年03月",
+              "value": 2200
+            },
+            {
+              "name": "2020年04月",
+              "value": 2234
+            }
+          ],
+          "title": "服务用户数"
+        }
+      },
+      {
+        "title": "建筑类",
+        "tabBarData": [
+          {
+            "label": "当前服务企业",
+            "value": 8
+          },
+          {
+            "label": "当前服务用户",
+            "value": 1232
+          },
+          {
+            "label": "累积开发人员",
+            "value": 6
+          }
+        ],
+        "chartType": "bar",
+        "chart": {
+          "data": [
+            {
+              "name": "2019年110月",
+              "value": 1200
+            },
+            {
+              "name": "2019年11月",
+              "value": 1321
+            },
+            {
+              "name": "2019年12月",
+              "value": 1100
+            },
+            {
+              "name": "2020年01月",
+              "value": 1356
+            },
+            {
+              "name": "2020年03月",
+              "value": 1304
+            },
+            {
+              "name": "2020年03月",
+              "value": 1200
+            },
+            {
+              "name": "2020年04月",
+              "value": 1232
+            }
+          ],
+          "title": "服务用户数"
+        }
+      },
+      {
+        "title": "门户类",
+        "tabBarData": [
+          {
+            "label": "当前服务企业",
+            "value": 8
+          },
+          {
+            "label": "当前服务用户",
+            "value": 1232
+          },
+          {
+            "label": "累积开发人员",
+            "value": 6
+          }
+        ],
+        "chartType": "bar",
+        "chart": {
+          "data": [
+            {
+              "name": "2019年110月",
+              "value": 1200
+            },
+            {
+              "name": "2019年11月",
+              "value": 1321
+            },
+            {
+              "name": "2019年12月",
+              "value": 1100
+            },
+            {
+              "name": "2020年01月",
+              "value": 1356
+            },
+            {
+              "name": "2020年03月",
+              "value": 1304
+            },
+            {
+              "name": "2020年03月",
+              "value": 1200
+            },
+            {
+              "name": "2020年04月",
+              "value": 1232
+            }
+          ],
+          "title": "服务用户数"
+        }
+      }
+    ]
+  },
+  {
+    "data": [
+      {
+        "title": "服装首饰",
+        "tabBarData": [
+          {
+            "label": "学生",
+            "value": 12100
+          },
+          {
+            "label": "在职人员",
+            "value": 112234
+          }
+        ],
+        "chartType": "pie",
+        "chart": {
+          "data": [
+            {
+              "name": "学生",
+              "value": 12100
+            },
+            {
+              "name": "在职人员",
+              "value": 112234
+            }
+          ],
+          "title": ""
+        }
+      },
+      {
+        "title": "宠物用品",
+        "tabBarData": [
+          {
+            "label": "学生",
+            "value": 1100
+          },
+          {
+            "label": "在职人员",
+            "value": 112234
+          }
+        ],
+        "chartType": "pie",
+        "chart": {
+          "data": [
+            {
+              "name": "学生",
+              "value": 1100
+            },
+            {
+              "name": "在职人员",
+              "value": 112234
+            }
+          ],
+          "title": ""
+        }
+      },
+      {
+        "title": "鞋包用品",
+        "tabBarData": [
+          {
+            "label": "学生",
+            "value": 12100
+          },
+          {
+            "label": "在职人员",
+            "value": 112234
+          }
+        ],
+        "chartType": "pie",
+        "chart": {
+          "data": [
+            {
+              "name": "学生",
+              "value": 12100
+            },
+            {
+              "name": "在职人员",
+              "value": 112234
+            }
+          ],
+          "title": ""
+        }
+      },
+      {
+        "title": "文具用品",
+        "tabBarData": [
+          {
+            "label": "学生",
+            "value": 12100
+          },
+          {
+            "label": "在职人员",
+            "value": 12234
+          }
+        ],
+        "chartType": "pie",
+        "chart": {
+          "data": [
+            {
+              "name": "学生",
+              "value": 12100
+            },
+            {
+              "name": "在职人员",
+              "value": 12234
+            }
+          ],
+          "title": ""
+        }
+      }
+    ]
+  },
+  {
+    "data": [
+      {
+        "title": "项目申报App",
+        "tabBarData": [
+          {
+            "label": "当前服务企业",
+            "value": 10
+          },
+          {
+            "label": "当前服务用户",
+            "value": 1234
+          },
+          {
+            "label": "累积开发人员",
+            "value": 5
+          }
+        ],
+        "chartType": "bar",
+        "chart": {
+          "data": [
+            {
+              "name": "2019年110月",
+              "value": 1200
+            },
+            {
+              "name": "2019年11月",
+              "value": 1301
+            },
+            {
+              "name": "2019年12月",
+              "value": 1100
+            },
+            {
+              "name": "2020年01月",
+              "value": 1056
+            },
+            {
+              "name": "2020年03月",
+              "value": 1204
+            },
+            {
+              "name": "2020年03月",
+              "value": 1200
+            },
+            {
+              "name": "2020年04月",
+              "value": 1234
+            }
+          ],
+          "title": "服务用户数"
+        }
+      },
+      {
+        "title": "音乐共享",
+        "tabBarData": [
+          {
+            "label": "当前服务用户",
+            "value": 2311
+          },
+          {
+            "label": "累积开发人员",
+            "value": 4
+          }
+        ],
+        "chartType": "bar",
+        "chart": {
+          "data": [
+            {
+              "name": "2019年110月",
+              "value": 2200
+            },
+            {
+              "name": "2019年11月",
+              "value": 2301
+            },
+            {
+              "name": "2019年12月",
+              "value": 2100
+            },
+            {
+              "name": "2020年01月",
+              "value": 2056
+            },
+            {
+              "name": "2020年03月",
+              "value": 2204
+            },
+            {
+              "name": "2020年03月",
+              "value": 2200
+            },
+            {
+              "name": "2020年04月",
+              "value": 2234
+            }
+          ],
+          "title": "服务用户数"
+        }
+      },
+      {
+        "title": "金融理财",
+        "tabBarData": [
+          {
+            "label": "学生",
+            "value": 1100
+          },
+          {
+            "label": "企业人员",
+            "value": 2234
+          },
+          {
+            "name": "机构人员",
+            "value": 122234
+          }
+        ],
+        "chartType": "pie",
+        "chart": {
+          "data": [
+            {
+              "name": "学生",
+              "value": 1100
+            },
+            {
+              "name": "企业人员",
+              "value": 2234
+            },
+            {
+              "name": "机构人员",
+              "value": 122234
+            }
+          ],
+          "title": ""
+        }
+      },
+      {
+        "title": "设计审查",
+        "tabBarData": [
+          {
+            "label": "服务企业",
+            "value": 1100
+          },
+          {
+            "label": "服务机构",
+            "value": 2234
+          }
+        ],
+        "chartType": "pie",
+        "chart": {
+          "data": [
+            {
+              "name": "服务企业",
+              "value": 1100
+            },
+            {
+              "name": "服务机构",
+              "value": 2234
+            }
+          ],
+          "title": ""
+        }
+      }
+    ]
+  },
+  {
+    "data": [
+      {
+        "title": "H5邀请函",
+        "tabBarData": [
+          {
+            "label": "服务企业",
+            "value": 1100
+          },
+          {
+            "label": "服务机构",
+            "value": 2234
+          },
+          {
+            "name": "服务用户",
+            "value": 122234
+          }
+        ],
+        "chartType": "pie",
+        "chart": {
+          "data": [
+            {
+              "name": "服务企业",
+              "value": 1100
+            },
+            {
+              "name": "服务机构",
+              "value": 2234
+            },
+            {
+              "name": "服务用户",
+              "value": 122234
+            }
+          ],
+          "title": ""
+        }
+      },
+      {
+        "title": "H5招聘应用",
+        "tabBarData": [
+          {
+            "label": "服务企业",
+            "value": 1100
+          },
+          {
+            "label": "服务机构",
+            "value": 2234
+          }
+        ],
+        "chartType": "pie",
+        "chart": {
+          "data": [
+            {
+              "name": "服务企业",
+              "value": 1100
+            },
+            {
+              "name": "服务机构",
+              "value": 2234
+            }
+          ],
+          "title": ""
+        }
+      }
+    ]
+  }
+]

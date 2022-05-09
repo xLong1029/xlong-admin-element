@@ -62,15 +62,20 @@ export default [
         const { username, password } = config.body;
 
         const user = users.find(
-          e => e.username == username && e.password == password
+          e => e.username == username
         );
 
         if (user) {
-          const { token, id } = user;
-          const info = infos.find(e => e.id === id);
-          return handleResponse(200, "success", { ...info, token });
+          if(user.password == password){
+            const { token, id } = user;
+            const info = infos.find(e => e.id === id);
+            return handleResponse(200, "success", { ...info, token });
+          }
+          else{
+            return handleResponse(404, "密码错误，请重新输入");
+          }         
         } else {
-          return handleResponse(404, "找不到该用户");
+          return handleResponse(404, "该用户不存在");
         }
       })
   },
