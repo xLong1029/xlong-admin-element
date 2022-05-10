@@ -152,7 +152,7 @@ export default [
         }
 
         // 深克隆
-        const filterList = JSON.parse(JSON.stringify(list));
+        const filterList = deepClone(list);
 
         list = list.slice((page - 1) * size, page * size);
 
