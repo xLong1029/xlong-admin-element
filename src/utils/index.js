@@ -425,7 +425,7 @@ export function objOmit(obj, uselessKeys) {
  * @param {*} iv
  */
  export const AESEncrypt = (str, key = "xLong", iv = "") => {
-  return CryptoJS.AES.AESEncrypt(str, iv, CryptoJS.enc.Utf8.parse(key), {
+  return CryptoJS.AES.encrypt(str, iv, CryptoJS.enc.Utf8.parse(key), {
     mode: CryptoJS.mode.ECB,
     padding: CryptoJS.pad.Pkcs7,
   }).toString();
