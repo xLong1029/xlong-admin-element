@@ -20,7 +20,7 @@ xlong-admin-element 是一套基于 Vue + Element + Mock 开发的单页面客�
 [Element](https://github.com/ElemeFE/element)<br/>
 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)<br/>
 [ECharts](https://www.echartsjs.com/zh)<br/>
-[Mock](https://github.com/nuysoft/Mock) 
+[Mock](http://mockjs.com/) 
 
 ## 部分项目运行截图
 * 登录界面
