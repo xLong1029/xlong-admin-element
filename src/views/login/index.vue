@@ -37,7 +37,7 @@
 
 <script>
 
-import { setLocalS, getLocalS, delLocalS, encrypt, AESDecrypt } from "utils";
+import { setLocalS, getLocalS, delLocalS, AESEncrypt, AESDecrypt } from "utils";
 
 export default {
   name: "Login",
@@ -129,7 +129,7 @@ export default {
               if (this.remeberPwd) {
                 // 本地存储用户名和密码
                 setLocalS("username", this.loginForm.username);
-                setLocalS("password", encrypt(this.loginForm.password));
+                setLocalS("password", AESEncrypt(this.loginForm.password));
               }
               this.$message.success("登录成功!");
 
