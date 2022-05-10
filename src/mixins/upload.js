@@ -60,7 +60,6 @@ export default {
           const data = {
             name,
             size,
-            size,
             type,
             urlType: "base64",
             url,
