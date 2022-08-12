@@ -1,4 +1,4 @@
-import { getToken } from "./../utils/auth.js";
+import { getToken } from "@/utils/auth.js";
 
 /**
  * 处理响应

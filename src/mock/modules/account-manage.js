@@ -1,4 +1,4 @@
-import { handleMock, handleResponse } from "./../mock-handle.js";
+import { handleMock, handleResponse } from "@/mock/mock-handle.js";
 import {
   professionList,
   jobList,
